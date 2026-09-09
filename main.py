@@ -454,7 +454,7 @@ BOT_I18N = {
         "btn_create": "➕ ساخت کاربر",
         "btn_addip": "🌐 افزودن آی‌پی تمیز",
         "btn_lang": "English",
-        "welcome": "👑 <b>به پنل エムエムدی خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
+        "welcome": "👑 <b>به پنل 에ممدی خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
         "lang_switched": "🌐 زبان به <b>فارسی</b> تغییر یافت.",
         "stats": (
             "<b>📊 وضعیت سرور</b>\n\n"
@@ -710,7 +710,8 @@ async def save_db():
             # Save addresses
             async with CUSTOM_ADDRESSES_LOCK:
                 conn.execute("DELETE FROM custom_addresses")
-                for ad...(truncated 174411 characters)...etch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+                for ad...(truncated 174411 characters)...
+etch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
     if(r.ok){$m('login-pw').value='';showDashboard()}
     else $m('login-err').style.display='block';
   }catch(e){$m('login-err').style.display='block'}
@@ -869,7 +870,7 @@ function renderLinks(links){
     </div>
     <div class="pill"><span class="pill-used">${fmtB(r.u)}</span><div class="pill-bar"><div class="pill-fill" style="width:${r.pct}%;background:${r.col}"></div></div><span class="pill-lim">${fmtLim(r.lim)}</span></div>
     <div style="font-size:11.5px;color:${r.ec};margin-top:6px;font-weight:600">⏳ ${r.ex} · ${r.cc}/${r.mc2||'∞'} IPs</div>
-    <div class="m-card-acts">
+    <div style="m-card-acts">
       <button class="act-btn act-edit" onclick="showEditMo('${r.l.uuid}')">${editText}</button>
       <button class="act-btn act-copy" onclick="cpLink('${esc((r.l.vless_links||[]).join(String.fromCharCode(10)))}')">${copyText}</button>
       <button class="act-btn act-sub" onclick="cpSub('${r.l.uuid}')">${subText}</button>
