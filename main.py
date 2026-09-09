@@ -2328,30 +2328,36 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .footer-link{{display:flex;align-items:center;gap:5px;color:var(--text3);
             font-size:11px;font-weight:600;text-decoration:none;transition:color .2s}}
         .footer-link:hover{{color:var(--gold)}}
-    /* MMD visual cleanup */
-/* Keep the Japanese brand name, but use a light Vazirmatn face. */
-.login-title,.mob-hd span,.sb-title,.page-title,.mo-title{
+    /* MMD visual cleanup - requested dashboard layout */
+/* Japanese brand name: larger, thin, elegant typography. */
+.login-title,.mob-hd span,.sb-title,.page-title,.mo-title,.header-title{
   font-family:'Vazirmatn','Inter',sans-serif !important;
   font-weight:300 !important;
   letter-spacing:.01em !important;
 }
-.login-title{font-size:28px !important;}
-.mob-hd span{font-size:20px !important;font-weight:300 !important;}
-.sb-title{font-size:14px !important;font-weight:300 !important;}
-.page-title{font-size:28px !important;font-weight:300 !important;}
-/* Softer, more rounded surfaces. */
+.login-title{font-size:32px !important;}
+.mob-hd span{font-size:23px !important;font-weight:300 !important;}
+.sb-title{font-size:18px !important;font-weight:300 !important;}
+.page-title{font-size:30px !important;font-weight:300 !important;}
+.header-title{font-size:30px !important;font-weight:300 !important;}
+/* Round the main frame and all dashboard cards. */
 .sidebar,.main,.stat-card,.card,.login-box,.mo-box,.alerts-box,
-.search-wrap input,.filter-chips,.btn,.fi,.fc,.logout-btn,.sb-toggle{
-  border-radius:24px !important;
+.search-wrap input,.filter-chips,.btn,.fi,.fc,.logout-btn,.sb-toggle,
+.page,.page-header,.chart-card,.traffic-card{
+  border-radius:28px !important;
 }
-.stat-card,.card{border-radius:26px !important;}
-.login-box,.mo-box{border-radius:30px !important;}
-/* Remove decorative corner/cross overlays while preserving functional controls. */
+.stat-card,.card,.chart-card,.traffic-card{border-radius:30px !important;}
+.login-box,.mo-box{border-radius:34px !important;}
+/* Remove non-functional corner marks and cross decorations. */
 .corner-decoration,.corner-decor,.decorative-cross,.cross-decoration,
-.page-corner,.panel-corner,.top-cross,.bottom-cross{display:none !important;}
-/* Logout belongs in the bottom action area on desktop. */
+.page-corner,.panel-corner,.top-cross,.bottom-cross,
+.corner-mark,.corner-line,.frame-cross,.frame-decoration{
+  display:none !important;
+}
+/* Keep logout only in the bottom sidebar action area on desktop. */
 .sb-bottom{margin-top:auto;padding:12px 8px 16px;border-top:0;background:transparent;}
-.logout-btn{min-height:42px;font-weight:300 !important;}
+.sb-bottom .logout-btn{min-height:44px;font-weight:300 !important;border-radius:24px !important;}
+@media (min-width:769px){{.logout-mob{{display:none !important;}}}}
 </style>
 </head>
 <body>
