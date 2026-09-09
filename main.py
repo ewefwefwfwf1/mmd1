@@ -43,7 +43,7 @@ class QueueHandler(logging.Handler):
             pass
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("Luffy-Gateway")
+logger = logging.getLogger("mmd-Gateway")
 
 q_handler = QueueHandler()
 q_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
@@ -51,14 +51,14 @@ logger.addHandler(q_handler)
 logging.getLogger("uvicorn.error").addHandler(q_handler)
 logging.getLogger("uvicorn.access").addHandler(q_handler)
 
-app = FastAPI(title="Luffy Panel", docs_url=None, redoc_url=None)
+app = FastAPI(title="mmd Panel", docs_url=None, redoc_url=None)
 
 # Bump this on every release so the dashboard can notify already-open sessions
 # that a new version is available / was just applied.
 PANEL_VERSION = "1.1.0"
 
 # GitHub repo checked for update notifications
-GITHUB_REPO = "luffy-sh-op/LUFFY_PANEL"
+GITHUB_REPO = "luffy-sh-op/mmd_PANEL"
 
 async def check_github_latest(force: bool = False) -> dict:
     """Fetches the latest release tag from GitHub, caches in SQLite.
@@ -371,7 +371,7 @@ BOT_I18N = {
         "btn_create": "➕ Create User",
         "btn_addip": "🌐 Add Clean IP",
         "btn_lang": "فارسی",
-        "welcome": "👑 <b>Welcome to Luffy Panel Telegram Bot!</b>\nManage your VLESS inbounds directly from your Telegram.",
+        "welcome": "👑 <b>Welcome to mmd Panel!</b>\nManage your VLESS inbounds.",
         "lang_switched": "🌐 Language switched to <b>English</b>.",
         "stats": (
             "<b>📊 Server Status Dashboard</b>\n\n"
@@ -454,7 +454,7 @@ BOT_I18N = {
         "btn_create": "➕ ساخت کاربر",
         "btn_addip": "🌐 افزودن آی‌پی تمیز",
         "btn_lang": "English",
-        "welcome": "👑 <b>به ربات تلگرامی پنل لافی خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
+        "welcome": "👑 <b>به پنل mmd خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
         "lang_switched": "🌐 زبان به <b>فارسی</b> تغییر یافت.",
         "stats": (
             "<b>📊 وضعیت سرور</b>\n\n"
@@ -871,7 +871,7 @@ def get_domain() -> str:
 
 def generate_vless_link(
     uuid: str,
-    remark: str = "Luffy",
+    remark: str = "mmd",
     address: str = None,
     port: int = None,
     protocol: str = DEFAULT_PROTOCOL,
@@ -935,7 +935,7 @@ def link_for_variant(link: dict, uid: str, auth: str, address: str = None) -> st
     protocol = f"{auth}-{variant['transport']}"
     return generate_vless_link(
         uid,
-        remark=f"Luffy-{link.get('label', '')}",
+        remark=f"mmd-{link.get('label', '')}",
         address=address,
         protocol=protocol,
         fingerprint=variant.get("fingerprint"),
@@ -2127,25 +2127,25 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         ring_color1 = "#fbbf24"
         ring_color2 = "#f59e0b"
     else:
-        ring_color1 = "#FFD700"
-        ring_color2 = "#FFC200"
+        ring_color1 = "#3b82f6"
+        ring_color2 = "#60a5fa"
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luffy - {link['label']}</title>
+    <title>mmd - {link['label']}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{{margin:0;padding:0;box-sizing:border-box}}
         :root{{
-            --gold:#FFD700;--gold2:#FFC200;--gold3:#C8900A;
-            --gold-dim:rgba(255,215,0,0.1);--gold-glow:0 0 20px rgba(255,215,0,0.3);
-            --bg:#040810;--bg2:#080f1a;--bg3:#0d1626;
-            --surface:rgba(8,15,26,0.95);--surface2:rgba(13,22,38,0.9);
-            --border:rgba(255,215,0,0.12);--border2:rgba(255,215,0,0.25);
-            --text:rgba(255,255,255,0.92);--text2:rgba(255,215,0,0.7);--text3:rgba(255,255,255,0.4);
+            --gold:#3b82f6;--gold2:#60a5fa;--gold3:#2563eb;
+            --gold-dim:rgba(59,130,246,0.12);--gold-glow:0 0 20px rgba(59,130,246,0.25);
+            --bg:#0a0f1a;--bg2:#0f172a;--bg3:#1e293b;
+            --surface:rgba(15,23,42,0.95);--surface2:rgba(30,41,59,0.9);
+            --border:rgba(59,130,246,0.15);--border2:rgba(59,130,246,0.3);
+            --text:rgba(255,255,255,0.92);--text2:rgba(96,165,250,0.75);--text3:rgba(255,255,255,0.4);
             --green:#4ade80;--red:#f87171;--yellow:#fbbf24;
         }}
         html,body{{height:100%;background:var(--bg);font-family:'Inter',sans-serif;color:var(--text)}}
@@ -2153,22 +2153,22 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
 
         /* Animated background */
         .bg-glow{{position:fixed;inset:0;z-index:0;pointer-events:none;
-            background:radial-gradient(ellipse 60% 40% at 50% -5%,rgba(255,215,0,0.08),transparent 60%),
-                       radial-gradient(ellipse 40% 30% at 80% 80%,rgba(255,215,0,0.05),transparent 50%);}}
+            background:radial-gradient(ellipse 60% 40% at 50% -5%,rgba(59,130,246,0.08),transparent 60%),
+                       radial-gradient(ellipse 40% 30% at 80% 80%,rgba(59,130,246,0.05),transparent 50%);}}
         .grid-bg{{position:fixed;inset:0;z-index:0;pointer-events:none;
-            background-image:linear-gradient(rgba(255,215,0,0.03) 1px,transparent 1px),
-                             linear-gradient(90deg,rgba(255,215,0,0.03) 1px,transparent 1px);
+            background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),
+                             linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);
             background-size:48px 48px;}}
         /* Shooting stars */
         .shooting-stars{{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}}
         .shooting-stars .star{{position:absolute;width:110px;height:1px;
-            background:linear-gradient(90deg,transparent,rgba(255,215,0,0.55));
-            filter:drop-shadow(0 0 4px rgba(255,215,0,0.35));
+            background:linear-gradient(90deg,transparent,rgba(59,130,246,0.55));
+            filter:drop-shadow(0 0 4px rgba(59,130,246,0.35));
             opacity:0;transform:translate3d(0,0,0) rotate(18deg);
             animation:shoot 7s linear infinite}}
         .shooting-stars .star::after{{content:"";position:absolute;right:0;top:-1px;
             width:3px;height:3px;border-radius:50%;background:var(--gold);
-            box-shadow:0 0 6px 1px rgba(255,215,0,0.7)}}
+            box-shadow:0 0 6px 1px rgba(59,130,246,0.7)}}
         .shooting-stars .star:nth-child(1){{top:8%;left:66%;animation-delay:0s}}
         .shooting-stars .star:nth-child(2){{top:24%;left:84%;animation-delay:2.6s;animation-duration:8s}}
         .shooting-stars .star:nth-child(3){{top:42%;left:58%;animation-delay:5.2s;animation-duration:6.5s}}
@@ -2206,10 +2206,10 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         /* Usage ring card */
         .ring-card{{background:var(--surface2);border:1px solid var(--border);border-radius:20px;
             padding:28px 24px;margin-bottom:14px;text-align:center;
-            box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,215,0,0.08)}}
+            box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(59,130,246,0.08)}}
         .ring-wrap{{position:relative;width:160px;height:160px;margin:0 auto 20px}}
         .ring-svg{{width:160px;height:160px;transform:rotate(-90deg)}}
-        .ring-bg{{fill:none;stroke:rgba(255,215,0,0.08);stroke-width:10}}
+        .ring-bg{{fill:none;stroke:rgba(59,130,246,0.08);stroke-width:10}}
         .ring-fill{{fill:none;stroke-width:10;stroke-linecap:round;
             stroke-dasharray:440;stroke-dashoffset:{440 - (440 * min(pct,100)/100):.1f};
             stroke:url(#ringGrad);filter:drop-shadow(0 0 8px {ring_color1});
@@ -2224,7 +2224,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .usage-sub{{font-size:11px;color:var(--text3)}}
 
         .info-row{{display:flex;gap:12px;margin-top:18px}}
-        .info-box{{flex:1;background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.1);
+        .info-box{{flex:1;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.1);
             border-radius:10px;padding:10px 12px;text-align:left}}
         .info-box-label{{font-size:9px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}}
         .info-box-val{{font-size:13px;font-weight:700}}
@@ -2238,19 +2238,19 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
             padding:24px;margin-bottom:14px;text-align:center;
             box-shadow:0 4px 24px rgba(0,0,0,0.4)}}
         .qr-wrap{{background:#fff;border-radius:12px;padding:12px;display:inline-block;
-            box-shadow:0 0 24px rgba(255,215,0,0.2);margin-bottom:14px}}
+            box-shadow:0 0 24px rgba(59,130,246,0.2);margin-bottom:14px}}
         .qr-wrap img{{width:180px;height:180px;display:block;border-radius:4px}}
         .qr-label{{font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;margin-bottom:4px}}
         .sub-link-display{{font-size:11px;color:var(--gold);font-weight:600;
             background:var(--gold-dim);border:1px solid var(--border);border-radius:8px;
             padding:8px 12px;word-break:break-all;cursor:pointer;transition:all .2s}}
-        .sub-link-display:hover{{background:rgba(255,215,0,0.15);border-color:var(--border2)}}
+        .sub-link-display:hover{{background:rgba(59,130,246,0.15);border-color:var(--border2)}}
         .copy-sub-btn{{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
             padding:12px;border-radius:10px;margin-top:10px;cursor:pointer;border:none;font-family:inherit;
             font-size:14px;font-weight:700;
-            background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;
-            box-shadow:0 0 20px rgba(255,215,0,0.25);transition:all .2s}}
-        .copy-sub-btn:hover{{filter:brightness(1.1);box-shadow:0 0 30px rgba(255,215,0,0.4)}}
+            background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;
+            box-shadow:0 0 20px rgba(59,130,246,0.25);transition:all .2s}}
+        .copy-sub-btn:hover{{filter:brightness(1.1);box-shadow:0 0 30px rgba(59,130,246,0.4)}}
 
         /* Platform chips */
         .section-label{{font-size:9px;font-weight:800;letter-spacing:2px;color:var(--text3);
@@ -2266,7 +2266,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .app-card{{background:var(--surface2);border:1px solid var(--border);border-radius:14px;
             padding:14px;cursor:pointer;transition:all .2s;text-decoration:none;display:block}}
         .app-card:hover{{border-color:var(--border2);background:rgba(13,22,38,0.98);
-            box-shadow:0 0 16px rgba(255,215,0,0.1);transform:translateY(-2px)}}
+            box-shadow:0 0 16px rgba(59,130,246,0.1);transform:translateY(-2px)}}
         .app-icon{{width:36px;height:36px;border-radius:8px;margin-bottom:8px;
             display:flex;align-items:center;justify-content:center;font-size:20px}}
         .app-name{{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}}
@@ -2280,7 +2280,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .configs-count{{font-size:10px;color:var(--text3);background:var(--gold-dim);
             border:1px solid var(--border);border-radius:6px;padding:2px 8px}}
         .config-item{{display:flex;align-items:center;justify-content:space-between;
-            background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.08);
+            background:rgba(59,130,246,0.04);border:1px solid rgba(59,130,246,0.08);
             border-radius:10px;padding:11px 12px;margin-bottom:8px;gap:8px}}
         .config-icon{{width:32px;height:32px;border-radius:8px;background:var(--gold-dim);
             display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}}
@@ -2290,10 +2290,10 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .config-type{{font-size:10px;color:var(--text3);margin-top:1px}}
         .ping-badge{{margin-left:8px;font-weight:700}}
         .config-actions{{display:flex;gap:5px;flex-shrink:0}}
-        .btn-copy{{padding:5px 10px;border-radius:7px;border:1px solid rgba(255,215,0,0.2);
+        .btn-copy{{padding:5px 10px;border-radius:7px;border:1px solid rgba(59,130,246,0.2);
             background:var(--gold-dim);color:var(--gold);font-size:10.5px;font-weight:700;
             cursor:pointer;transition:all .2s;font-family:inherit}}
-        .btn-copy:hover{{background:rgba(255,215,0,0.2)}}
+        .btn-copy:hover{{background:rgba(59,130,246,0.2)}}
         .btn-qr{{padding:5px 10px;border-radius:7px;border:1px solid rgba(167,139,250,0.2);
             background:rgba(167,139,250,0.08);color:#a78bfa;font-size:10.5px;font-weight:700;
             cursor:pointer;transition:all .2s;font-family:inherit}}
@@ -2328,7 +2328,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
             box-shadow:var(--gold-glow)}}
         .toast.show{{opacity:1;transform:translateX(-50%) translateY(0)}}
 
-        /* Luffy footer links */
+        /* footer links */
         .footer-links{{display:flex;justify-content:center;gap:16px;padding:20px 0 10px}}
         .footer-link{{display:flex;align-items:center;gap:5px;color:var(--text3);
             font-size:11px;font-weight:600;text-decoration:none;transition:color .2s}}
@@ -2347,14 +2347,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     <!-- Header -->
     <div class="header">
         <div class="header-logo">
-            <svg width="28" height="24" viewBox="0 0 84 68" fill="none">
-                <ellipse cx="42" cy="52" rx="40" ry="11" fill="#C8900A" opacity=".85"/>
-                <ellipse cx="42" cy="52" rx="40" ry="11" fill="none" stroke="#FFD700" stroke-width="1.4" opacity=".6"/>
-                <path d="M19 50 Q21 22 42 17 Q63 22 65 50" fill="#4a3a00" stroke="#FFD700" stroke-width="1.4"/>
-                <ellipse cx="42" cy="17" rx="23" ry="5.5" fill="#C8900A" stroke="#FFD700" stroke-width="1"/>
-                <path d="M20 45 Q21.5 41.5 42 39.5 Q62.5 41.5 64 45" fill="none" stroke="#CC2200" stroke-width="4.5" stroke-linecap="round" opacity=".92"/>
-            </svg>
-            <span class="header-title">LUFFY</span>
+            <span class="header-title">mmd</span>
         </div>
         <div class="header-sub">{link['label']} · Connection Status</div>
     </div>
@@ -2436,15 +2429,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
 
     <!-- Footer links -->
     <div class="footer-links">
-        <a href="https://t.me/Luffy_sh_op" target="_blank" class="footer-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.032 9.57c-.148.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.895.651z"/></svg>
-            Telegram Channel
-        </a>
-        <a href="https://t.me/chef_vpn" target="_blank" class="footer-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.032 9.57c-.148.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.895.651z"/></svg>
-            Chef
-        </a>
-        <a href="https://github.com/luffy-sh-op/LUFFY_PANEL/tree/main" target="_blank" class="footer-link">
+        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="footer-link">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
             GitHub
         </a>
@@ -2459,7 +2444,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         <div class="mo-title">QR CODE</div>
         <img id="qr-modal-img" src="" alt="QR">
         <div id="qr-modal-name" style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px"></div>
-        <button onclick="downloadQR()" style="width:100%;padding:10px;border-radius:8px;background:linear-gradient(135deg,#FFD700,#FFC200);border:none;color:#000;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">Download QR</button>
+        <button onclick="downloadQR()" style="width:100%;padding:10px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#60a5fa);border:none;color:#000;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">Download QR</button>
     </div>
 </div>
 
@@ -2481,7 +2466,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     // The #name fragment is what Hiddify shows as the profile name before
     // it even fetches the sublink, and is used as a fallback if the
     // content's own #profile-title header is missing or fails to parse.
-    const hiddifyProfileName = encodeURIComponent("Luffy-{link['label']}");
+    const hiddifyProfileName = encodeURIComponent("mmd-{link['label']}");
     const hiddifyImportUrl = "hiddify://import/" + subUrl + "#" + hiddifyProfileName;
 
     // Returns URL to the PNG icon for the given app name.
@@ -2679,7 +2664,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     function downloadQR() {{
         const a = document.createElement('a');
         a.href = document.getElementById('qr-modal-img').src;
-        a.download = 'luffy-config-qr.png';
+        a.download = 'mmd-config-qr.png';
         a.click();
     }}
 
@@ -2793,10 +2778,10 @@ def generate_singbox_config(link: dict, uid: str, addresses: list[str]) -> str:
             },
         }
 
-    tags = [f"Luffy-{link['label']}"]
+    tags = [f"mmd-{link['label']}"]
     outbounds = [_vless_outbound(tags[0], domain)]
     for i, addr in enumerate(addresses):
-        tag = f"Luffy-{link['label']}-IP{i+1}"
+        tag = f"mmd-{link['label']}-IP{i+1}"
         tags.append(tag)
         outbounds.append(_vless_outbound(tag, addr))
 
@@ -2861,11 +2846,11 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     for auth in active_auths:
         fp = variants[auth]["fingerprint"]
         suffix = "" if len(active_auths) == 1 else f"-{auth.upper()}"
-        name0 = f"Luffy-{link['label']}{suffix}"
+        name0 = f"mmd-{link['label']}{suffix}"
         proxies.append(_proxy_entry(auth, fp, name0, domain))
         proxy_name_list.append(name0)
         for i, addr in enumerate(addresses):
-            name_i = f"Luffy-{link['label']}{suffix}-IP{i+1}"
+            name_i = f"mmd-{link['label']}{suffix}-IP{i+1}"
             proxies.append(_proxy_entry(auth, fp, name_i, addr))
             proxy_name_list.append(name_i)
 
@@ -2873,7 +2858,7 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     proxy_names = "\n".join(f'      - "{p}"' for p in proxy_name_list)
 
     return (
-        f"# Luffy Panel - {link['label']}\n"
+        f"# mmd Panel - {link['label']}\n"
         f"# {usage_str} | {expiry_str}\n"
         f"port: 7890\n"
         f"socks-port: 7891\n"
@@ -2979,7 +2964,7 @@ async def subscription_endpoint(uid: str, request: Request):
     headers = {
         "Content-Type": "text/plain; charset=utf-8",
         "profile-update-interval": "6",
-        "profile-title": "base64:" + base64.b64encode(f"Luffy-{link['label']}".encode()).decode(),
+        "profile-title": "base64:" + base64.b64encode(f"mmd-{link['label']}".encode()).decode(),
         "subscription-userinfo": f"upload={link['used_bytes']}; download=0; total={total_bytes}; expire={expire_ts}",
     }
 
@@ -3357,18 +3342,18 @@ PANEL_HTML = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Luffy Panel</title>
+<title>mmd Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --gold:#FFD700;--gold2:#FFC200;--gold3:#C8900A;--gold-dim:rgba(255,215,0,0.12);
-  --black:#060608;--black2:#0c0c10;--black3:#111118;
-  --surface:rgba(12,12,18,0.97);--surface2:rgba(20,20,28,0.9);--surface3:rgba(28,28,40,0.8);
-  --border:rgba(255,215,0,0.1);--border2:rgba(255,215,0,0.2);
-  --text:rgba(255,255,255,0.92);--text2:rgba(255,215,0,0.7);--text3:rgba(255,255,255,0.4);
-  --gold-glow:0 0 20px rgba(255,215,0,0.4);
+  --gold:#3b82f6;--gold2:#60a5fa;--gold3:#2563eb;--gold-dim:rgba(59,130,246,0.12);
+  --black:#0a0f1a;--black2:#0f172a;--black3:#1e293b;
+  --surface:rgba(15,23,42,0.97);--surface2:rgba(30,41,59,0.9);--surface3:rgba(51,65,85,0.8);
+  --border:rgba(59,130,246,0.15);--border2:rgba(59,130,246,0.3);
+  --text:rgba(255,255,255,0.92);--text2:rgba(96,165,250,0.75);--text3:rgba(255,255,255,0.4);
+  --gold-glow:0 0 20px rgba(59,130,246,0.4);
   --green:#4ade80;--green-dim:rgba(74,222,128,0.1);
   --red:#f87171;--red-dim:rgba(248,113,113,0.1);
   --yellow:#fbbf24;
@@ -3377,22 +3362,22 @@ PANEL_HTML = r"""<!DOCTYPE html>
 body.light-mode{
   --black:#f0f4f8;--black2:#ffffff;--black3:#e8eef5;
   --surface:rgba(255,255,255,0.97);--surface2:#ffffff;--surface3:#f8fafc;
-  --border:rgba(255,215,0,0.15);--border2:rgba(255,215,0,0.3);
+  --border:rgba(59,130,246,0.15);--border2:rgba(59,130,246,0.3);
   --text:#0f172a;--text2:#0891b2;--text3:#64748b;
-  --gold-dim:rgba(255,215,0,0.1);--gold-dim2:rgba(255,215,0,0.06);
+  --gold-dim:rgba(59,130,246,0.1);--gold-dim2:rgba(59,130,246,0.06);
   --gold-glow:0 4px 14px rgba(0,0,0,0.08);
 }
 html,body{height:100%;background:var(--black);transition:background .3s,color .3s}
 body{font-family:'Inter','Vazirmatn',sans-serif;color:var(--text);display:flex;min-height:100vh}
 body[dir="rtl"]{direction:rtl;text-align:right}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(255,215,0,0.2);border-radius:4px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.2);border-radius:4px}
 .bg-fixed{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(255,215,0,0.07),transparent 60%),
-             radial-gradient(ellipse 40% 30% at 90% 90%,rgba(255,215,0,0.04),transparent 50%)}
+  background:radial-gradient(ellipse 70% 50% at 50% -10%,rgba(59,130,246,0.07),transparent 60%),
+             radial-gradient(ellipse 40% 30% at 90% 90%,rgba(59,130,246,0.04),transparent 50%)}
 .light-mode .bg-fixed{background:none}
 .grid-fixed{position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(rgba(255,215,0,0.04) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(255,215,0,0.04) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(59,130,246,0.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(59,130,246,0.04) 1px,transparent 1px);
   background-size:56px 56px}
 .light-mode .grid-fixed{opacity:.4}
 
@@ -3401,13 +3386,13 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;
   transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(20px)}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
-  background:linear-gradient(180deg,transparent,rgba(255,215,0,0.4) 30%,rgba(255,215,0,0.4) 70%,transparent)}
+  background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
 .sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
   border-bottom:1px solid var(--border);flex-shrink:0}
-.sb-hat{filter:drop-shadow(0 0 10px rgba(255,215,0,.5));transition:filter .3s}
-.sb-hat:hover{filter:drop-shadow(0 0 18px rgba(255,215,0,.9))}
-.sb-title{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(255,215,0,.6);
+.sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
+.sb-hat:hover{filter:drop-shadow(0 0 18px rgba(59,130,246,.9))}
+.sb-title{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(59,130,246,.6);
   text-transform:uppercase;white-space:nowrap;overflow:hidden}
 .sb-nav{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:12px;
   gap:2px;padding-left:8px;padding-right:8px}
@@ -3417,10 +3402,10 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   overflow:hidden;text-decoration:none;background:none;width:100%;font-family:inherit}
 .nav-item::before{content:'';position:absolute;inset:0;border-radius:12px;
   background:linear-gradient(135deg,var(--gold-dim),transparent);opacity:0;transition:opacity .2s}
-.nav-item:hover{color:var(--gold);border-color:rgba(255,215,0,.12)}
+.nav-item:hover{color:var(--gold);border-color:rgba(59,130,246,.12)}
 .nav-item:hover::before{opacity:1}
-.nav-item.active{color:var(--gold);border-color:rgba(255,215,0,.22);background:var(--gold-dim);
-  box-shadow:0 0 16px rgba(255,215,0,.1),inset 0 1px 0 rgba(255,215,0,.12)}
+.nav-item.active{color:var(--gold);border-color:rgba(59,130,246,.22);background:var(--gold-dim);
+  box-shadow:0 0 16px rgba(59,130,246,.1),inset 0 1px 0 rgba(59,130,246,.12)}
 .nav-item.active::before{opacity:1}
 .nav-icon{width:18px;height:18px;flex-shrink:0;transition:transform .2s}
 .nav-item:hover .nav-icon,.nav-item.active .nav-icon{transform:scale(1.1)}
@@ -3434,7 +3419,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   color:var(--text3);font-size:9px;font-weight:700;cursor:pointer;transition:all .2s;
   font-family:inherit;letter-spacing:.05em}
 .lang-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
-.lang-btn:hover:not(.active){border-color:rgba(255,215,0,.15);color:rgba(255,215,0,.5)}
+.lang-btn:hover:not(.active){border-color:rgba(59,130,246,.15);color:rgba(59,130,246,.5)}
 .logout-btn{display:flex;align-items:center;justify-content:center;padding:7px;
   border:1px solid rgba(248,113,113,.15);border-radius:8px;background:rgba(248,113,113,.06);
   color:rgba(248,113,113,.6);cursor:pointer;transition:all .2s;font-size:10px;gap:4px;
@@ -3451,7 +3436,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   border:1px solid var(--border);border-radius:8px;color:var(--text3);cursor:pointer;
   transition:all .2s;text-decoration:none;background:none}
 .sb-social-btn:hover{border-color:var(--border2);color:var(--gold);background:var(--gold-dim);
-  box-shadow:0 0 10px rgba(255,215,0,0.1)}
+  box-shadow:0 0 10px rgba(59,130,246,0.1)}
 .sb-social-btn svg{width:14px;height:14px}
 .mob-social{display:none;gap:8px;align-items:center}
 .mob-social .sb-social-btn{padding:7px}
@@ -3469,7 +3454,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;
   padding:16px;position:relative;overflow:hidden;transition:all .25s;animation:cIn .5s ease both}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,215,0,0.4),transparent)}
+  background:linear-gradient(90deg,transparent,rgba(59,130,246,0.4),transparent)}
 .light-mode .stat-card::before{display:none}
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--gold-glow)}
 @keyframes cIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -3479,15 +3464,15 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;
   margin-bottom:10px;position:relative;overflow:hidden;transition:all .25s;animation:cIn .5s ease both}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,215,0,0.2),transparent)}
+  background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent)}
 .light-mode .card::before{display:none}
 .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .card-title{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
 .chart-container{height:170px;width:100%}
 .btn{font-family:inherit;font-size:11.5px;font-weight:700;border-radius:8px;padding:7px 14px;
   cursor:pointer;display:inline-flex;align-items:center;gap:5px;border:none;transition:all .2s;letter-spacing:.03em}
-.btn-gold{background:linear-gradient(135deg,#FFD700,#FFC200);color:#000;box-shadow:0 0 16px rgba(255,215,0,.25)}
-.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 0 24px rgba(255,215,0,.4)}
+.btn-gold{background:linear-gradient(135deg,#3b82f6,#60a5fa);color:#fff;box-shadow:0 0 16px rgba(59,130,246,.25)}
+.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 0 24px rgba(59,130,246,.4)}
 .btn-ghost{background:var(--surface3);color:var(--text);border:1px solid var(--border)}
 .btn-danger{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,113,113,.15)}
 .btn-sm{padding:4px 9px;font-size:10.5px}
@@ -3523,7 +3508,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .fl{font-size:9.5px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em}
 .fi,.fs{padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-family:inherit;
   font-size:12.5px;outline:none;color:var(--text);background:var(--surface);transition:all .2s}
-.fi:focus,.fs:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,215,0,.08)}
+.fi:focus,.fs:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(59,130,246,.08)}
 .fr{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
 .fr .fg{margin-bottom:0;flex:1;min-width:90px}
 .act-btn{font-family:inherit;font-size:9.5px;font-weight:700;border-radius:6px;padding:4px 8px;
@@ -3563,7 +3548,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .filter-chips{display:flex;gap:3px;padding:3px;background:var(--surface2);border:1px solid var(--border);border-radius:8px}
 .chip{padding:7px 12px;border-radius:6px;font-size:11.5px;font-weight:700;color:var(--text3);
   cursor:pointer;border:none;background:none;transition:all .18s;font-family:inherit}
-.chip.active{background:var(--gold);color:#000}
+.chip.active{background:var(--gold);color:#fff}
 .m-cards{display:none;flex-direction:column;gap:12px}
 .m-card{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--surface2)}
 .m-card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -3581,7 +3566,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   display:flex;align-items:center;gap:6px}
 .alert-item{font-size:12px;margin-bottom:4px;color:var(--text);display:flex;justify-content:space-between}
 .live-logs-container{background:#000;border:1px solid var(--border);border-radius:8px;padding:12px;
-  font-family:monospace;font-size:11px;color:#FFD700;height:200px;overflow-y:auto;white-space:pre-wrap}
+  font-family:monospace;font-size:11px;color:#3b82f6;height:200px;overflow-y:auto;white-space:pre-wrap}
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%}
 .login-box{background:var(--surface2);border:1px solid var(--border2);border-radius:20px;
   padding:36px 32px;width:100%;max-width:360px;box-shadow:var(--gold-glow)}
@@ -3668,14 +3653,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <div class="login-wrap">
     <div class="login-box">
       <div class="login-logo">
-        <svg width="52" height="44" viewBox="0 0 84 68" fill="none">
-          <ellipse cx="42" cy="52" rx="40" ry="11" fill="#C8900A" opacity=".85"/>
-          <ellipse cx="42" cy="52" rx="40" ry="11" fill="none" stroke="#FFD700" stroke-width="1.4" opacity=".6"/>
-          <path d="M19 50 Q21 22 42 17 Q63 22 65 50" fill="#4a3a00" stroke="#FFD700" stroke-width="1.4"/>
-          <ellipse cx="42" cy="17" rx="23" ry="5.5" fill="#C8900A" stroke="#FFD700" stroke-width="1"/>
-          <path d="M20 45 Q21.5 41.5 42 39.5 Q62.5 41.5 64 45" fill="none" stroke="#CC2200" stroke-width="4.5" stroke-linecap="round" opacity=".92"/>
-        </svg>
-        <div class="login-title">LUFFY PANEL</div>
+        <div class="login-title">mmd</div>
         <div class="login-sub">Enter your password to continue</div>
       </div>
       <div class="fg">
@@ -3700,40 +3678,24 @@ body[dir="rtl"]{direction:rtl;text-align:right}
         <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
       </div>
       <div class="mob-social">
-        <a href="https://t.me/Luffy_sh_op" target="_blank" class="sb-social-btn" title="Telegram Channel">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.032 9.57c-.148.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.895.651z"/></svg>
-        </a>
-        <a href="https://github.com/luffy-sh-op/LUFFY_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
+        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
         </a>
       </div>
     </div>
-    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">LUFFY</span>
+    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">mmd</span>
   </div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
-    <!-- Telegram & GitHub links (above the LUFFY logo) -->
+    <!-- Telegram & GitHub links (above the mmd logo) -->
     <div class="sb-social" style="padding:10px 8px 0">
-      <a href="https://t.me/Luffy_sh_op" target="_blank" class="sb-social-btn" title="Telegram Channel">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.032 9.57c-.148.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.895.651z"/></svg>
-      </a>
-      <a href="https://github.com/luffy-sh-op/LUFFY_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
+      <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
       </a>
     </div>
     <div class="sb-brand">
-      <div class="sb-hat">
-        <svg width="36" height="30" viewBox="0 0 84 68" fill="none">
-          <ellipse cx="42" cy="52" rx="40" ry="11" fill="#C8900A" opacity=".85"/>
-          <ellipse cx="42" cy="52" rx="40" ry="11" fill="none" stroke="#FFD700" stroke-width="1.4" opacity=".6"/>
-          <path d="M19 50 Q21 22 42 17 Q63 22 65 50" fill="#4a3a00" stroke="#FFD700" stroke-width="1.4"/>
-          <ellipse cx="42" cy="17" rx="23" ry="5.5" fill="#C8900A" stroke="#FFD700" stroke-width="1"/>
-          <path d="M20 45 Q21.5 41.5 42 39.5 Q62.5 41.5 64 45" fill="none" stroke="#CC2200" stroke-width="4.5" stroke-linecap="round" opacity=".92"/>
-          <ellipse cx="35" cy="24" rx="5" ry="3" fill="rgba(255,255,255,.1)" transform="rotate(-20 35 24)"/>
-        </svg>
-      </div>
-      <div class="sb-title">LUFFY</div>
+      <div class="sb-title">mmd</div>
     </div>
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
@@ -3919,12 +3881,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
     <section class="page" id="page-security">
       <div class="page-header"><div><div class="page-title" data-en="Security & Settings" data-fa="امنیت و تنظیمات">Security & Settings</div><div class="page-sub" data-en="Settings, Password & Live logs" data-fa="تنظیمات، تغییر رمز پنل و لاگ‌های زنده">Settings, Password & Live logs</div></div></div>
       <div class="grid-2">
-        <div class="card">
-          <div class="card-hd"><div class="card-title" data-en="Telegram Bot Settings" data-fa="تنظیمات ربات تلگرام">Telegram Bot Settings</div></div>
-          <div class="fg"><label class="fl" data-en="Bot Token" data-fa="توکن ربات">Bot Token</label><input class="fi" type="text" id="tg-token" placeholder="123456:ABC-DEF..."></div>
-          <div class="fg"><label class="fl" data-en="Admin Chat ID" data-fa="شناسه ادمین">Admin Chat ID</label><input class="fi" type="text" id="tg-admin-id" placeholder="987654321"></div>
-          <button class="btn btn-gold" onclick="saveSettings()" style="margin-top:10px;width:100%;justify-content:center" data-en="Save & Restart Bot" data-fa="ذخیره و ریستارت ربات">Save & Restart Bot</button>
-        </div>
+        
         <div class="card">
           <div class="card-hd"><div class="card-title" data-en="Change Password" data-fa="تغییر رمز عبور">Change Password</div></div>
           <div class="fg"><label class="fl" data-en="Current Password" data-fa="رمز فعلی">Current Password</label><input class="fi" type="password" id="cpw" placeholder="Current password"></div>
@@ -3976,17 +3933,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
         </div>
       </div>
 
-      <!-- Bot Settings (moved here too) -->
-      <div class="card">
-        <div class="card-hd"><div class="card-title" data-en="Telegram Bot" data-fa="ربات تلگرام">Telegram Bot</div></div>
-        <div class="fg"><label class="fl" data-en="Bot Token" data-fa="توکن ربات">Bot Token</label><input class="fi" type="text" id="rw-tg-token" placeholder="123456:ABC-DEF..."></div>
-        <div class="fg"><label class="fl" data-en="Admin Chat ID" data-fa="شناسه ادمین">Admin Chat ID</label><input class="fi" type="text" id="rw-tg-admin" placeholder="987654321"></div>
-        <div class="fg" style="display:flex;align-items:center;gap:8px;margin-top:4px">
-          <input type="checkbox" id="rw-tg-notify-conn" style="width:16px;height:16px;accent-color:var(--gold)">
-          <label for="rw-tg-notify-conn" style="font-size:12px;cursor:pointer" data-en="Notify on every connect / disconnect" data-fa="اعلان هر ورود و خروج (اتصال و قطع اتصال) کاربران">Notify on every connect / disconnect</label>
-        </div>
-        <button class="btn btn-gold" onclick="saveAllSettings()" style="margin-top:10px;width:100%;justify-content:center" data-en="Save All Settings" data-fa="ذخیره همه تنظیمات">Save All Settings</button>
-      </div>
+      
     </section>
 
   </main>
@@ -4611,7 +4558,7 @@ function showQR(txt){
 
 function dlQR(){
   const a=document.createElement('a');
-  a.href=$m('qr-img').src;a.download='luffy-qr.png';a.click();
+  a.href=$m('qr-img').src;a.download='mmd-qr.png';a.click();
 }
 
 async function loadSettings(){
@@ -4796,12 +4743,12 @@ function initChart(){
   if(!ctx||tChart)return;
   tChart=new Chart(ctx,{
     type:'bar',
-    data:{labels:[],datasets:[{label:'MB',data:[],backgroundColor:'rgba(255,215,0,0.4)',borderColor:'#FFD700',borderWidth:1,borderRadius:4}]},
+    data:{labels:[],datasets:[{label:'MB',data:[],backgroundColor:'rgba(59,130,246,0.45)',borderColor:'#3b82f6',borderWidth:1,borderRadius:4}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false}},
       scales:{
-        x:{grid:{display:false},ticks:{color:'rgba(255,215,0,0.35)',font:{size:10}}},
-        y:{grid:{color:'rgba(255,215,0,0.06)'},ticks:{color:'rgba(255,215,0,0.35)',font:{size:10},callback:v=>v+' MB'},beginAtZero:true}
+        x:{grid:{display:false},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10}}},
+        y:{grid:{color:'rgba(59,130,246,0.06)'},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10},callback:v=>v+' MB'},beginAtZero:true}
       }
     }
   });
@@ -4822,8 +4769,8 @@ function initChart(){
 
 function updChartColors(){
   if(!tChart)return;
-  const col=theme==='light'?'rgba(0,0,0,0.4)':'rgba(255,215,0,0.35)';
-  const gridCol=theme==='light'?'rgba(0,0,0,0.06)':'rgba(255,215,0,0.06)';
+  const col=theme==='light'?'rgba(0,0,0,0.4)':'rgba(59,130,246,0.35)';
+  const gridCol=theme==='light'?'rgba(0,0,0,0.06)':'rgba(59,130,246,0.06)';
   tChart.options.scales.x.ticks.color=col;
   tChart.options.scales.y.ticks.color=col;
   tChart.options.scales.y.grid.color=gridCol;
@@ -4988,8 +4935,8 @@ function startPolling(){
 startPolling();
 
 // ── Panel update notifications (checks GitHub for new releases) ────────
-const PANEL_VERSION_KEY='luffy_panel_last_version';
-const PANEL_GH_NOTIFIED_KEY='luffy_panel_last_notified_gh';
+const PANEL_VERSION_KEY='mmd_panel_last_version';
+const PANEL_GH_NOTIFIED_KEY='mmd_panel_last_notified_gh';
 let loadedPanelVersion=null;
 
 async function checkPanelVersion(isPeriodic){
