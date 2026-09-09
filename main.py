@@ -3343,7 +3343,7 @@ PANEL_HTML = r"""<!DOCTYPE html>
   --green:#4ade80;--green-dim:rgba(74,222,128,0.12);
   --red:#f87171;--red-dim:rgba(248,113,113,0.12);
   --yellow:#fbbf24;
-  --nav-w:64px;
+  --nav-w:72px;--nav-w-collapsed:52px;
 }
 body.light-mode{
   --black:#f0f4f8;--black2:#ffffff;--black3:#e8eef5;
@@ -3380,20 +3380,28 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .light-mode .grid-fixed{opacity:.25}
 
 /* Sidebar */
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);background:rgba(10,18,35,0.55);
-  border-right:1px solid rgba(96,165,250,0.15);display:flex;flex-direction:column;z-index:100;
-  transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);background:rgba(10,18,35,0.75);
+  border-right:1px solid rgba(96,165,250,0.2);display:flex;flex-direction:column;z-index:100;
+  transition:width .28s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  overflow:hidden}
+.sidebar.collapsed{width:var(--nav-w-collapsed)}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
-  background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
+  background:linear-gradient(180deg,transparent,rgba(59,130,246,0.45) 30%,rgba(59,130,246,0.45) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
-.sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
-  border-bottom:1px solid var(--border);flex-shrink:0}
-.sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
-.sb-hat:hover{filter:drop-shadow(0 0 18px rgba(59,130,246,.9))}
-.sb-title{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(59,130,246,.6);
-  text-transform:uppercase;white-space:nowrap;overflow:hidden}
-.sb-nav{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:12px;
-  gap:2px;padding-left:8px;padding-right:8px}
+.sb-brand{padding:16px 6px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  border-bottom:1px solid var(--border);flex-shrink:0;min-height:78px;background:rgba(59,130,246,0.08)}
+.sb-title{font-family:'Cinzel','Inter',sans-serif;font-size:13px;font-weight:800;letter-spacing:.06em;
+  color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;
+  text-shadow:0 0 12px rgba(255,255,255,0.25);line-height:1.2}
+.sidebar.collapsed .sb-title{font-size:9px;letter-spacing:0}
+.sb-toggle{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:rgba(59,130,246,0.12);
+  color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;
+  flex-shrink:0;padding:0}
+.sb-toggle:hover{background:rgba(59,130,246,0.28);border-color:var(--gold)}
+.sb-toggle svg{width:14px;height:14px;transition:transform .28s}
+.sidebar.collapsed .sb-toggle svg{transform:rotate(180deg)}
+.sb-nav{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:10px 6px 8px;
+  gap:3px;overflow-y:auto;overflow-x:hidden}
 .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   padding:10px 6px;border-radius:12px;color:var(--text3);cursor:pointer;
   transition:all .2s cubic-bezier(.4,0,.2,1);border:1px solid transparent;position:relative;
@@ -3411,18 +3419,22 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .nav-badge{position:absolute;top:5px;right:5px;background:var(--gold);color:#000;font-size:8px;
   font-weight:800;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;
   justify-content:center;padding:0 3px}
-.sb-bottom{padding:8px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.sb-bottom{padding:10px 8px 12px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0;
+  background:rgba(0,0,0,0.15)}
+.sidebar.collapsed .logout-btn span{display:none}
+.sidebar.collapsed .nav-label{display:none}
+.sidebar.collapsed .nav-item{padding:10px 4px}
 .lang-row{display:flex;gap:4px}
 .lang-btn{flex:1;padding:5px 2px;border:1px solid var(--border);border-radius:7px;background:none;
   color:var(--text3);font-size:9px;font-weight:700;cursor:pointer;transition:all .2s;
   font-family:inherit;letter-spacing:.05em}
 .lang-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
 .lang-btn:hover:not(.active){border-color:rgba(59,130,246,.15);color:rgba(59,130,246,.5)}
-.logout-btn{display:flex;align-items:center;justify-content:center;padding:7px;
-  border:1px solid rgba(248,113,113,.15);border-radius:8px;background:rgba(248,113,113,.06);
-  color:rgba(248,113,113,.6);cursor:pointer;transition:all .2s;font-size:10px;gap:4px;
-  font-weight:600;font-family:inherit}
-.logout-btn:hover{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3);color:var(--red)}
+.logout-btn{display:flex;align-items:center;justify-content:center;padding:10px 8px;
+  border:1px solid rgba(248,113,113,.25);border-radius:10px;background:rgba(248,113,113,.1);
+  color:var(--red);cursor:pointer;transition:all .2s;font-size:11px;gap:6px;
+  font-weight:700;font-family:inherit;width:100%}
+.logout-btn:hover{background:rgba(248,113,113,.2);border-color:rgba(248,113,113,.45);color:#ff6b6b;box-shadow:0 0 12px rgba(248,113,113,.2)}
 .theme-toggle{background:transparent;border:1px solid var(--border);color:var(--text3);
   border-radius:7px;padding:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:all .2s}
@@ -3441,7 +3453,8 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .mob-social .sb-social-btn svg{width:16px;height:16px}
 
 /* Main */
-.main{margin-left:var(--nav-w);flex:1;padding:24px 28px 48px;min-height:100vh;position:relative;z-index:1}
+.main{margin-left:var(--nav-w);flex:1;padding:24px 28px 48px;min-height:100vh;position:relative;z-index:1;transition:margin-left .28s cubic-bezier(.4,0,.2,1)}
+body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
 .page{display:none;animation:pgIn .35s ease}
 .page.active{display:block}
 @keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -3617,7 +3630,9 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   .nav-label{font-size:10px;letter-spacing:0}
   .nav-badge{top:6px;right:50%;transform:translateX(10px);min-width:18px;height:18px;font-size:10px}
   .logout-mob{display:flex}
-  .main{margin-left:0;padding-top:85px;padding-left:18px;padding-right:18px;padding-bottom:100px}
+  .main{margin-left:0 !important;padding-top:85px;padding-left:18px;padding-right:18px;padding-bottom:100px}
+  body.sb-collapsed .main{margin-left:0 !important}
+  .sidebar.collapsed{width:100% !important}
   .page-title{font-size:24px}
   .page-sub{font-size:13px;margin-top:5px}
   .btn{font-size:14px;padding:10px 18px}
@@ -3684,6 +3699,9 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <aside class="sidebar" id="sb">
     <div class="sb-brand">
       <div class="sb-title">エムエムディー</div>
+      <button class="sb-toggle" id="sb-toggle" onclick="toggleSidebar()" title="جمع/باز">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
     </div>
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
@@ -4909,6 +4927,20 @@ async function importAddrs(source){
 
 setTheme(theme);
 setLang('fa');
+
+function toggleSidebar(){
+  const sb=document.getElementById('sb');
+  if(!sb)return;
+  sb.classList.toggle('collapsed');
+  document.body.classList.toggle('sb-collapsed', sb.classList.contains('collapsed'));
+  localStorage.setItem('sb_collapsed', sb.classList.contains('collapsed') ? '1' : '0');
+}
+(function(){
+  if(localStorage.getItem('sb_collapsed')==='1'){
+    const sb=document.getElementById('sb');
+    if(sb){sb.classList.add('collapsed');document.body.classList.add('sb-collapsed')}
+  }
+})();
 checkAuth();
 let statsInterval=null;
 function startPolling(){
