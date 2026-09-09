@@ -51,7 +51,7 @@ logger.addHandler(q_handler)
 logging.getLogger("uvicorn.error").addHandler(q_handler)
 logging.getLogger("uvicorn.access").addHandler(q_handler)
 
-app = FastAPI(title="エムエムディー Panel", docs_url=None, redoc_url=None)
+app = FastAPI(title="mmd Panel", docs_url=None, redoc_url=None)
 
 # Bump this on every release so the dashboard can notify already-open sessions
 # that a new version is available / was just applied.
@@ -371,7 +371,7 @@ BOT_I18N = {
         "btn_create": "➕ Create User",
         "btn_addip": "🌐 Add Clean IP",
         "btn_lang": "فارسی",
-        "welcome": "👑 <b>Welcome to エムエムディー Panel!</b>\nManage your VLESS inbounds.",
+        "welcome": "👑 <b>Welcome to mmd Panel!</b>\nManage your VLESS inbounds.",
         "lang_switched": "🌐 Language switched to <b>English</b>.",
         "stats": (
             "<b>📊 Server Status Dashboard</b>\n\n"
@@ -454,7 +454,7 @@ BOT_I18N = {
         "btn_create": "➕ ساخت کاربر",
         "btn_addip": "🌐 افزودن آی‌پی تمیز",
         "btn_lang": "English",
-        "welcome": "👑 <b>به پنل エムエムディー خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
+        "welcome": "👑 <b>به پنل mmd خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
         "lang_switched": "🌐 زبان به <b>فارسی</b> تغییر یافت.",
         "stats": (
             "<b>📊 وضعیت سرور</b>\n\n"
@@ -871,7 +871,7 @@ def get_domain() -> str:
 
 def generate_vless_link(
     uuid: str,
-    remark: str = "エムエムディー",
+    remark: str = "mmd",
     address: str = None,
     port: int = None,
     protocol: str = DEFAULT_PROTOCOL,
@@ -935,7 +935,7 @@ def link_for_variant(link: dict, uid: str, auth: str, address: str = None) -> st
     protocol = f"{auth}-{variant['transport']}"
     return generate_vless_link(
         uid,
-        remark=f"エムエムディー-{link.get('label', '')}",
+        remark=f"mmd-{link.get('label', '')}",
         address=address,
         protocol=protocol,
         fingerprint=variant.get("fingerprint"),
@@ -2135,7 +2135,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>エムエムディー - {link['label']}</title>
+    <title>mmd - {link['label']}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{{margin:0;padding:0;box-sizing:border-box}}
@@ -2328,31 +2328,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .footer-link{{display:flex;align-items:center;gap:5px;color:var(--text3);
             font-size:11px;font-weight:600;text-decoration:none;transition:color .2s}}
         .footer-link:hover{{color:var(--gold)}}
-    /* MMD visual cleanup */
-/* Keep the Japanese brand name, but use a light Vazirmatn face. */
-.login-title,.mob-hd span,.sb-title,.page-title,.mo-title{
-  font-family:'Vazirmatn','Inter',sans-serif !important;
-  font-weight:300 !important;
-  letter-spacing:.01em !important;
-}
-.login-title{font-size:28px !important;}
-.mob-hd span{font-size:20px !important;font-weight:300 !important;}
-.sb-title{font-size:14px !important;font-weight:300 !important;}
-.page-title{font-size:28px !important;font-weight:300 !important;}
-/* Softer, more rounded surfaces. */
-.sidebar,.main,.stat-card,.card,.login-box,.mo-box,.alerts-box,
-.search-wrap input,.filter-chips,.btn,.fi,.fc,.logout-btn,.sb-toggle{
-  border-radius:24px !important;
-}
-.stat-card,.card{border-radius:26px !important;}
-.login-box,.mo-box{border-radius:30px !important;}
-/* Remove decorative corner/cross overlays while preserving functional controls. */
-.corner-decoration,.corner-decor,.decorative-cross,.cross-decoration,
-.page-corner,.panel-corner,.top-cross,.bottom-cross{display:none !important;}
-/* Logout belongs in the bottom action area on desktop. */
-.sb-bottom{margin-top:auto;padding:12px 8px 16px;border-top:0;background:transparent;}
-.logout-btn{min-height:42px;font-weight:300 !important;}
-</style>
+    </style>
 </head>
 <body>
 <div class="bg-glow"></div>
@@ -2366,7 +2342,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     <!-- Header -->
     <div class="header">
         <div class="header-logo">
-            <span class="header-title">エムエムディー</span>
+            <span class="header-title">mmd</span>
         </div>
         <div class="header-sub">{link['label']} · Connection Status</div>
     </div>
@@ -2445,6 +2421,15 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         <button class="ping-btn" id="ping-all-btn" onclick="pingAll()">⚡ Ping test all</button>
         <div id="config-list"></div>
     </div>
+
+    <!-- Footer links -->
+    <div class="footer-links">
+        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="footer-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+        </a>
+    </div>
+
 </div>
 
 <!-- QR Modal -->
@@ -2476,7 +2461,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     // The #name fragment is what Hiddify shows as the profile name before
     // it even fetches the sublink, and is used as a fallback if the
     // content's own #profile-title header is missing or fails to parse.
-    const hiddifyProfileName = encodeURIComponent("エムエムディー-{link['label']}");
+    const hiddifyProfileName = encodeURIComponent("mmd-{link['label']}");
     const hiddifyImportUrl = "hiddify://import/" + subUrl + "#" + hiddifyProfileName;
 
     // Returns URL to the PNG icon for the given app name.
@@ -2788,10 +2773,10 @@ def generate_singbox_config(link: dict, uid: str, addresses: list[str]) -> str:
             },
         }
 
-    tags = [f"エムエムディー-{link['label']}"]
+    tags = [f"mmd-{link['label']}"]
     outbounds = [_vless_outbound(tags[0], domain)]
     for i, addr in enumerate(addresses):
-        tag = f"エムエムディー-{link['label']}-IP{i+1}"
+        tag = f"mmd-{link['label']}-IP{i+1}"
         tags.append(tag)
         outbounds.append(_vless_outbound(tag, addr))
 
@@ -2856,11 +2841,11 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     for auth in active_auths:
         fp = variants[auth]["fingerprint"]
         suffix = "" if len(active_auths) == 1 else f"-{auth.upper()}"
-        name0 = f"エムエムディー-{link['label']}{suffix}"
+        name0 = f"mmd-{link['label']}{suffix}"
         proxies.append(_proxy_entry(auth, fp, name0, domain))
         proxy_name_list.append(name0)
         for i, addr in enumerate(addresses):
-            name_i = f"エムエムディー-{link['label']}{suffix}-IP{i+1}"
+            name_i = f"mmd-{link['label']}{suffix}-IP{i+1}"
             proxies.append(_proxy_entry(auth, fp, name_i, addr))
             proxy_name_list.append(name_i)
 
@@ -2868,7 +2853,7 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     proxy_names = "\n".join(f'      - "{p}"' for p in proxy_name_list)
 
     return (
-        f"# エムエムディー - {link['label']}\n"
+        f"# mmd Panel - {link['label']}\n"
         f"# {usage_str} | {expiry_str}\n"
         f"port: 7890\n"
         f"socks-port: 7891\n"
@@ -2974,7 +2959,7 @@ async def subscription_endpoint(uid: str, request: Request):
     headers = {
         "Content-Type": "text/plain; charset=utf-8",
         "profile-update-interval": "6",
-        "profile-title": "base64:" + base64.b64encode(f"エムエムディー-{link['label']}".encode()).decode(),
+        "profile-title": "base64:" + base64.b64encode(f"mmd-{link['label']}".encode()).decode(),
         "subscription-userinfo": f"upload={link['used_bytes']}; download=0; total={total_bytes}; expire={expire_ts}",
     }
 
@@ -3353,7 +3338,7 @@ PANEL_HTML = r"""<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>mmd Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -3367,7 +3352,7 @@ PANEL_HTML = r"""<!DOCTYPE html>
   --green:#4ade80;--green-dim:rgba(74,222,128,0.12);
   --red:#f87171;--red-dim:rgba(248,113,113,0.12);
   --yellow:#fbbf24;
-  --nav-w:72px;--nav-w-collapsed:52px;
+  --nav-w:64px;
 }
 body.light-mode{
   --black:#f0f4f8;--black2:#ffffff;--black3:#e8eef5;
@@ -3404,28 +3389,20 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .light-mode .grid-fixed{opacity:.25}
 
 /* Sidebar */
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);background:rgba(10,18,35,0.75);
-  border-right:1px solid rgba(96,165,250,0.2);display:flex;flex-direction:column;z-index:100;
-  transition:width .28s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  overflow:hidden}
-.sidebar.collapsed{width:var(--nav-w-collapsed)}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);background:rgba(10,18,35,0.55);
+  border-right:1px solid rgba(96,165,250,0.15);display:flex;flex-direction:column;z-index:100;
+  transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
-  background:linear-gradient(180deg,transparent,rgba(59,130,246,0.45) 30%,rgba(59,130,246,0.45) 70%,transparent)}
+  background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
-.sb-brand{padding:16px 6px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  border-bottom:1px solid var(--border);flex-shrink:0;min-height:78px;background:rgba(59,130,246,0.08)}
-.sb-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:13px;font-weight:800;letter-spacing:.06em;
-  color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;
-  text-shadow:0 0 12px rgba(255,255,255,0.25);line-height:1.2}
-.sidebar.collapsed .sb-title{font-size:9px;letter-spacing:0}
-.sb-toggle{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:rgba(59,130,246,0.12);
-  color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;
-  flex-shrink:0;padding:0}
-.sb-toggle:hover{background:rgba(59,130,246,0.28);border-color:var(--gold)}
-.sb-toggle svg{width:14px;height:14px;transition:transform .28s}
-.sidebar.collapsed .sb-toggle svg{transform:rotate(180deg)}
-.sb-nav{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:10px 6px 8px;
-  gap:3px;overflow-y:auto;overflow-x:hidden}
+.sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
+  border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
+.sb-hat:hover{filter:drop-shadow(0 0 18px rgba(59,130,246,.9))}
+.sb-title{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(59,130,246,.6);
+  text-transform:uppercase;white-space:nowrap;overflow:hidden}
+.sb-nav{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:12px;
+  gap:2px;padding-left:8px;padding-right:8px}
 .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   padding:10px 6px;border-radius:12px;color:var(--text3);cursor:pointer;
   transition:all .2s cubic-bezier(.4,0,.2,1);border:1px solid transparent;position:relative;
@@ -3443,22 +3420,18 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .nav-badge{position:absolute;top:5px;right:5px;background:var(--gold);color:#000;font-size:8px;
   font-weight:800;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;
   justify-content:center;padding:0 3px}
-.sb-bottom{padding:10px 8px 12px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0;
-  background:rgba(0,0,0,0.15)}
-.sidebar.collapsed .logout-btn span{display:none}
-.sidebar.collapsed .nav-label{display:none}
-.sidebar.collapsed .nav-item{padding:10px 4px}
+.sb-bottom{padding:8px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0}
 .lang-row{display:flex;gap:4px}
 .lang-btn{flex:1;padding:5px 2px;border:1px solid var(--border);border-radius:7px;background:none;
   color:var(--text3);font-size:9px;font-weight:700;cursor:pointer;transition:all .2s;
   font-family:inherit;letter-spacing:.05em}
 .lang-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
 .lang-btn:hover:not(.active){border-color:rgba(59,130,246,.15);color:rgba(59,130,246,.5)}
-.logout-btn{display:flex;align-items:center;justify-content:center;padding:10px 8px;
-  border:1px solid rgba(248,113,113,.25);border-radius:10px;background:rgba(248,113,113,.1);
-  color:var(--red);cursor:pointer;transition:all .2s;font-size:11px;gap:6px;
-  font-weight:700;font-family:inherit;width:100%}
-.logout-btn:hover{background:rgba(248,113,113,.2);border-color:rgba(248,113,113,.45);color:#ff6b6b;box-shadow:0 0 12px rgba(248,113,113,.2)}
+.logout-btn{display:flex;align-items:center;justify-content:center;padding:7px;
+  border:1px solid rgba(248,113,113,.15);border-radius:8px;background:rgba(248,113,113,.06);
+  color:rgba(248,113,113,.6);cursor:pointer;transition:all .2s;font-size:10px;gap:4px;
+  font-weight:600;font-family:inherit}
+.logout-btn:hover{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3);color:var(--red)}
 .theme-toggle{background:transparent;border:1px solid var(--border);color:var(--text3);
   border-radius:7px;padding:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:all .2s}
@@ -3477,13 +3450,12 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .mob-social .sb-social-btn svg{width:16px;height:16px}
 
 /* Main */
-.main{margin-left:var(--nav-w);flex:1;padding:24px 28px 48px;min-height:100vh;position:relative;z-index:1;transition:margin-left .28s cubic-bezier(.4,0,.2,1)}
-body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
+.main{margin-left:var(--nav-w);flex:1;padding:24px 28px 48px;min-height:100vh;position:relative;z-index:1}
 .page{display:none;animation:pgIn .35s ease}
 .page.active{display:block}
 @keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .page-header{margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.page-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em}
+.page-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em}
 .page-sub{font-size:11px;color:var(--text3);margin-top:3px;letter-spacing:.02em}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 .stat-card{background:rgba(18,32,58,0.5);border:1px solid rgba(96,165,250,0.18);border-radius:16px;
@@ -3570,7 +3542,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   transform:scale(.92);opacity:0;transition:all .38s cubic-bezier(.34,1.56,.64,1)}
 .mo.show .mo-box{transform:scale(1);opacity:1}
-.mo-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;
+.mo-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;margin-bottom:16px;
   color:var(--gold);letter-spacing:.06em}
 .mo-close{position:absolute;top:14px;right:14px;background:var(--surface3);border:1px solid var(--border);
   color:var(--text3);width:30px;height:30px;border-radius:7px;cursor:pointer;display:flex;
@@ -3612,7 +3584,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   padding:36px 32px;width:100%;max-width:360px;box-shadow:var(--gold-glow);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .login-logo{text-align:center;margin-bottom:28px}
-.login-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:22px;font-weight:900;color:var(--gold);letter-spacing:.1em}
+.login-title{font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:var(--gold);letter-spacing:.1em}
 .login-sub{font-size:11px;color:var(--text3);margin-top:6px}
 
 /* Notification styles */
@@ -3654,9 +3626,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   .nav-label{font-size:10px;letter-spacing:0}
   .nav-badge{top:6px;right:50%;transform:translateX(10px);min-width:18px;height:18px;font-size:10px}
   .logout-mob{display:flex}
-  .main{margin-left:0 !important;padding-top:85px;padding-left:18px;padding-right:18px;padding-bottom:100px}
-  body.sb-collapsed .main{margin-left:0 !important}
-  .sidebar.collapsed{width:100% !important}
+  .main{margin-left:0;padding-top:85px;padding-left:18px;padding-right:18px;padding-bottom:100px}
   .page-title{font-size:24px}
   .page-sub{font-size:13px;margin-top:5px}
   .btn{font-size:14px;padding:10px 18px}
@@ -3684,103 +3654,9 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   .fl{font-size:11px;margin-bottom:6px}
 }
 @media(max-width:460px){.stats-row{grid-template-columns:1fr;gap:14px}}
-
-/* ===== Neon Title - エムエムディー ===== */
-.neon-title {
-  position: fixed;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  z-index: 1000;
-  pointer-events: none;
-}
-.neon-title .text {
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: #e0f2fe;
-  text-shadow:
-    0 0 6px #0ea5e9,
-    0 0 12px #0ea5e9,
-    0 0 24px #0284c7,
-    0 0 40px #0369a1;
-}
-.neon-title .arrow {
-  width: 50px;
-  height: 15px;
-  background: linear-gradient(90deg, transparent, #0ea5e9, #38bdf8, #0ea5e9, transparent);
-  clip-path: polygon(0% 50%, 12% 0%, 88% 0%, 100% 50%, 88% 100%, 12% 100%);
-  filter: drop-shadow(0 0 8px #0ea5e9);
-}
-
-/* ===== Sidebar گرد و نئونی ===== */
-#sb {
-  width: 70px !important;
-  margin: 12px 10px !important;
-  height: calc(100vh - 24px) !important;
-  border-radius: 36px !important;
-  border: 1px solid rgba(14, 165, 233, 0.45) !important;
-  background: rgba(6, 12, 32, 0.94) !important;
-  box-shadow: 0 0 30px rgba(14, 165, 233, 0.13), inset 0 0 18px rgba(14, 165, 233, 0.05) !important;
-  padding: 14px 0 10px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-}
-
-.sb-toggle-btn {
-  margin-top: auto;
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background: rgba(14, 165, 233, 0.12);
-  border: 1px solid rgba(14, 165, 233, 0.35);
-  color: #7dd3fc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-.sb-toggle-btn:hover {
-  background: rgba(14, 165, 233, 0.28);
-}
-
-/* ===== دکمه خروج قرمز پایین راست ===== */
-.logout-fixed {
-  position: fixed !important;
-  bottom: 22px !important;
-  right: 24px !important;
-  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
-  color: white !important;
-  border: none !important;
-  padding: 11px 18px !important;
-  border-radius: 12px !important;
-  font-size: 13.5px !important;
-  font-weight: 600 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  cursor: pointer !important;
-  box-shadow: 0 4px 22px rgba(239, 68, 68, 0.5) !important;
-  z-index: 9999 !important;
-  transition: all 0.25s !important;
-}
-.logout-fixed:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 28px rgba(239, 68, 68, 0.65) !important;
-}
 </style>
 </head>
 <body>
-<div class="neon-title">
-  <div class="arrow"></div>
-  <div class="text">エムエムディー</div>
-  <div class="arrow"></div>
-</div>
 <div class="bg-fixed"></div>
 <div class="grid-fixed"></div>
 <div class="toast" id="toast"></div>
@@ -3790,7 +3666,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   <div class="login-wrap">
     <div class="login-box">
       <div class="login-logo">
-        <div class="login-title">エムエムディー</div>
+        <div class="login-title">mmd</div>
         <div class="login-sub">Enter your password to continue</div>
       </div>
       <div class="fg">
@@ -3809,17 +3685,30 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   <!-- MOBILE HEADER -->
   <div class="mob-hd">
     <div class="mob-tl-group">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-mob">🌙</button>
+      <div class="lang-row">
+        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
+      </div>
+      <div class="mob-social">
+        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+      </div>
     </div>
-    <span style="font-family:'Vazirmatn','Inter',sans-serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
+    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">mmd</span>
   </div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
+    <!-- Telegram & GitHub links (above the mmd logo) -->
+    <div class="sb-social" style="padding:10px 8px 0">
+      <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      </a>
+    </div>
     <div class="sb-brand">
-      <div class="sb-title">エムエムディー</div>
-      <button class="sb-toggle" id="sb-toggle" onclick="toggleSidebar()" title="جمع/باز">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
+      <div class="sb-title">mmd</div>
     </div>
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
@@ -3852,17 +3741,17 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
         <span class="nav-label" data-en="Settings" data-fa="تنظیمات">Settings</span>
       </button>
-      <div class="sb-toggle-btn" onclick="toggleSidebar()" title="جمع کردن">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M6 9l6 6 6-6"/>
-        </svg>
-      </div>
       <button class="nav-item logout-mob" onclick="doLogout()">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         <span class="nav-label" data-en="Logout" data-fa="خروج">Logout</span>
       </button>
     </nav>
     <div class="sb-bottom">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="margin-bottom:4px;font-size:12px">🌙 Theme</button>
+      <div class="lang-row">
+        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
+      </div>
       <button class="logout-btn" onclick="doLogout()" style="margin-top:2px">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         <span data-en="Logout" data-fa="خروج">Logout</span>
@@ -4277,7 +4166,7 @@ const langMap={
 };
 function tr(key){return(langMap[lang]&&langMap[lang][key])||langMap['en'][key]||key}
 
-let lang=localStorage.getItem('ll')||'fa';
+let lang=localStorage.getItem('ll')||'en';
 let theme=localStorage.getItem('theme')||'dark';
 let allLinks=[];
 let cf='all';
@@ -5049,21 +4938,7 @@ async function importAddrs(source){
 }
 
 setTheme(theme);
-setLang('fa');
-
-function toggleSidebar(){
-  const sb=document.getElementById('sb');
-  if(!sb)return;
-  sb.classList.toggle('collapsed');
-  document.body.classList.toggle('sb-collapsed', sb.classList.contains('collapsed'));
-  localStorage.setItem('sb_collapsed', sb.classList.contains('collapsed') ? '1' : '0');
-}
-(function(){
-  if(localStorage.getItem('sb_collapsed')==='1'){
-    const sb=document.getElementById('sb');
-    if(sb){sb.classList.add('collapsed');document.body.classList.add('sb-collapsed')}
-  }
-})();
+setLang(lang);
 checkAuth();
 let statsInterval=null;
 function startPolling(){
@@ -5107,14 +4982,6 @@ async function checkPanelVersion(isPeriodic){
 checkPanelVersion(false);
 setInterval(()=>checkPanelVersion(true),5*60*1000);
 </script>
-<button class="logout-fixed" onclick="doLogout()">
-  خروج
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-    <polyline points="16 17 21 12 16 7"/>
-    <line x1="21" y1="12" x2="9" y2="12"/>
-  </svg>
-</button>
 </body>
 </html>"""
 
