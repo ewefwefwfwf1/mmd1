@@ -2328,7 +2328,31 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .footer-link{{display:flex;align-items:center;gap:5px;color:var(--text3);
             font-size:11px;font-weight:600;text-decoration:none;transition:color .2s}}
         .footer-link:hover{{color:var(--gold)}}
-    </style>
+    /* MMD visual cleanup */
+/* Keep the Japanese brand name, but use a light Vazirmatn face. */
+.login-title,.mob-hd span,.sb-title,.page-title,.mo-title{
+  font-family:'Vazirmatn','Inter',sans-serif !important;
+  font-weight:300 !important;
+  letter-spacing:.01em !important;
+}
+.login-title{font-size:28px !important;}
+.mob-hd span{font-size:20px !important;font-weight:300 !important;}
+.sb-title{font-size:14px !important;font-weight:300 !important;}
+.page-title{font-size:28px !important;font-weight:300 !important;}
+/* Softer, more rounded surfaces. */
+.sidebar,.main,.stat-card,.card,.login-box,.mo-box,.alerts-box,
+.search-wrap input,.filter-chips,.btn,.fi,.fc,.logout-btn,.sb-toggle{
+  border-radius:24px !important;
+}
+.stat-card,.card{border-radius:26px !important;}
+.login-box,.mo-box{border-radius:30px !important;}
+/* Remove decorative corner/cross overlays while preserving functional controls. */
+.corner-decoration,.corner-decor,.decorative-cross,.cross-decoration,
+.page-corner,.panel-corner,.top-cross,.bottom-cross{display:none !important;}
+/* Logout belongs in the bottom action area on desktop. */
+.sb-bottom{margin-top:auto;padding:12px 8px 16px;border-top:0;background:transparent;}
+.logout-btn{min-height:42px;font-weight:300 !important;}
+</style>
 </head>
 <body>
 <div class="bg-glow"></div>
@@ -3329,7 +3353,7 @@ PANEL_HTML = r"""<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>mmd Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -3390,7 +3414,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .light-mode .sidebar::after{display:none}
 .sb-brand{padding:16px 6px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
   border-bottom:1px solid var(--border);flex-shrink:0;min-height:78px;background:rgba(59,130,246,0.08)}
-.sb-title{font-family:'Cinzel','Inter',sans-serif;font-size:13px;font-weight:800;letter-spacing:.06em;
+.sb-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:13px;font-weight:800;letter-spacing:.06em;
   color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;
   text-shadow:0 0 12px rgba(255,255,255,0.25);line-height:1.2}
 .sidebar.collapsed .sb-title{font-size:9px;letter-spacing:0}
@@ -3459,7 +3483,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
 .page.active{display:block}
 @keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .page-header{margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.page-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em}
+.page-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em}
 .page-sub{font-size:11px;color:var(--text3);margin-top:3px;letter-spacing:.02em}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 .stat-card{background:rgba(18,32,58,0.5);border:1px solid rgba(96,165,250,0.18);border-radius:16px;
@@ -3546,7 +3570,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   transform:scale(.92);opacity:0;transition:all .38s cubic-bezier(.34,1.56,.64,1)}
 .mo.show .mo-box{transform:scale(1);opacity:1}
-.mo-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;margin-bottom:16px;
+.mo-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:14px;font-weight:700;margin-bottom:16px;
   color:var(--gold);letter-spacing:.06em}
 .mo-close{position:absolute;top:14px;right:14px;background:var(--surface3);border:1px solid var(--border);
   color:var(--text3);width:30px;height:30px;border-radius:7px;cursor:pointer;display:flex;
@@ -3588,7 +3612,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   padding:36px 32px;width:100%;max-width:360px;box-shadow:var(--gold-glow);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .login-logo{text-align:center;margin-bottom:28px}
-.login-title{font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:var(--gold);letter-spacing:.1em}
+.login-title{font-family:'Vazirmatn','Inter',sans-serif;font-size:22px;font-weight:900;color:var(--gold);letter-spacing:.1em}
 .login-sub{font-size:11px;color:var(--text3);margin-top:6px}
 
 /* Notification styles */
@@ -3660,9 +3684,103 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   .fl{font-size:11px;margin-bottom:6px}
 }
 @media(max-width:460px){.stats-row{grid-template-columns:1fr;gap:14px}}
+
+/* ===== Neon Title - エムエムディー ===== */
+.neon-title {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 1000;
+  pointer-events: none;
+}
+.neon-title .text {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #e0f2fe;
+  text-shadow:
+    0 0 6px #0ea5e9,
+    0 0 12px #0ea5e9,
+    0 0 24px #0284c7,
+    0 0 40px #0369a1;
+}
+.neon-title .arrow {
+  width: 50px;
+  height: 15px;
+  background: linear-gradient(90deg, transparent, #0ea5e9, #38bdf8, #0ea5e9, transparent);
+  clip-path: polygon(0% 50%, 12% 0%, 88% 0%, 100% 50%, 88% 100%, 12% 100%);
+  filter: drop-shadow(0 0 8px #0ea5e9);
+}
+
+/* ===== Sidebar گرد و نئونی ===== */
+#sb {
+  width: 70px !important;
+  margin: 12px 10px !important;
+  height: calc(100vh - 24px) !important;
+  border-radius: 36px !important;
+  border: 1px solid rgba(14, 165, 233, 0.45) !important;
+  background: rgba(6, 12, 32, 0.94) !important;
+  box-shadow: 0 0 30px rgba(14, 165, 233, 0.13), inset 0 0 18px rgba(14, 165, 233, 0.05) !important;
+  padding: 14px 0 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.sb-toggle-btn {
+  margin-top: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  color: #7dd3fc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.sb-toggle-btn:hover {
+  background: rgba(14, 165, 233, 0.28);
+}
+
+/* ===== دکمه خروج قرمز پایین راست ===== */
+.logout-fixed {
+  position: fixed !important;
+  bottom: 22px !important;
+  right: 24px !important;
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: white !important;
+  border: none !important;
+  padding: 11px 18px !important;
+  border-radius: 12px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 22px rgba(239, 68, 68, 0.5) !important;
+  z-index: 9999 !important;
+  transition: all 0.25s !important;
+}
+.logout-fixed:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 28px rgba(239, 68, 68, 0.65) !important;
+}
 </style>
 </head>
 <body>
+<div class="neon-title">
+  <div class="arrow"></div>
+  <div class="text">エムエムディー</div>
+  <div class="arrow"></div>
+</div>
 <div class="bg-fixed"></div>
 <div class="grid-fixed"></div>
 <div class="toast" id="toast"></div>
@@ -3692,7 +3810,7 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
   <div class="mob-hd">
     <div class="mob-tl-group">
     </div>
-    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
+    <span style="font-family:'Vazirmatn','Inter',sans-serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
   </div>
 
   <!-- SIDEBAR -->
@@ -3734,6 +3852,11 @@ body.sb-collapsed .main{margin-left:var(--nav-w-collapsed)}
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
         <span class="nav-label" data-en="Settings" data-fa="تنظیمات">Settings</span>
       </button>
+      <div class="sb-toggle-btn" onclick="toggleSidebar()" title="جمع کردن">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </div>
       <button class="nav-item logout-mob" onclick="doLogout()">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         <span class="nav-label" data-en="Logout" data-fa="خروج">Logout</span>
@@ -4984,6 +5107,14 @@ async function checkPanelVersion(isPeriodic){
 checkPanelVersion(false);
 setInterval(()=>checkPanelVersion(true),5*60*1000);
 </script>
+<button class="logout-fixed" onclick="doLogout()">
+  خروج
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+    <polyline points="16 17 21 12 16 7"/>
+    <line x1="21" y1="12" x2="9" y2="12"/>
+  </svg>
+</button>
 </body>
 </html>"""
 
