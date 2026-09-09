@@ -2177,8 +2177,28 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         .starfield{{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}}
         .starfield .s{{position:absolute;border-radius:50%;
             background:radial-gradient(circle,rgba(147,197,253,0.9),rgba(59,130,246,0.3) 40%,transparent 70%);
-            animation-name:orbPulse;animation-timing-function:ease-in-out;animation-iteration-count:infinite}}
-        @keyframes orbPulse{{0%,100%{{opacity:.25;transform:scale(1)}}50%{{opacity:.7;transform:scale(1.15)}}}}
+            animation-name:orbClassicFloat;animation-timing-function:ease-in-out;animation-iteration-count:infinite;
+            will-change:transform,opacity}}
+        .starfield .s:nth-child(3n){{animation-name:orbClassicFloat2}}
+        .starfield .s:nth-child(4n){{animation-name:orbClassicFloat3}}
+        @keyframes orbClassicFloat{{
+            0%,100%{{opacity:.22;transform:translate3d(0,0,0) scale(1)}}
+            25%{{opacity:.32;transform:translate3d(9px,-7px,0) scale(1.02)}}
+            50%{{opacity:.16;transform:translate3d(17px,5px,0) scale(.98)}}
+            75%{{opacity:.29;transform:translate3d(7px,12px,0) scale(1.01)}}
+        }}
+        @keyframes orbClassicFloat2{{
+            0%,100%{{opacity:.18;transform:translate3d(0,0,0) scale(1)}}
+            25%{{opacity:.28;transform:translate3d(-10px,6px,0) scale(1.02)}}
+            50%{{opacity:.14;transform:translate3d(-16px,-8px,0) scale(.98)}}
+            75%{{opacity:.25;transform:translate3d(-6px,-13px,0) scale(1.01)}}
+        }}
+        @keyframes orbClassicFloat3{{
+            0%,100%{{opacity:.2;transform:translate3d(0,0,0) scale(1)}}
+            25%{{opacity:.3;transform:translate3d(6px,10px,0) scale(1.01)}}
+            50%{{opacity:.15;transform:translate3d(-8px,15px,0) scale(.99)}}
+            75%{{opacity:.27;transform:translate3d(-13px,4px,0) scale(1.02)}}
+        }}
         @media (prefers-reduced-motion: reduce){{
             .bg-glow::before,.bg-glow::after{{animation:none}}
             .starfield .s{{animation:none;opacity:.4}}
@@ -2439,7 +2459,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         var h='';
         for(var i=0;i<n;i++){{
             var sz=(Math.random()*1.8+0.5).toFixed(2);
-            h+='<span class="s" style="width:'+sz+'px;height:'+sz+'px;top:'+(Math.random()*100).toFixed(2)+'%;left:'+(Math.random()*100).toFixed(2)+'%;animation-duration:'+(Math.random()*3+1.8).toFixed(2)+'s;animation-delay:'+(Math.random()*4).toFixed(2)+'s;opacity:'+(Math.random()*0.5+0.3).toFixed(2)+'"></span>';
+            h+='<span class="s" style="width:'+sz+'px;height:'+sz+'px;top:'+(Math.random()*100).toFixed(2)+'%;left:'+(Math.random()*100).toFixed(2)+'%;animation-duration:'+(Math.random()*3+1.8).toFixed(2)+'s;animation-delay:'+(Math.random()*4).toFixed(2)+'s;opacity:'+(Math.random()*0.18+0.12).toFixed(2)+'"></span>';
         }}
         sf.innerHTML=h;
     }})();
@@ -3381,11 +3401,11 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
   background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
-.sidebar-toggle{position:absolute;right:-22px;bottom:118px;width:22px;height:42px;padding:0;border:1px solid var(--border);border-left:none;border-radius:0 9px 9px 0;background:var(--surface);color:var(--text2);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:110;font-size:22px;line-height:1;transition:all .3s ease;box-shadow:4px 0 14px rgba(0,0,0,.12)}
+.sidebar-toggle{position:absolute;right:8px;bottom:82px;width:24px;height:24px;padding:0;border:1px solid var(--border);border-radius:7px;background:var(--surface2);color:var(--text2);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:110;font-size:14px;line-height:1;transition:all .25s ease;box-shadow:0 3px 10px rgba(0,0,0,.12)}
 .sidebar-toggle:hover{color:var(--gold);background:var(--surface3);border-color:var(--border2)}
 .sidebar-collapsed .sidebar{width:0;overflow:visible}
 .sidebar-collapsed .sidebar > :not(.sidebar-toggle){opacity:0;pointer-events:none}
-.sidebar-collapsed .sidebar-toggle{right:-22px}
+.sidebar-collapsed .sidebar-toggle{right:8px}
 .sidebar-collapsed .main{margin-left:0}
 .sidebar-collapsed .sidebar-toggle{transform:rotate(180deg)}
 .logout-float{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border:1px solid rgba(248,113,113,.45);border-radius:12px;background:rgba(248,113,113,.12);color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:120;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:all .2s ease}
@@ -3411,7 +3431,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .nav-item.active::before{opacity:1}
 .nav-icon{width:18px;height:18px;flex-shrink:0;transition:transform .2s}
 .nav-item:hover .nav-icon,.nav-item.active .nav-icon{transform:scale(1.1)}
-.nav-label{font-size:8.5px;font-weight:600;letter-spacing:.05em;white-space:nowrap;overflow:hidden}
+.nav-label{display:none !important;font-size:8.5px;font-weight:600;letter-spacing:.05em;white-space:nowrap;overflow:hidden}
 .nav-badge{position:absolute;top:5px;right:5px;background:var(--gold);color:#000;font-size:8px;
   font-weight:800;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;
   justify-content:center;padding:0 3px}
@@ -3426,7 +3446,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   color:rgba(248,113,113,.6);cursor:pointer;transition:all .2s;font-size:10px;gap:4px;
   font-weight:600;font-family:inherit}
 .logout-btn:hover{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3);color:var(--red)}
-.theme-toggle{background:transparent;border:1px solid var(--border);color:var(--text3);
+.theme-toggle{display:none !important;background:transparent;border:1px solid var(--border);color:var(--text3);
   border-radius:7px;padding:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:all .2s}
 .theme-toggle:hover{background:var(--surface3);color:var(--gold);border-color:var(--gold)}
@@ -3600,6 +3620,10 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 /* Gold accent on progress fills */
 .pill-fill-gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
 
+.sb-brand{padding:10px 0 6px;min-height:44px}
+.sb-brand .brand-text,.sb-brand span:not(.brand-icon){display:none !important}
+.sb-nav{gap:5px;padding-top:4px}
+.nav-item{padding:8px 6px}
 @media(max-width:768px){
   .mob-hd{display:flex;height:65px;padding:0 20px}
   .mob-tl-group .lang-btn{font-size:13px;padding:7px 10px;border-radius:8px}
@@ -3617,7 +3641,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   .sb-nav{flex-direction:row;width:100%;padding:0;align-items:center;justify-content:space-between;gap:0}
   .nav-item{flex:1;padding:12px 0;border-radius:0}
   .nav-icon{width:24px;height:24px;margin-bottom:5px}
-  .nav-label{font-size:10px;letter-spacing:0}
+  .nav-label{display:none !important;font-size:10px;letter-spacing:0}
   .nav-badge{top:6px;right:50%;transform:translateX(10px);min-width:18px;height:18px;font-size:10px}
   .main{margin-left:0;padding-top:85px;padding-left:18px;padding-right:18px;padding-bottom:100px}
   .page-title{font-size:24px}
@@ -3678,7 +3702,6 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <!-- MOBILE HEADER -->
   <div class="mob-hd">
     <div class="mob-tl-group">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-mob">🌙</button>
     </div>
     <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
   </div>
@@ -3717,13 +3740,10 @@ body[dir="rtl"]{direction:rtl;text-align:right}
       </button>
       <button class="nav-item" data-page="settings">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        <span class="nav-label" data-en="Settings" data-fa="تنظیمات">Settings</span>
+        <span class="nav-label" data-en="Settings" data-fa="تنظیمات">تنظیمات</span>
       </button>
       <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="جمع کردن منوی کناری" title="جمع/باز کردن منوی کناری">‹</button>
     </nav>
-    <div class="sb-bottom">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="margin-bottom:4px;font-size:12px">🌙 Theme</button>
-    </div>
   </aside>
 
   <button class="logout-float" onclick="doLogout()" aria-label="خروج" title="خروج">
