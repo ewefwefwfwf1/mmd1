@@ -43,7 +43,7 @@ class QueueHandler(logging.Handler):
             pass
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("mmd-Gateway")
+logger = logging.getLogger("エムエムディー-Gateway")
 
 q_handler = QueueHandler()
 q_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
@@ -51,7 +51,7 @@ logger.addHandler(q_handler)
 logging.getLogger("uvicorn.error").addHandler(q_handler)
 logging.getLogger("uvicorn.access").addHandler(q_handler)
 
-app = FastAPI(title="mmd Panel", docs_url=None, redoc_url=None)
+app = FastAPI(title="エムエムディー Panel", docs_url=None, redoc_url=None)
 
 # Bump this on every release so the dashboard can notify already-open sessions
 # that a new version is available / was just applied.
@@ -371,7 +371,7 @@ BOT_I18N = {
         "btn_create": "➕ Create User",
         "btn_addip": "🌐 Add Clean IP",
         "btn_lang": "فارسی",
-        "welcome": "👑 <b>Welcome to mmd Panel!</b>\nManage your VLESS inbounds.",
+        "welcome": "👑 <b>Welcome to エムエムディー Panel!</b>\nManage your VLESS inbounds.",
         "lang_switched": "🌐 Language switched to <b>English</b>.",
         "stats": (
             "<b>📊 Server Status Dashboard</b>\n\n"
@@ -454,7 +454,7 @@ BOT_I18N = {
         "btn_create": "➕ ساخت کاربر",
         "btn_addip": "🌐 افزودن آی‌پی تمیز",
         "btn_lang": "English",
-        "welcome": "👑 <b>به پنل mmd خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
+        "welcome": "👑 <b>به پنل エムエムディー خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
         "lang_switched": "🌐 زبان به <b>فارسی</b> تغییر یافت.",
         "stats": (
             "<b>📊 وضعیت سرور</b>\n\n"
@@ -871,7 +871,7 @@ def get_domain() -> str:
 
 def generate_vless_link(
     uuid: str,
-    remark: str = "mmd",
+    remark: str = "エムエムディー",
     address: str = None,
     port: int = None,
     protocol: str = DEFAULT_PROTOCOL,
@@ -935,7 +935,7 @@ def link_for_variant(link: dict, uid: str, auth: str, address: str = None) -> st
     protocol = f"{auth}-{variant['transport']}"
     return generate_vless_link(
         uid,
-        remark=f"mmd-{link.get('label', '')}",
+        remark=f"エムエムディー-{link.get('label', '')}",
         address=address,
         protocol=protocol,
         fingerprint=variant.get("fingerprint"),
@@ -2135,7 +2135,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mmd - {link['label']}</title>
+    <title>エムエムディー - {link['label']}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{{margin:0;padding:0;box-sizing:border-box}}
@@ -2342,7 +2342,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     <!-- Header -->
     <div class="header">
         <div class="header-logo">
-            <span class="header-title">mmd</span>
+            <span class="header-title">エムエムディー</span>
         </div>
         <div class="header-sub">{link['label']} · Connection Status</div>
     </div>
@@ -2461,7 +2461,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     // The #name fragment is what Hiddify shows as the profile name before
     // it even fetches the sublink, and is used as a fallback if the
     // content's own #profile-title header is missing or fails to parse.
-    const hiddifyProfileName = encodeURIComponent("mmd-{link['label']}");
+    const hiddifyProfileName = encodeURIComponent("エムエムディー-{link['label']}");
     const hiddifyImportUrl = "hiddify://import/" + subUrl + "#" + hiddifyProfileName;
 
     // Returns URL to the PNG icon for the given app name.
@@ -2659,7 +2659,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     function downloadQR() {{
         const a = document.createElement('a');
         a.href = document.getElementById('qr-modal-img').src;
-        a.download = 'mmd-config-qr.png';
+        a.download = 'エムエムディー-config-qr.png';
         a.click();
     }}
 
@@ -2773,10 +2773,10 @@ def generate_singbox_config(link: dict, uid: str, addresses: list[str]) -> str:
             },
         }
 
-    tags = [f"mmd-{link['label']}"]
+    tags = [f"エムエムディー-{link['label']}"]
     outbounds = [_vless_outbound(tags[0], domain)]
     for i, addr in enumerate(addresses):
-        tag = f"mmd-{link['label']}-IP{i+1}"
+        tag = f"エムエムディー-{link['label']}-IP{i+1}"
         tags.append(tag)
         outbounds.append(_vless_outbound(tag, addr))
 
@@ -2841,11 +2841,11 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     for auth in active_auths:
         fp = variants[auth]["fingerprint"]
         suffix = "" if len(active_auths) == 1 else f"-{auth.upper()}"
-        name0 = f"mmd-{link['label']}{suffix}"
+        name0 = f"エムエムディー-{link['label']}{suffix}"
         proxies.append(_proxy_entry(auth, fp, name0, domain))
         proxy_name_list.append(name0)
         for i, addr in enumerate(addresses):
-            name_i = f"mmd-{link['label']}{suffix}-IP{i+1}"
+            name_i = f"エムエムディー-{link['label']}{suffix}-IP{i+1}"
             proxies.append(_proxy_entry(auth, fp, name_i, addr))
             proxy_name_list.append(name_i)
 
@@ -2853,7 +2853,7 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     proxy_names = "\n".join(f'      - "{p}"' for p in proxy_name_list)
 
     return (
-        f"# mmd Panel - {link['label']}\n"
+        f"# エムエムディー Panel - {link['label']}\n"
         f"# {usage_str} | {expiry_str}\n"
         f"port: 7890\n"
         f"socks-port: 7891\n"
@@ -2959,7 +2959,7 @@ async def subscription_endpoint(uid: str, request: Request):
     headers = {
         "Content-Type": "text/plain; charset=utf-8",
         "profile-update-interval": "6",
-        "profile-title": "base64:" + base64.b64encode(f"mmd-{link['label']}".encode()).decode(),
+        "profile-title": "base64:" + base64.b64encode(f"エムエムディー-{link['label']}".encode()).decode(),
         "subscription-userinfo": f"upload={link['used_bytes']}; download=0; total={total_bytes}; expire={expire_ts}",
     }
 
@@ -3337,7 +3337,7 @@ PANEL_HTML = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>mmd Panel</title>
+<title>エムエムディー Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -3666,7 +3666,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <div class="login-wrap">
     <div class="login-box">
       <div class="login-logo">
-        <div class="login-title">mmd</div>
+        <div class="login-title">エムエムディー</div>
         <div class="login-sub">Enter your password to continue</div>
       </div>
       <div class="fg">
@@ -3696,7 +3696,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
         </a>
       </div>
     </div>
-    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">mmd</span>
+    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
   </div>
 
   <!-- SIDEBAR -->
@@ -3708,7 +3708,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
       </a>
     </div>
     <div class="sb-brand">
-      <div class="sb-title">mmd</div>
+      <div class="sb-title">エムエムディー</div>
     </div>
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
@@ -4571,7 +4571,7 @@ function showQR(txt){
 
 function dlQR(){
   const a=document.createElement('a');
-  a.href=$m('qr-img').src;a.download='mmd-qr.png';a.click();
+  a.href=$m('qr-img').src;a.download='エムエムディー-qr.png';a.click();
 }
 
 async function loadSettings(){
@@ -4948,8 +4948,8 @@ function startPolling(){
 startPolling();
 
 // ── Panel update notifications (checks GitHub for new releases) ────────
-const PANEL_VERSION_KEY='mmd_panel_last_version';
-const PANEL_GH_NOTIFIED_KEY='mmd_panel_last_notified_gh';
+const PANEL_VERSION_KEY='エムエムディー_panel_last_version';
+const PANEL_GH_NOTIFIED_KEY='エムエムディー_panel_last_notified_gh';
 let loadedPanelVersion=null;
 
 async function checkPanelVersion(isPeriodic){
