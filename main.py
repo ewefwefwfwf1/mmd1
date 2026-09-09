@@ -2322,12 +2322,6 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
             opacity:0;transition:all .3s;z-index:999;backdrop-filter:blur(20px);
             box-shadow:var(--gold-glow)}}
         .toast.show{{opacity:1;transform:translateX(-50%) translateY(0)}}
-
-        /* footer links */
-        .footer-links{{display:flex;justify-content:center;gap:16px;padding:20px 0 10px}}
-        .footer-link{{display:flex;align-items:center;gap:5px;color:var(--text3);
-            font-size:11px;font-weight:600;text-decoration:none;transition:color .2s}}
-        .footer-link:hover{{color:var(--gold)}}
     </style>
 </head>
 <body>
@@ -2420,14 +2414,6 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         </div>
         <button class="ping-btn" id="ping-all-btn" onclick="pingAll()">⚡ Ping test all</button>
         <div id="config-list"></div>
-    </div>
-
-    <!-- Footer links -->
-    <div class="footer-links">
-        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="footer-link">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-            GitHub
-        </a>
     </div>
 
 </div>
@@ -3395,6 +3381,15 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
   background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
+.sidebar-toggle{position:absolute;right:-22px;bottom:118px;width:22px;height:42px;padding:0;border:1px solid var(--border);border-left:none;border-radius:0 9px 9px 0;background:var(--surface);color:var(--text2);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:110;font-size:22px;line-height:1;transition:all .3s ease;box-shadow:4px 0 14px rgba(0,0,0,.12)}
+.sidebar-toggle:hover{color:var(--gold);background:var(--surface3);border-color:var(--border2)}
+.sidebar-collapsed .sidebar{width:0;overflow:visible}
+.sidebar-collapsed .sidebar > :not(.sidebar-toggle){opacity:0;pointer-events:none}
+.sidebar-collapsed .sidebar-toggle{right:-22px}
+.sidebar-collapsed .main{margin-left:0}
+.sidebar-collapsed .sidebar-toggle{transform:rotate(180deg)}
+.logout-float{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border:1px solid rgba(248,113,113,.45);border-radius:12px;background:rgba(248,113,113,.12);color:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:120;box-shadow:0 8px 24px rgba(0,0,0,.18);transition:all .2s ease}
+.logout-float:hover{background:var(--red);color:#fff;transform:translateY(-2px);box-shadow:0 10px 28px rgba(248,113,113,.25)}
 .sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
   border-bottom:1px solid var(--border);flex-shrink:0}
 .sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
@@ -3421,7 +3416,6 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   font-weight:800;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;
   justify-content:center;padding:0 3px}
 .sb-bottom{padding:8px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0}
-.lang-row{display:flex;gap:4px}
 .lang-btn{flex:1;padding:5px 2px;border:1px solid var(--border);border-radius:7px;background:none;
   color:var(--text3);font-size:9px;font-weight:700;cursor:pointer;transition:all .2s;
   font-family:inherit;letter-spacing:.05em}
@@ -3570,8 +3564,6 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   border-bottom:1px solid rgba(96,165,250,0.15);z-index:90;align-items:center;justify-content:space-between;
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 .mob-tl-group{display:flex;gap:10px;align-items:center;flex-direction:row}
-.logout-mob{display:none;color:var(--red) !important}
-.logout-mob:hover{background:var(--red-dim) !important;border-color:rgba(248,113,113,.3) !important}
 .alerts-box{background:rgba(248,113,113,.08);border:1px dashed rgba(248,113,113,.3);
   border-radius:12px;padding:14px;margin-bottom:14px;display:none}
 .alerts-title{color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:8px;
@@ -3619,13 +3611,14 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   .light-mode .sidebar{box-shadow:0 -4px 20px rgba(0,0,0,.06)}
   .sb-brand,.sb-bottom{display:none !important}
   .sidebar .sb-social{display:none !important}
+  .sidebar-toggle{display:none !important}
+  .logout-float{right:16px;bottom:94px;width:44px;height:44px}
   .mob-social{display:flex !important}
   .sb-nav{flex-direction:row;width:100%;padding:0;align-items:center;justify-content:space-between;gap:0}
   .nav-item{flex:1;padding:12px 0;border-radius:0}
   .nav-icon{width:24px;height:24px;margin-bottom:5px}
   .nav-label{font-size:10px;letter-spacing:0}
   .nav-badge{top:6px;right:50%;transform:translateX(10px);min-width:18px;height:18px;font-size:10px}
-  .logout-mob{display:flex}
   .main{margin-left:0;padding-top:85px;padding-left:18px;padding-right:18px;padding-bottom:100px}
   .page-title{font-size:24px}
   .page-sub{font-size:13px;margin-top:5px}
@@ -3686,27 +3679,12 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <div class="mob-hd">
     <div class="mob-tl-group">
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-mob">🌙</button>
-      <div class="lang-row">
-        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
-      </div>
-      <div class="mob-social">
-        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-        </a>
-      </div>
     </div>
     <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
   </div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
-    <!-- Telegram & GitHub links (above the mmd logo) -->
-    <div class="sb-social" style="padding:10px 8px 0">
-      <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-      </a>
-    </div>
     <div class="sb-brand">
       <div class="sb-title">エムエムディー</div>
     </div>
@@ -3741,23 +3719,16 @@ body[dir="rtl"]{direction:rtl;text-align:right}
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
         <span class="nav-label" data-en="Settings" data-fa="تنظیمات">Settings</span>
       </button>
-      <button class="nav-item logout-mob" onclick="doLogout()">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span class="nav-label" data-en="Logout" data-fa="خروج">Logout</span>
-      </button>
+      <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="جمع کردن منوی کناری" title="جمع/باز کردن منوی کناری">‹</button>
     </nav>
     <div class="sb-bottom">
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="margin-bottom:4px;font-size:12px">🌙 Theme</button>
-      <div class="lang-row">
-        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
-      </div>
-      <button class="logout-btn" onclick="doLogout()" style="margin-top:2px">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span data-en="Logout" data-fa="خروج">Logout</span>
-      </button>
     </div>
   </aside>
+
+  <button class="logout-float" onclick="doLogout()" aria-label="خروج" title="خروج">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+  </button>
 
   <!-- MAIN CONTENT -->
   <main class="main">
@@ -4161,12 +4132,11 @@ function protoBadge(variants){
 }
 
 const langMap={
-  en:{edit:'Edit',copy:'Copy',sub:'Sub',qr:'QR',del:'Del',gh:'View on GitHub'},
   fa:{edit:'ویرایش',copy:'کپی',sub:'اشتراک',qr:'QR',del:'حذف',gh:'مشاهده در گیت‌هاب'}
 };
-function tr(key){return(langMap[lang]&&langMap[lang][key])||langMap['en'][key]||key}
+function tr(key){return(langMap['fa']&&langMap['fa'][key])||key}
 
-let lang=localStorage.getItem('ll')||'en';
+let lang='fa';
 let theme=localStorage.getItem('theme')||'dark';
 let allLinks=[];
 let cf='all';
@@ -4206,20 +4176,25 @@ function setTheme(t){
 }
 function toggleTheme(){setTheme(theme==='dark'?'light':'dark')}
 
+function toggleSidebar(){
+  const collapsed=document.body.classList.toggle('sidebar-collapsed');
+  const btn=$m('sidebar-toggle');
+  if(btn){btn.textContent=collapsed?'›':'‹';btn.title=collapsed?'باز کردن منوی کناری':'جمع کردن منوی کناری';}
+  localStorage.setItem('sidebar_collapsed',collapsed?'1':'0');
+}
+
 function setLang(l){
-  lang=l;
-  document.querySelectorAll('.lang-en').forEach(e=>e.classList.toggle('active',l==='en'));
-  document.querySelectorAll('.lang-fa').forEach(e=>e.classList.toggle('active',l==='fa'));
-  document.body.dir=l==='fa'?'rtl':'ltr';
+  lang='fa';
+  document.body.dir='rtl';
   document.querySelectorAll('[data-en]').forEach(el=>{
-    const v=el.getAttribute('data-'+l);
+    const v=el.getAttribute('data-fa');
     if(v)el.textContent=v;
   });
   document.querySelectorAll('[data-ph-en]').forEach(el=>{
-    const v=el.getAttribute('data-ph-'+l);
+    const v=el.getAttribute('data-ph-fa');
     if(v)el.placeholder=v;
   });
-  localStorage.setItem('ll',l);
+  localStorage.setItem('ll','fa');
   filterLinks();
 }
 
@@ -4279,6 +4254,10 @@ async function doLogin(){
 async function doLogout(){
   await fetch('/api/logout',{method:'POST'});
   showLogin();
+}
+
+if(localStorage.getItem('sidebar_collapsed')==='1'){
+  document.body.classList.add('sidebar-collapsed');
 }
 
 document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
@@ -4845,7 +4824,7 @@ function renderNotifs(notifs){
     const icon=NOTIF_ICONS[n.type]||'ℹ️';
     const cls=n.seen?'':'unseen';
     const time=new Date(n.created_at).toLocaleString();
-    const linkHtml=n.link?`<a href="${esc(n.link)}" target="_blank" class="notif-link">${tr('gh')} ↗</a>`:'';
+    const linkHtml='';
     return `<div class="notif-item ${cls}" onclick="markSeen(${n.id})">
       <div class="notif-icon ${n.type}">${icon}</div>
       <div class="notif-body">
@@ -4973,7 +4952,7 @@ async function checkPanelVersion(isPeriodic){
     if(d.update_available&&d.latest_github_version){
       const alreadyNotified=localStorage.getItem(PANEL_GH_NOTIFIED_KEY);
       if(alreadyNotified!==d.latest_github_version){
-        toast('🚀 New version available on GitHub: '+d.latest_github_version+' - pull the latest update');
+        toast('🚀 نسخه جدید پنل در دسترس است: '+d.latest_github_version);
         localStorage.setItem(PANEL_GH_NOTIFIED_KEY,d.latest_github_version);
       }
     }
