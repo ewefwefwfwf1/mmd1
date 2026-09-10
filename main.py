@@ -3421,7 +3421,7 @@ body.light-mode{
   --yellow:#CA8A04;
 }
 html,body{height:100%;background:var(--black);transition:background .3s,color .3s}
-body{font-family:'Inter','Vazirmatn',sans-serif;color:var(--text);display:flex;min-height:100vh}
+body{font-family:'Inter','Vazirmatn',sans-serif;color:var(--text);display:flex;min-height:100vh;overflow-x:hidden}
 body[dir="rtl"]{direction:rtl;text-align:right}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.2);border-radius:4px}
 .bg-fixed{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
