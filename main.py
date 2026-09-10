@@ -4951,16 +4951,6 @@ async function chgPw(){
 function initChart(){
   const ctx=$m('tc');
   if(!ctx||tChart)return;
-  tChart=new Chart(ctx,{
-    type:'bar',
-    data:{labels:[],datasets:[{label:'MB',data:[],backgroundColor:'rgba(59,130,246,0.45)',borderColor:'#3b82f6',borderWidth:1,borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{grid:{display:false},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10}}},
-        y:{grid:{color:'rgba(59,130,246,0.06)'},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10},callback:v=>v+' MB'},beginAtZero:true}
-      }
-    }
   });
 
   const ctx2=$m('inbound-chart');
