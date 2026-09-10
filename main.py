@@ -4595,7 +4595,7 @@ function fillVariantFields(prefix,auth,variant){
 
 async function createLink(){
   const label=$m('nl').value.trim()||'New Link';
-  if(!/^[a-zA-Z0-9\-_. \u0600-\u06FF\u200c\u200d\u2600-\u27BF\uFE0F\U0001F300-\U0001F5FF\U0001F600-\U0001F64F\U0001F680-\U0001F6FF\U0001F900-\U0001F9FF\U0001FA00-\U0001FAFF\U0001F1E6-\U0001F1FF\s]+$/u.test(label)){toast('toast('نام نامعتبر است',true)',true);return}
+  if(!/^[a-zA-Z0-9\-_. \u0600-\u06FF\u200c\u200d\u2600-\u27BF\uFE0F\U0001F300-\U0001F5FF\U0001F600-\U0001F64F\U0001F680-\U0001F6FF\U0001F900-\U0001F9FF\U0001FA00-\U0001FAFF\U0001F1E6-\U0001F1FF\s]+$/u.test(label)){toast('نام نامعتبر',true);return}
   if(!$m('n_vless_enabled').checked && !$m('n_trojan_enabled').checked){toast('Enable at least one protocol (VLESS or Trojan)',true);return}
   const v=parseFloat($m('nv').value)||0;
   const mc=parseInt($m('nc').value)||0;
