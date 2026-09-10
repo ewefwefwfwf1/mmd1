@@ -3812,7 +3812,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 
 
   <!-- MAIN CONTENT -->
-  <main class="main">                    <div style="text-align:center;padding:0 0 0 0;margin-top:-40px;margin-bottom:-45px;">
+  <main class="main">                    <div style="text-align:center;padding:0 0 0 0;margin-top:-40px;margin-bottom:-50px;">
       <img src="/client/logo.png" alt="logo" style="max-width:470px;width:100%;height:auto;filter:drop-shadow(0 0 20px rgba(59,130,246,0.5));">
     </div>
 
