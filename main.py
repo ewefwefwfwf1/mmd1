@@ -1339,7 +1339,7 @@ async def handle_create_command(text: str):
     if len(parts) < 2:
         return L("create_format")
     label = parts[1]
-    if not re.match(r'^[a-zA-Z0-9\-_. ]+$', label):
+        if not re.match(r'^[\w\-. \u0600-\u06FF\u200c\u200d\U0001F1E6-\U0001F1FF\s]+$', label, re.UNICODE):
         return L("create_bad_name")
 
     limit_value = 0.0
@@ -1812,8 +1812,8 @@ async def get_stats(_=Depends(require_auth)):
 async def create_link(request: Request, _=Depends(require_auth)):
     body = await request.json()
     label = (body.get("label") or "New Link").strip()[:60]
-    if not re.match(r'^[a-zA-Z0-9\-_. ]+$', label):
-        raise HTTPException(status_code=400, detail="Inbound name must contain only English letters, numbers, and characters: - _ . space")
+        if not re.match(r'^[\w\-. \u0600-\u06FF\u200c\u200d\U0001F1E6-\U0001F1FF\s]+$', label, re.UNICODE):
+        raise HTTPException(status_code=400, detail="Invalid name")
     if not label:
         raise HTTPException(status_code=400, detail="Inbound name is required")
     async with LINKS_LOCK:
@@ -4595,7 +4595,7 @@ function fillVariantFields(prefix,auth,variant){
 
 async function createLink(){
   const label=$m('nl').value.trim()||'New Link';
-  if(!/^[a-zA-Z0-9\-_. ]+$/.test(label)){toast('Only English letters allowed',true);return}
+    if(!/^[\w\-. \u0600-\u06FF\u200c\u200d\U0001F1E6-\U0001F1FF\s]+$/u.test(label)){toast('نام نامعتبر است',true);return}
   if(!$m('n_vless_enabled').checked && !$m('n_trojan_enabled').checked){toast('Enable at least one protocol (VLESS or Trojan)',true);return}
   const v=parseFloat($m('nv').value)||0;
   const mc=parseInt($m('nc').value)||0;
