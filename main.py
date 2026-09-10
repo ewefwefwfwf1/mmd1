@@ -3453,6 +3453,9 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
   background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
+.sb-theme-top{display:flex;justify-content:center;padding:12px 0 6px;border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-theme-top .theme-toggle{font-size:16px;padding:6px 10px;border-radius:8px;background:var(--surface3);border:1px solid var(--border)}
+.sb-theme-top .theme-toggle:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
 .sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
   border-bottom:1px solid var(--border);flex-shrink:0}
 .sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
@@ -3667,6 +3670,8 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .pill-fill-gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
 
 @media(max-width:768px){
+  .sb-theme-top{display:none !important}
+
   .mob-hd{display:flex;height:65px;padding:0 20px}
   .mob-tl-group .lang-btn{font-size:13px;padding:7px 10px;border-radius:8px}
   .theme-toggle{font-size:18px;padding:7px 10px;border-radius:8px}
@@ -3751,10 +3756,11 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
-
-    <div class="sb-brand">
-      <div class="sb-title">エムエムディー</div>
+    <div class="sb-theme-top">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" title="Theme">🌙</button>
     </div>
+
+
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -3792,7 +3798,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
       </button>
     </nav>
     <div class="sb-bottom">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="margin-bottom:4px;font-size:12px">🌙 Theme</button>
+
       <button class="logout-btn" onclick="doLogout()" style="margin-top:2px;margin-left:auto;width:auto;padding:7px 14px;align-self:flex-end">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         <span data-en="Logout" data-fa="خروج">خروج</span>
