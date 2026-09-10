@@ -3607,7 +3607,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .mo-box{background:rgba(15,28,52,0.7);border:1px solid rgba(96,165,250,0.25);border-radius:18px;padding:24px;
   width:100%;max-width:460px;position:relative;box-shadow:var(--gold-glow);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  transform:scale(.92);opacity:0;transition:all .38s cubic-bezier(.34,1.56,.64,1)}
+  transform:scale(.92);opacity:0;transform:scale(.92);opacity:0;transition:all .38s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto}
 .mo.show .mo-box{transform:scale(1);opacity:1}
 .mo-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;margin-bottom:16px;
   color:var(--gold);letter-spacing:.06em}
