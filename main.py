@@ -1339,7 +1339,7 @@ async def handle_create_command(text: str):
     if len(parts) < 2:
         return L("create_format")
     label = parts[1]
-        if not re.match(r'^[\w\-. \u0600-\u06FF\u200c\u200d\U0001F1E6-\U0001F1FF\s]+$', label, re.UNICODE):
+    if not re.match(r'^[\w\-. \u0600-\u06FF\u200c\u200d\U0001F1E6-\U0001F1FF\s]+$', label, re.UNICODE):
         return L("create_bad_name")
 
     limit_value = 0.0
