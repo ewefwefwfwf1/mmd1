@@ -3647,10 +3647,10 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .live-logs-container{background:#000;border:1px solid var(--border);border-radius:8px;padding:12px;
   font-family:monospace;font-size:11px;color:#3b82f6;height:200px;overflow-y:auto;white-space:pre-wrap}
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%}
-.login-box{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:24px;
+.login-box{background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.35);border-radius:28px;
   padding:36px 32px;width:100%;max-width:360px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);
-  backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}
+  box-shadow:0 8px 32px rgba(0,0,0,0.25),0 0 0 1px rgba(255,255,255,0.08) inset,inset 0 1px 0 rgba(255,255,255,0.4);
+  backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%)}
 .login-logo{text-align:center;margin-bottom:28px}
 .login-title{font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:var(--gold);letter-spacing:.1em}
 .login-sub{font-size:11px;color:var(--text3);margin-top:6px}
