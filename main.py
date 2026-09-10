@@ -3453,9 +3453,9 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
   background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
-.sb-theme-top{display:flex;justify-content:center;padding:12px 0 6px;border-bottom:1px solid var(--border);flex-shrink:0}
-.sb-theme-top .theme-toggle{font-size:16px;padding:6px 10px;border-radius:8px;background:var(--surface3);border:1px solid var(--border)}
-.sb-theme-top .theme-toggle:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+.sb-theme-top{display:flex;justify-content:center;padding:14px 0;flex-shrink:0}
+.sb-theme-top .theme-toggle{font-size:24px;padding:0;margin:0;border-radius:0;background:transparent;border:none;color:var(--text);cursor:pointer;transition:transform .2s;box-shadow:none}
+.sb-theme-top .theme-toggle:hover{background:transparent;border:none;box-shadow:none;transform:scale(1.15)}
 .sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
   border-bottom:1px solid var(--border);flex-shrink:0}
 .sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
@@ -3757,7 +3757,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
     <div class="sb-theme-top">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" title="Theme">🌙</button>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk">🌙</button>
     </div>
 
 
@@ -4248,7 +4248,7 @@ function setTheme(t){
   const mb=$m('theme-btn-mob');
   const db=$m('theme-btn-desk');
   if(mb)mb.innerHTML=icon;
-  if(db)db.innerHTML=icon+' Theme';
+  if(db)db.innerHTML=icon;
   updChartColors();
 }
 function toggleTheme(){setTheme(theme==='dark'?'light':'dark')}
