@@ -2180,6 +2180,61 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
             background:radial-gradient(circle,rgba(147,197,253,0.9),rgba(59,130,246,0.3) 40%,transparent 70%);
             animation-name:orbPulse;animation-timing-function:ease-in-out;animation-iteration-count:infinite}}
         @keyframes orbPulse{{0%,100%{{opacity:.25;transform:scale(1)}}50%{{opacity:.7;transform:scale(1.15)}}}}
+        /* Blue orbs - gently floating & pulsing in subscription page */
+        .blue-orb{{
+            position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+            background:radial-gradient(circle,rgba(59,130,246,0.55),rgba(37,99,235,0.22) 45%,transparent 72%);
+            filter:blur(40px);
+            opacity:0.5;
+        }}
+        .orb-1{{
+            width:300px;height:300px;top:-70px;left:-80px;
+            animation:orbFloat1 22s ease-in-out infinite, orbPulse1 8s ease-in-out infinite;
+        }}
+        .orb-2{{
+            width:240px;height:240px;top:35%;right:-70px;
+            animation:orbFloat2 26s ease-in-out infinite, orbPulse2 10s ease-in-out infinite;
+        }}
+        .orb-3{{
+            width:260px;height:260px;bottom:-80px;left:25%;
+            animation:orbFloat3 24s ease-in-out infinite, orbPulse3 9s ease-in-out infinite;
+        }}
+        .orb-4{{
+            width:200px;height:200px;top:15%;left:15%;
+            animation:orbFloat4 28s ease-in-out infinite, orbPulse4 11s ease-in-out infinite;
+        }}
+        @keyframes orbFloat1{{
+            0%,100%{{transform:translate(0,0) scale(1)}}
+            50%{{transform:translate(15px,10px) scale(1.03)}}
+        }}
+        @keyframes orbFloat2{{
+            0%,100%{{transform:translate(0,0) scale(1)}}
+            50%{{transform:translate(-18px,-12px) scale(1.04)}}
+        }}
+        @keyframes orbFloat3{{
+            0%,100%{{transform:translate(0,0) scale(1)}}
+            50%{{transform:translate(20px,-15px) scale(1.03)}}
+        }}
+        @keyframes orbFloat4{{
+            0%,100%{{transform:translate(0,0) scale(1)}}
+            50%{{transform:translate(-12px,18px) scale(1.05)}}
+        }}
+        @keyframes orbPulse1{{
+            0%,100%{{opacity:0.45}}
+            50%{{opacity:0.75}}
+        }}
+        @keyframes orbPulse2{{
+            0%,100%{{opacity:0.55}}
+            50%{{opacity:0.30}}
+        }}
+        @keyframes orbPulse3{{
+            0%,100%{{opacity:0.40}}
+            50%{{opacity:0.70}}
+        }}
+        @keyframes orbPulse4{{
+            0%,100%{{opacity:0.50}}
+            50%{{opacity:0.25}}
+        }}
         @media (prefers-reduced-motion: reduce){{
             .bg-glow::before,.bg-glow::after{{animation:none}}
             .starfield .s{{animation:none;opacity:.4}}
@@ -2336,6 +2391,10 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
 <div class="grid-bg"></div>
 <div class="starfield" id="starfield"></div>
 <div class="shooting-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div>
+<div class="blue-orb orb-1"></div>
+<div class="blue-orb orb-2"></div>
+<div class="blue-orb orb-3"></div>
+<div class="blue-orb orb-4"></div>
 <div class="toast" id="toast"></div>
 
 <div class="container">
