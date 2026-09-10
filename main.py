@@ -1812,7 +1812,7 @@ async def get_stats(_=Depends(require_auth)):
 async def create_link(request: Request, _=Depends(require_auth)):
     body = await request.json()
     label = (body.get("label") or "New Link").strip()[:60]
-        if not re.match(r'^[\w\-. \u0600-\u06FF\u200c\u200d\U0001F1E6-\U0001F1FF\s]+$', label, re.UNICODE):
+    if not re.match(r'^[\w\-. \u0600-\u06FF\u200c\u200d\U0001F1E6-\U0001F1FF\s]+$', label, re.UNICODE):
         raise HTTPException(status_code=400, detail="Invalid name")
     if not label:
         raise HTTPException(status_code=400, detail="Inbound name is required")
