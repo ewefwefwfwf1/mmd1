@@ -4053,6 +4053,11 @@ body[dir="rtl"]{direction:rtl;text-align:right}
     <button class="mo-close" onclick="document.getElementById('mo-add').classList.remove('show')">✕</button>
     <div class="mo-title" data-en="ADD INBOUND" data-fa="افزودن اینباند">ADD INBOUND</div>
     <div class="fg"><label class="fl" data-en="Remark" data-fa="توضیح">Remark</label><input class="fi" id="nl" data-ph-en="e.g. User 1" data-ph-fa="مثلاً کاربر ۱" placeholder="e.g. User 1"></div>
+        <div style="display:flex;gap:6px;margin-top:-4px;margin-bottom:10px">
+      <button type="button" onclick="addFlag('🇳🇱')" style="padding:6px 12px;background:var(--surface3);border:1px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='var(--gold-dim)'" onmouseout="this.style.background='var(--surface3)'">🇳🇱</button>
+      <button type="button" onclick="addFlag('🇺🇸')" style="padding:6px 12px;background:var(--surface3);border:1px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='var(--gold-dim)'" onmouseout="this.style.background='var(--surface3)'">🇺🇸</button>
+      <button type="button" onclick="addFlag('🇸🇬')" style="padding:6px 12px;background:var(--surface3);border:1px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='var(--gold-dim)'" onmouseout="this.style.background='var(--surface3)'">🇸🇬</button>
+    </div>
     <div class="fr">
       <div class="fg"><label class="fl" data-en="Traffic Limit" data-fa="محدودیت ترافیک">Traffic Limit</label><input class="fi" id="nv" type="number" min="0" step=".1" placeholder="0 = ∞"></div>
       <div class="fg" style="max-width:100px"><label class="fl" data-en="Unit" data-fa="واحد">Unit</label><select class="fs" id="nu"><option>GB</option></select></div>
@@ -4564,6 +4569,20 @@ async function togLink(el){
 }
 
 function showAddMo(){$m('mo-add').classList.add('show')}
+function addFlag(flag){
+  const inp=$m('nl');
+  if(!inp)return;
+  let v=inp.value;
+  if(v.startsWith(flag)){
+    // اگه پرچم قبلاً هست، برش دار
+    v=v.substring(flag.length).replace(/^\s+/,'');
+  }else{
+    // اگه نیست، اضافه کن
+    v=flag+' '+v.trim();
+  }
+  inp.value=v;
+  inp.focus();
+}
 
 // وقتی transport یک بلاک (vless یا trojan) عوض شد، ALPN همون بلاک رو به پیش‌فرضش ببر
 const ALPN_DEFAULTS={
