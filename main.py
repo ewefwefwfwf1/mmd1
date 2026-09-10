@@ -3158,8 +3158,8 @@ async def ws_to_tcp(websocket, writer, conn_id, link_uid):
             stats["total_requests"] += 1
             async with connections_lock:
                 if conn_id in connections:
-                                        connections[conn_id]["last_seen"] = time.time()
                     connections[conn_id]["bytes"] += size
+                    connections[conn_id]["last_seen"] = time.time()
             now = datetime.now(timezone.utc)
             hourly_traffic[now.strftime("%Y-%m-%d %H:00")] += size
             daily_traffic[now.strftime("%Y-%m-%d")] += size
