@@ -3646,7 +3646,30 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .alert-item{font-size:12px;margin-bottom:4px;color:var(--text);display:flex;justify-content:space-between}
 .live-logs-container{background:#000;border:1px solid var(--border);border-radius:8px;padding:12px;
   font-family:monospace;font-size:11px;color:#3b82f6;height:200px;overflow-y:auto;white-space:pre-wrap}
-.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%;position:relative;z-index:1}
+.login-wrap::before,.login-wrap::after{content:"";position:absolute;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(59,130,246,0.75),rgba(37,99,235,0.4) 45%,transparent 72%);
+  filter:blur(50px)}
+.login-wrap::before{width:380px;height:380px;top:-100px;left:-120px;
+  animation:loginOrb1 16s ease-in-out infinite,loginOrbPulse1 6s ease-in-out infinite}
+.login-wrap::after{width:320px;height:320px;bottom:-100px;right:-100px;
+  animation:loginOrb2 20s ease-in-out infinite,loginOrbPulse2 8s ease-in-out infinite}
+@keyframes loginOrb1{
+  0%,100%{transform:translate(0,0) scale(1);opacity:0.7}
+  50%{transform:translate(40px,30px) scale(1.1);opacity:1}
+}
+@keyframes loginOrb2{
+  0%,100%{transform:translate(0,0) scale(1);opacity:0.8}
+  50%{transform:translate(-50px,-40px) scale(1.15);opacity:0.5}
+}
+@keyframes loginOrbPulse1{
+  0%,100%{opacity:0.6}
+  50%{opacity:1}
+}
+@keyframes loginOrbPulse2{
+  0%,100%{opacity:0.7}
+  50%{opacity:0.4}
+}
 .login-box{background:linear-gradient(90deg,rgba(8,32,62,0.85),rgba(14,28,38,0.85));border:1px solid rgba(255,255,255,0.15);border-radius:20px;
   padding:36px 32px;width:100%;max-width:360px;
   box-shadow:0 20px 60px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.12);
