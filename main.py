@@ -3525,28 +3525,6 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .page-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em}
 .page-sub{font-size:11px;color:var(--text3);margin-top:3px;letter-spacing:.02em}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-/* DASHBOARD NEW LAYOUT */
-.dash-stats{display:grid;grid-template-columns:1fr 280px;gap:14px;margin-bottom:14px;align-items:center}
-.dash-info-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;
-  padding:20px;display:flex;align-items:center;justify-content:space-around;gap:12px;
-  box-shadow:0 4px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.05)}
-.dash-info-item{flex:1;text-align:center}
-.di-label{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:6px;letter-spacing:.03em}
-.di-val{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.02em}
-.dash-info-divider{width:1px;height:40px;background:var(--border)}
-.dash-circles{display:flex;align-items:center;justify-content:center;gap:18px}
-.circle-stat{position:relative;width:95px;height:95px}
-.circle-stat svg{width:100%;height:100%;transform:rotate(-90deg)}
-.cs-bg{fill:none;stroke:rgba(96,165,250,0.1);stroke-width:8}
-.cs-fill{fill:none;stroke-width:8;stroke-linecap:round;
-  stroke-dasharray:264;stroke-dashoffset:264;
-  transition:stroke-dashoffset .8s ease;
-  filter:drop-shadow(0 0 6px currentColor)}
-.circle-center{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:2px}
-.circle-val{font-size:16px;font-weight:800;color:var(--text)}
-.circle-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px}
-
 .stat-card{background:rgba(18,32,58,0.5);border:1px solid rgba(96,165,250,0.18);border-radius:16px;
   padding:16px;position:relative;overflow:hidden;transition:all .25s;animation:cIn .5s ease both;
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
@@ -3554,12 +3532,6 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(59,130,246,0.4),transparent)}
 .light-mode .stat-card::before{display:none}
-
-
-@media(max-width:768px){
-  .dash-stats{grid-template-columns:1fr}
-  .dash-circles{margin-top:10px}
-}
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--gold-glow)}
 @keyframes cIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .stat-label{font-size:9.5px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
@@ -3916,49 +3888,22 @@ body[dir="rtl"]{direction:rtl;text-align:right}
         <div id="alerts-list"></div>
       </div>
 
-      <!-- DASHBOARD STATS -->
-      <div class="dash-stats">
-        <div class="dash-info-card">
-          <div class="dash-info-item">
-            <div class="di-label" data-en="Inbounds" data-fa="اینباندها">اینباندها</div>
-            <div class="di-val" id="sv-links">-</div>
-          </div>
-          <div class="dash-info-divider"></div>
-          <div class="dash-info-item">
-            <div class="di-label" data-en="Uptime" data-fa="آپتایم">آپتایم</div>
-            <div class="di-val" id="sv-uptime">-</div>
-          </div>
-          <div class="dash-info-divider"></div>
-          <div class="dash-info-item">
-            <div class="di-label" data-en="Online Users" data-fa="کاربران آنلاین">کاربران آنلاین</div>
-            <div class="di-val" id="sv-online">0</div>
-          </div>
+      <div class="stats-row">
+        <div class="stat-card" style="animation-delay:.08s"><div class="stat-label" data-en="Traffic" data-fa="ترافیک">Traffic</div><div class="stat-val" id="sv-traffic">-<span class="stat-unit"> MB</span></div></div>
+        <div class="stat-card" style="animation-delay:.16s"><div class="stat-label" data-en="Inbounds" data-fa="اینباندها">Inbounds</div><div class="stat-val" id="sv-links">-</div></div>
+        <div class="stat-card" style="animation-delay:.24s"><div class="stat-label" data-en="Uptime" data-fa="آپتایم">Uptime</div><div class="stat-val" id="sv-uptime" style="font-size:15px">-</div></div>
+        <div class="stat-card" style="animation-delay:.32s"><div class="stat-label" data-en="Domain" data-fa="دامنه">Domain</div><div class="stat-val" id="sv-domain" style="font-size:10px;word-break:break-all;font-weight:500">-</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-hd"><div class="card-title" data-en="CPU" data-fa="پردازنده">CPU</div><span id="cpu-v" style="font-size:17px;font-weight:700;color:var(--gold)">-%</span></div>
+          <div class="sys-bar"><div class="sys-fill" id="cpu-b" style="background:var(--gold)"></div></div>
         </div>
-        <div class="dash-circles">
-          <div class="circle-stat">
-            <svg viewBox="0 0 100 100">
-              <circle class="cs-bg" cx="50" cy="50" r="42"/>
-              <circle class="cs-fill" cx="50" cy="50" r="42" id="cpu-circle" stroke="#4ade80"/>
-            </svg>
-            <div class="circle-center">
-              <div class="circle-val" id="cpu-v">-%</div>
-              <div class="circle-label" data-en="CPU" data-fa="CPU">CPU</div>
-            </div>
-          </div>
-          <div class="circle-stat">
-            <svg viewBox="0 0 100 100">
-              <circle class="cs-bg" cx="50" cy="50" r="42"/>
-              <circle class="cs-fill" cx="50" cy="50" r="42" id="mem-circle" stroke="#60a5fa"/>
-            </svg>
-            <div class="circle-center">
-              <div class="circle-val" id="mem-v">-%</div>
-              <div class="circle-label" data-en="RAM" data-fa="RAM">RAM</div>
-            </div>
-          </div>
+        <div class="card">
+          <div class="card-hd"><div class="card-title" data-en="Memory" data-fa="حافظه">Memory</div><span id="mem-v" style="font-size:17px;font-weight:700;color:var(--green)">-%</span></div>
+          <div class="sys-bar"><div class="sys-fill" id="mem-b" style="background:var(--green)"></div></div>
         </div>
       </div>
-
-
       <div class="card">
         <div class="card-hd"><div class="card-title" data-en="Hourly Traffic" data-fa="ترافیک ساعتی">Hourly Traffic</div></div>
         <div class="chart-container"><canvas id="tc"></canvas></div>
@@ -4893,10 +4838,10 @@ async function loadStats(){
     if(r.status===401){showLogin();return}
     if(!r.ok)throw new Error();
     sData=await r.json();
+    $m('sv-traffic').innerHTML=(sData.total_traffic_mb||0)+'<span class="stat-unit"> MB</span>';
     $m('sv-links').textContent=sData.links_count||0;
     $m('sv-uptime').textContent=sData.uptime||'-';
-    const svOnline=$m('sv-online');
-    if(svOnline)svOnline.textContent=sData.active_connections||0;
+    $m('sv-domain').textContent=sData.domain||'-';
     $m('nb').textContent=sData.links_count||0;
     $m('last-up').textContent='Updated '+new Date().toLocaleTimeString();
     if($m('t-tr'))$m('t-tr').textContent=(sData.total_traffic_mb||0)+' MB';
@@ -4904,30 +4849,20 @@ async function loadStats(){
     if($m('t-up'))$m('t-up').textContent=sData.uptime||'-';
     if(sData.cpu_percent!==undefined){
       const c=sData.cpu_percent;
-      const cc=c>80?'#f87171':c>50?'#fbbf24':'#4ade80';
-      $m('cpu-v').textContent=c.toFixed(0)+'%';
-      $m('cpu-v').style.color=cc;
-      const cpuCircle=$m('cpu-circle');
-      if(cpuCircle){
-        cpuCircle.style.stroke=cc;
-        cpuCircle.style.strokeDashoffset=264-(264*c/100);
-      }
+      const cc=c>80?'var(--red)':c>50?'var(--yellow)':'var(--gold)';
+      $m('cpu-v').textContent=c.toFixed(1)+'%';$m('cpu-v').style.color=cc;
+      $m('cpu-b').style.width=c+'%';$m('cpu-b').style.background=cc;
     }
     if(sData.memory_percent!==undefined){
       const m=sData.memory_percent;
-      const mc=m>80?'#f87171':m>50?'#fbbf24':'#60a5fa';
-      $m('mem-v').textContent=m.toFixed(0)+'%';
-      $m('mem-v').style.color=mc;
-      const memCircle=$m('mem-circle');
-      if(memCircle){
-        memCircle.style.stroke=mc;
-        memCircle.style.strokeDashoffset=264-(264*m/100);
-              }
+      const mc=m>80?'var(--red)':m>50?'var(--yellow)':'var(--green)';
+      $m('mem-v').textContent=m.toFixed(1)+'%';$m('mem-v').style.color=mc;
+      $m('mem-b').style.width=m+'%';$m('mem-b').style.background=mc;
     }
     updChart();
   }catch(e){}
 }
-      }
+
 async function loadLinks(){
   try{
     const r=await fetch('/api/links');
