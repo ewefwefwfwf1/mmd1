@@ -3451,8 +3451,8 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   border-radius:22px;border:1px solid rgba(96,165,250,0.15);display:flex;flex-direction:column;z-index:100;
   transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   box-shadow:0 8px 32px rgba(0,0,0,0.35)}
-.sb-theme-top{display:flex;justify-content:center;padding:14px 0;flex-shrink:0}
-.sb-theme-top .theme-toggle{font-size:14px;padding:0;margin:0;border-radius:0;background:transparent;border:none;color:var(--text);cursor:pointer;transition:transform .2s;box-shadow:none}
+.sb-theme-top{position:fixed;top:20px;left:26px;z-index:101;display:flex;justify-content:center}
+.sb-theme-top .theme-toggle{font-size:18px;padding:0;margin:0;border-radius:0;background:transparent;border:none;color:var(--text);cursor:pointer;transition:transform .2s;box-shadow:none}
 .sb-theme-top .theme-toggle:hover{background:transparent;border:none;box-shadow:none;transform:scale(1.15)}
 .sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
   border-bottom:1px solid var(--border);flex-shrink:0}
@@ -3486,6 +3486,8 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   font-family:inherit;letter-spacing:.05em}
 .lang-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
 .lang-btn:hover:not(.active){border-color:rgba(59,130,246,.15);color:rgba(59,130,246,.5)}
+.sb-logout-bottom{position:fixed;bottom:32px;left:12px;z-index:101}
+.sb-logout-bottom .logout-btn{padding:7px 14px;width:auto}
 .logout-btn{display:flex;align-items:center;justify-content:center;padding:7px;
   border:1px solid rgba(248,113,113,.15);border-radius:8px;background:rgba(248,113,113,.06);
   color:rgba(248,113,113,.6);cursor:pointer;transition:all .2s;font-size:10px;gap:4px;
@@ -3753,11 +3755,10 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   </div>
 
   <!-- SIDEBAR -->
+  <div class="sb-theme-top">
+    <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" title="Theme">🌙</button>
+  </div>
   <aside class="sidebar" id="sb">
-    <div class="sb-theme-top">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk">🌙</button>
-    </div>
-
 
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
@@ -3795,14 +3796,13 @@ body[dir="rtl"]{direction:rtl;text-align:right}
         <span class="nav-label" data-en="Logout" data-fa="خروج">Logout</span>
       </button>
     </nav>
-    <div class="sb-bottom">
-
-      <button class="logout-btn" onclick="doLogout()" style="margin-top:2px;align-self:flex-end;width:auto;padding:7px 16px">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span data-en="Logout" data-fa="خروج">خروج</span>
-      </button>
-    </div>
   </aside>
+  <div class="sb-logout-bottom">
+    <button class="logout-btn" onclick="doLogout()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span data-en="Logout" data-fa="خروج">خروج</span>
+    </button>
+  </div>
 
   <!-- MAIN CONTENT -->
   <main class="main">
