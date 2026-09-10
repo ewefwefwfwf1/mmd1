@@ -3525,6 +3525,27 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .page-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em}
 .page-sub{font-size:11px;color:var(--text3);margin-top:3px;letter-spacing:.02em}
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+/* DASHBOARD NEW LAYOUT */
+.dash-stats{display:grid;grid-template-columns:1fr 280px;gap:14px;margin-bottom:14px;align-items:center}
+.dash-info-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;
+  padding:20px;display:flex;align-items:center;justify-content:space-around;gap:12px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.05)}
+.dash-info-item{flex:1;text-align:center}
+.di-label{font-size:11px;color:var(--text3);font-weight:600;margin-bottom:6px;letter-spacing:.03em}
+.di-val{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.dash-info-divider{width:1px;height:40px;background:var(--border)}
+.dash-circles{display:flex;align-items:center;justify-content:center;gap:18px}
+.circle-stat{position:relative;width:95px;height:95px}
+.circle-stat svg{width:100%;height:100%;transform:rotate(-90deg)}
+.cs-bg{fill:none;stroke:rgba(96,165,250,0.1);stroke-width:8}
+.cs-fill{fill:none;stroke-width:8;stroke-linecap:round;
+  stroke-dasharray:264;stroke-dashoffset:264;
+  transition:stroke-dashoffset .8s ease;
+  filter:drop-shadow(0 0 6px currentColor)}
+.circle-center{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px}
+.circle-val{font-size:16px;font-weight:800;color:var(--text)}
+.circle-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px}
 .stat-card{background:rgba(18,32,58,0.5);border:1px solid rgba(96,165,250,0.18);border-radius:16px;
   padding:16px;position:relative;overflow:hidden;transition:all .25s;animation:cIn .5s ease both;
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
