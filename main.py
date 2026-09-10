@@ -4953,7 +4953,7 @@ function initChart(){
   if(!ctx||tChart)return;
   tChart=new Chart(ctx,{
     type:'bar',
-    data:{labels:[],datasets:[{label:'MB',data:[],backgroundColor:'rgba(96,165,250,0.85)',borderColor:'#3b82f6',borderWidth:1,borderRadius:8,borderSkipped:false}]},
+    data:{labels:[],datasets:[{label:'MB',data:[],backgroundColor:'rgba(251,191,36,0.85)',borderColor:'#fbbf24',borderWidth:1,borderRadius:8,borderSkipped:false}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false}},
       scales:{
