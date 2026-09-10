@@ -4922,8 +4922,12 @@ async function loadStats(){
       if(memCircle){
         memCircle.style.stroke=mc;
         memCircle.style.strokeDashoffset=264-(264*m/100);
-      }
+              }
     }
+    updChart();
+  }catch(e){}
+}
+      }
 async function loadLinks(){
   try{
     const r=await fetch('/api/links');
