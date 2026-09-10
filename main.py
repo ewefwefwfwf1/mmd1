@@ -3909,22 +3909,48 @@ body[dir="rtl"]{direction:rtl;text-align:right}
         <div id="alerts-list"></div>
       </div>
 
-      <div class="stats-row">
-        <div class="stat-card" style="animation-delay:.08s"><div class="stat-label" data-en="Traffic" data-fa="ترافیک">Traffic</div><div class="stat-val" id="sv-traffic">-<span class="stat-unit"> MB</span></div></div>
-        <div class="stat-card" style="animation-delay:.16s"><div class="stat-label" data-en="Inbounds" data-fa="اینباندها">Inbounds</div><div class="stat-val" id="sv-links">-</div></div>
-        <div class="stat-card" style="animation-delay:.24s"><div class="stat-label" data-en="Uptime" data-fa="آپتایم">Uptime</div><div class="stat-val" id="sv-uptime" style="font-size:15px">-</div></div>
-        <div class="stat-card" style="animation-delay:.32s"><div class="stat-label" data-en="Domain" data-fa="دامنه">Domain</div><div class="stat-val" id="sv-domain" style="font-size:10px;word-break:break-all;font-weight:500">-</div></div>
-      </div>
-      <div class="grid-2">
-        <div class="card">
-          <div class="card-hd"><div class="card-title" data-en="CPU" data-fa="پردازنده">CPU</div><span id="cpu-v" style="font-size:17px;font-weight:700;color:var(--gold)">-%</span></div>
-          <div class="sys-bar"><div class="sys-fill" id="cpu-b" style="background:var(--gold)"></div></div>
+      <!-- DASHBOARD STATS -->
+      <div class="dash-stats">
+        <div class="dash-info-card">
+          <div class="dash-info-item">
+            <div class="di-label" data-en="Inbounds" data-fa="اینباندها">اینباندها</div>
+            <div class="di-val" id="sv-links">-</div>
+          </div>
+          <div class="dash-info-divider"></div>
+          <div class="dash-info-item">
+            <div class="di-label" data-en="Uptime" data-fa="آپتایم">آپتایم</div>
+            <div class="di-val" id="sv-uptime">-</div>
+          </div>
+          <div class="dash-info-divider"></div>
+          <div class="dash-info-item">
+            <div class="di-label" data-en="Online Users" data-fa="کاربران آنلاین">کاربران آنلاین</div>
+            <div class="di-val" id="sv-online">0</div>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-hd"><div class="card-title" data-en="Memory" data-fa="حافظه">Memory</div><span id="mem-v" style="font-size:17px;font-weight:700;color:var(--green)">-%</span></div>
-          <div class="sys-bar"><div class="sys-fill" id="mem-b" style="background:var(--green)"></div></div>
+        <div class="dash-circles">
+          <div class="circle-stat">
+            <svg viewBox="0 0 100 100">
+              <circle class="cs-bg" cx="50" cy="50" r="42"/>
+              <circle class="cs-fill" cx="50" cy="50" r="42" id="cpu-circle" stroke="#4ade80"/>
+            </svg>
+            <div class="circle-center">
+              <div class="circle-val" id="cpu-v">-%</div>
+              <div class="circle-label" data-en="CPU" data-fa="CPU">CPU</div>
+            </div>
+          </div>
+          <div class="circle-stat">
+            <svg viewBox="0 0 100 100">
+              <circle class="cs-bg" cx="50" cy="50" r="42"/>
+              <circle class="cs-fill" cx="50" cy="50" r="42" id="mem-circle" stroke="#60a5fa"/>
+            </svg>
+            <div class="circle-center">
+              <div class="circle-val" id="mem-v">-%</div>
+              <div class="circle-label" data-en="RAM" data-fa="RAM">RAM</div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="card">
         <div class="card-hd"><div class="card-title" data-en="Hourly Traffic" data-fa="ترافیک ساعتی">Hourly Traffic</div></div>
         <div class="chart-container"><canvas id="tc"></canvas></div>
