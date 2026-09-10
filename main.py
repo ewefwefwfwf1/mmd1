@@ -3486,6 +3486,14 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   font-family:inherit;letter-spacing:.05em}
 .lang-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
 .lang-btn:hover:not(.active){border-color:rgba(59,130,246,.15);color:rgba(59,130,246,.5)}
+.logout-float{position:fixed;left:10px;top:calc(60px + var(--nav-w) + var(--nav-w) + 250px);width:var(--nav-w);
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  padding:10px 6px;border-radius:14px;
+  border:1px solid rgba(248,113,113,0.25);background:rgba(248,113,113,0.08);
+  color:rgba(248,113,113,0.8);cursor:pointer;transition:all .2s;
+  font-size:10px;font-weight:600;font-family:inherit;z-index:100}
+.logout-float:hover{background:rgba(248,113,113,0.18);border-color:rgba(248,113,113,0.5);color:var(--red)}
+.logout-float svg{flex-shrink:0}
 .logout-btn{display:flex;align-items:center;justify-content:center;padding:7px;
   border:1px solid rgba(248,113,113,.15);border-radius:8px;background:rgba(248,113,113,.06);
   color:rgba(248,113,113,.6);cursor:pointer;transition:all .2s;font-size:10px;gap:4px;
@@ -3668,6 +3676,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .pill-fill-gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
 
 @media(max-width:768px){
+  .logout-float{display:none !important}
   .sb-theme-top{display:none !important}
 
   .mob-hd{display:flex;height:65px;padding:0 20px}
@@ -3795,6 +3804,12 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 
     </div>
   </aside>
+    <!-- Logout button below sidebar -->
+    <button class="logout-float" onclick="doLogout()" title="خروج">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span>خروج</span>
+    </button>
+
 
   <!-- MAIN CONTENT -->
   <main class="main">
