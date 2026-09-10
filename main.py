@@ -1,4 +1,3 @@
-# GitHub repository URL preserved per configuration: https://github.com/luffy-sh-op/mmd_PANEL/tree/main
 import asyncio
 import json
 import os
@@ -44,7 +43,7 @@ class QueueHandler(logging.Handler):
             pass
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger("エムエムディー-Gateway")
+logger = logging.getLogger("mmd-Gateway")
 
 q_handler = QueueHandler()
 q_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
@@ -52,7 +51,7 @@ logger.addHandler(q_handler)
 logging.getLogger("uvicorn.error").addHandler(q_handler)
 logging.getLogger("uvicorn.access").addHandler(q_handler)
 
-app = FastAPI(title="エムエムディー Panel", docs_url=None, redoc_url=None)
+app = FastAPI(title="mmd Panel", docs_url=None, redoc_url=None)
 
 # Bump this on every release so the dashboard can notify already-open sessions
 # that a new version is available / was just applied.
@@ -372,7 +371,7 @@ BOT_I18N = {
         "btn_create": "➕ Create User",
         "btn_addip": "🌐 Add Clean IP",
         "btn_lang": "فارسی",
-        "welcome": "👑 <b>Welcome to エムエムディー Panel!</b>\nManage your VLESS inbounds.",
+        "welcome": "👑 <b>Welcome to mmd Panel!</b>\nManage your VLESS inbounds.",
         "lang_switched": "🌐 Language switched to <b>English</b>.",
         "stats": (
             "<b>📊 Server Status Dashboard</b>\n\n"
@@ -455,7 +454,7 @@ BOT_I18N = {
         "btn_create": "➕ ساخت کاربر",
         "btn_addip": "🌐 افزودن آی‌پی تمیز",
         "btn_lang": "English",
-        "welcome": "👑 <b>به پنل エムエムディー خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
+        "welcome": "👑 <b>به پنل mmd خوش اومدی!</b>\nاینباندهای VLESS رو مستقیم از تلگرام مدیریت کن.",
         "lang_switched": "🌐 زبان به <b>فارسی</b> تغییر یافت.",
         "stats": (
             "<b>📊 وضعیت سرور</b>\n\n"
@@ -872,7 +871,7 @@ def get_domain() -> str:
 
 def generate_vless_link(
     uuid: str,
-    remark: str = "エムエムディー",
+    remark: str = "mmd",
     address: str = None,
     port: int = None,
     protocol: str = DEFAULT_PROTOCOL,
@@ -936,7 +935,7 @@ def link_for_variant(link: dict, uid: str, auth: str, address: str = None) -> st
     protocol = f"{auth}-{variant['transport']}"
     return generate_vless_link(
         uid,
-        remark=f"エムエムディー-{link.get('label', '')}",
+        remark=f"mmd-{link.get('label', '')}",
         address=address,
         protocol=protocol,
         fingerprint=variant.get("fingerprint"),
@@ -987,7 +986,7 @@ async def ensure_default_link():
     async with LINKS_LOCK:
         if not LINKS:
             LINKS[str(uuid.uuid4())] = {
-                "label": "エムエムディー",
+                "label": "Default",
                 "limit_bytes": 0,
                 "used_bytes": 0,
                 "max_connections": 0,
@@ -2136,7 +2135,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>エムエムディー - {link['label']}</title>
+    <title>mmd - {link['label']}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{{margin:0;padding:0;box-sizing:border-box}}
@@ -2180,61 +2179,6 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
             background:radial-gradient(circle,rgba(147,197,253,0.9),rgba(59,130,246,0.3) 40%,transparent 70%);
             animation-name:orbPulse;animation-timing-function:ease-in-out;animation-iteration-count:infinite}}
         @keyframes orbPulse{{0%,100%{{opacity:.25;transform:scale(1)}}50%{{opacity:.7;transform:scale(1.15)}}}}
-        /* Blue orbs - gently floating & pulsing in subscription page */
-        .blue-orb{{
-            position:fixed;border-radius:50%;pointer-events:none;z-index:0;
-            background:radial-gradient(circle,rgba(59,130,246,0.55),rgba(37,99,235,0.22) 45%,transparent 72%);
-            filter:blur(40px);
-            opacity:0.5;
-        }}
-        .orb-1{{
-            width:300px;height:300px;top:-70px;left:-80px;
-            animation:orbFloat1 22s ease-in-out infinite, orbPulse1 8s ease-in-out infinite;
-        }}
-        .orb-2{{
-            width:240px;height:240px;top:35%;right:-70px;
-            animation:orbFloat2 26s ease-in-out infinite, orbPulse2 10s ease-in-out infinite;
-        }}
-        .orb-3{{
-            width:260px;height:260px;bottom:-80px;left:25%;
-            animation:orbFloat3 24s ease-in-out infinite, orbPulse3 9s ease-in-out infinite;
-        }}
-        .orb-4{{
-            width:200px;height:200px;top:15%;left:15%;
-            animation:orbFloat4 28s ease-in-out infinite, orbPulse4 11s ease-in-out infinite;
-        }}
-        @keyframes orbFloat1{{
-            0%,100%{{transform:translate(0,0) scale(1)}}
-            50%{{transform:translate(15px,10px) scale(1.03)}}
-        }}
-        @keyframes orbFloat2{{
-            0%,100%{{transform:translate(0,0) scale(1)}}
-            50%{{transform:translate(-18px,-12px) scale(1.04)}}
-        }}
-        @keyframes orbFloat3{{
-            0%,100%{{transform:translate(0,0) scale(1)}}
-            50%{{transform:translate(20px,-15px) scale(1.03)}}
-        }}
-        @keyframes orbFloat4{{
-            0%,100%{{transform:translate(0,0) scale(1)}}
-            50%{{transform:translate(-12px,18px) scale(1.05)}}
-        }}
-        @keyframes orbPulse1{{
-            0%,100%{{opacity:0.45}}
-            50%{{opacity:0.75}}
-        }}
-        @keyframes orbPulse2{{
-            0%,100%{{opacity:0.55}}
-            50%{{opacity:0.30}}
-        }}
-        @keyframes orbPulse3{{
-            0%,100%{{opacity:0.40}}
-            50%{{opacity:0.70}}
-        }}
-        @keyframes orbPulse4{{
-            0%,100%{{opacity:0.50}}
-            50%{{opacity:0.25}}
-        }}
         @media (prefers-reduced-motion: reduce){{
             .bg-glow::before,.bg-glow::after{{animation:none}}
             .starfield .s{{animation:none;opacity:.4}}
@@ -2391,10 +2335,6 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
 <div class="grid-bg"></div>
 <div class="starfield" id="starfield"></div>
 <div class="shooting-stars"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div>
-<div class="blue-orb orb-1"></div>
-<div class="blue-orb orb-2"></div>
-<div class="blue-orb orb-3"></div>
-<div class="blue-orb orb-4"></div>
 <div class="toast" id="toast"></div>
 
 <div class="container">
@@ -2402,7 +2342,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     <!-- Header -->
     <div class="header">
         <div class="header-logo">
-            <span class="header-title">エムエムディー</span>
+            <span class="header-title">mmd</span>
         </div>
         <div class="header-sub">{link['label']} · Connection Status</div>
     </div>
@@ -2482,7 +2422,13 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         <div id="config-list"></div>
     </div>
 
-
+    <!-- Footer links -->
+    <div class="footer-links">
+        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="footer-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            GitHub
+        </a>
+    </div>
 
 </div>
 
@@ -2515,7 +2461,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     // The #name fragment is what Hiddify shows as the profile name before
     // it even fetches the sublink, and is used as a fallback if the
     // content's own #profile-title header is missing or fails to parse.
-    const hiddifyProfileName = encodeURIComponent("エムエムディー-{link['label']}");
+    const hiddifyProfileName = encodeURIComponent("mmd-{link['label']}");
     const hiddifyImportUrl = "hiddify://import/" + subUrl + "#" + hiddifyProfileName;
 
     // Returns URL to the PNG icon for the given app name.
@@ -2713,7 +2659,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
     function downloadQR() {{
         const a = document.createElement('a');
         a.href = document.getElementById('qr-modal-img').src;
-        a.download = 'エムエムディー-config-qr.png';
+        a.download = 'mmd-config-qr.png';
         a.click();
     }}
 
@@ -2827,10 +2773,10 @@ def generate_singbox_config(link: dict, uid: str, addresses: list[str]) -> str:
             },
         }
 
-    tags = [f"エムエムディー-{link['label']}"]
+    tags = [f"mmd-{link['label']}"]
     outbounds = [_vless_outbound(tags[0], domain)]
     for i, addr in enumerate(addresses):
-        tag = f"エムエムディー-{link['label']}-IP{i+1}"
+        tag = f"mmd-{link['label']}-IP{i+1}"
         tags.append(tag)
         outbounds.append(_vless_outbound(tag, addr))
 
@@ -2895,11 +2841,11 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     for auth in active_auths:
         fp = variants[auth]["fingerprint"]
         suffix = "" if len(active_auths) == 1 else f"-{auth.upper()}"
-        name0 = f"エムエムディー-{link['label']}{suffix}"
+        name0 = f"mmd-{link['label']}{suffix}"
         proxies.append(_proxy_entry(auth, fp, name0, domain))
         proxy_name_list.append(name0)
         for i, addr in enumerate(addresses):
-            name_i = f"エムエムディー-{link['label']}{suffix}-IP{i+1}"
+            name_i = f"mmd-{link['label']}{suffix}-IP{i+1}"
             proxies.append(_proxy_entry(auth, fp, name_i, addr))
             proxy_name_list.append(name_i)
 
@@ -2907,7 +2853,7 @@ def generate_clash_config(link: dict, uid: str, addresses: list[str]) -> str:
     proxy_names = "\n".join(f'      - "{p}"' for p in proxy_name_list)
 
     return (
-        f"# エムエムディー Panel - {link['label']}\n"
+        f"# mmd Panel - {link['label']}\n"
         f"# {usage_str} | {expiry_str}\n"
         f"port: 7890\n"
         f"socks-port: 7891\n"
@@ -3013,7 +2959,7 @@ async def subscription_endpoint(uid: str, request: Request):
     headers = {
         "Content-Type": "text/plain; charset=utf-8",
         "profile-update-interval": "6",
-        "profile-title": "base64:" + base64.b64encode(f"エムエムディー-{link['label']}".encode()).decode(),
+        "profile-title": "base64:" + base64.b64encode(f"mmd-{link['label']}".encode()).decode(),
         "subscription-userinfo": f"upload={link['used_bytes']}; download=0; total={total_bytes}; expire={expire_ts}",
     }
 
@@ -3391,7 +3337,7 @@ PANEL_HTML = r"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>エムエムディー Panel</title>
+<title>mmd Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -3409,16 +3355,12 @@ PANEL_HTML = r"""<!DOCTYPE html>
   --nav-w:64px;
 }
 body.light-mode{
-  --black:#F8FAFC;--black2:#FFFFFF;--black3:#F1F5F9;
-  --surface:rgba(255,255,255,0.95);--surface2:#FFFFFF;--surface3:#F1F5F9;
-  --border:rgba(15,23,42,0.08);--border2:rgba(15,23,42,0.18);
-  --text:#0F172A;--text2:#0891B2;--text3:#64748B;
-  --gold:#0891B2;--gold2:#06B6D4;--gold3:#0E7490;
-  --gold-dim:rgba(8,145,178,0.1);--gold-dim2:rgba(8,145,178,0.06);
-  --gold-glow:0 4px 14px rgba(8,145,178,0.15);
-  --green:#16A34A;--green-dim:rgba(22,163,74,0.1);
-  --red:#DC2626;--red-dim:rgba(220,38,38,0.1);
-  --yellow:#CA8A04;
+  --black:#f0f4f8;--black2:#ffffff;--black3:#e8eef5;
+  --surface:rgba(255,255,255,0.97);--surface2:#ffffff;--surface3:#f8fafc;
+  --border:rgba(59,130,246,0.15);--border2:rgba(59,130,246,0.3);
+  --text:#0f172a;--text2:#0891b2;--text3:#64748b;
+  --gold-dim:rgba(59,130,246,0.1);--gold-dim2:rgba(59,130,246,0.06);
+  --gold-glow:0 4px 14px rgba(0,0,0,0.08);
 }
 html,body{height:100%;background:var(--black);transition:background .3s,color .3s}
 body{font-family:'Inter','Vazirmatn',sans-serif;color:var(--text);display:flex;min-height:100vh}
@@ -3447,15 +3389,10 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .light-mode .grid-fixed{opacity:.25}
 
 /* Sidebar */
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);background:rgba(10,18,35,0.55);
-  border-right:1px solid rgba(96,165,250,0.15);display:flex;flex-direction:column;z-index:100;
-  transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-.sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
-  background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
-.light-mode .sidebar::after{display:none}
-.sb-theme-top{display:flex;justify-content:center;padding:14px 0;flex-shrink:0}
-.sb-theme-top .theme-toggle{font-size:14px;padding:0;margin:0;border-radius:0;background:transparent;border:none;color:var(--text);cursor:pointer;transition:transform .2s;box-shadow:none}
-.sb-theme-top .theme-toggle:hover{background:transparent;border:none;box-shadow:none;transform:scale(1.15)}
+.sidebar{position:fixed;left:10px;top:16px;bottom:16px;width:var(--nav-w);background:rgba(10,18,35,0.55);
+  border-radius:22px;border:1px solid rgba(96,165,250,0.15);display:flex;flex-direction:column;z-index:100;
+  transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.35)}
 .sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
   border-bottom:1px solid var(--border);flex-shrink:0}
 .sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
@@ -3511,7 +3448,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .mob-social .sb-social-btn svg{width:16px;height:16px}
 
 /* Main */
-.main{margin-left:var(--nav-w);flex:1;padding:24px 28px 48px;min-height:100vh;position:relative;z-index:1}
+.main{margin-left:calc(var(--nav-w) + 20px);flex:1;padding:24px 28px 48px;min-height:100vh;position:relative;z-index:1}
 .page{display:none;animation:pgIn .35s ease}
 .page.active{display:block}
 @keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -3670,8 +3607,6 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .pill-fill-gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
 
 @media(max-width:768px){
-  .sb-theme-top{display:none !important}
-
   .mob-hd{display:flex;height:65px;padding:0 20px}
   .mob-tl-group .lang-btn{font-size:13px;padding:7px 10px;border-radius:8px}
   .theme-toggle{font-size:18px;padding:7px 10px;border-radius:8px}
@@ -3729,7 +3664,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <div class="login-wrap">
     <div class="login-box">
       <div class="login-logo">
-        <div class="login-title">エムエムディー</div>
+        <div class="login-title">mmd</div>
         <div class="login-sub">Enter your password to continue</div>
       </div>
       <div class="fg">
@@ -3749,18 +3684,30 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <div class="mob-hd">
     <div class="mob-tl-group">
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-mob">🌙</button>
-
+      <div class="lang-row">
+        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
+      </div>
+      <div class="mob-social">
+        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+      </div>
     </div>
-    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
+    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">mmd</span>
   </div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
-    <div class="sb-theme-top">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk">🌙</button>
+    <!-- Telegram & GitHub links (above the mmd logo) -->
+    <div class="sb-social" style="padding:10px 8px 0">
+      <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+      </a>
     </div>
-
-
+    <div class="sb-brand">
+      <div class="sb-title">mmd</div>
+    </div>
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
@@ -3798,10 +3745,14 @@ body[dir="rtl"]{direction:rtl;text-align:right}
       </button>
     </nav>
     <div class="sb-bottom">
-
-      <button class="logout-btn" onclick="doLogout()" style="margin-top:2px;align-self:flex-end;width:auto;padding:7px 16px">
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="margin-bottom:4px;font-size:12px">🌙 Theme</button>
+      <div class="lang-row">
+        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
+      </div>
+      <button class="logout-btn" onclick="doLogout()" style="margin-top:2px">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span data-en="Logout" data-fa="خروج">خروج</span>
+        <span data-en="Logout" data-fa="خروج">Logout</span>
       </button>
     </div>
   </aside>
@@ -4213,7 +4164,7 @@ const langMap={
 };
 function tr(key){return(langMap[lang]&&langMap[lang][key])||langMap['en'][key]||key}
 
-let lang='fa';
+let lang=localStorage.getItem('ll')||'en';
 let theme=localStorage.getItem('theme')||'dark';
 let allLinks=[];
 let cf='all';
@@ -4248,7 +4199,7 @@ function setTheme(t){
   const mb=$m('theme-btn-mob');
   const db=$m('theme-btn-desk');
   if(mb)mb.innerHTML=icon;
-  if(db)db.innerHTML=icon;
+  if(db)db.innerHTML=icon+' Theme';
   updChartColors();
 }
 function toggleTheme(){setTheme(theme==='dark'?'light':'dark')}
@@ -4266,6 +4217,7 @@ function setLang(l){
     const v=el.getAttribute('data-ph-'+l);
     if(v)el.placeholder=v;
   });
+  localStorage.setItem('ll',l);
   filterLinks();
 }
 
@@ -4617,7 +4569,7 @@ function showQR(txt){
 
 function dlQR(){
   const a=document.createElement('a');
-  a.href=$m('qr-img').src;a.download='エムエムディー-qr.png';a.click();
+  a.href=$m('qr-img').src;a.download='mmd-qr.png';a.click();
 }
 
 async function loadSettings(){
@@ -4984,7 +4936,7 @@ async function importAddrs(source){
 }
 
 setTheme(theme);
-setLang('fa');
+setLang(lang);
 checkAuth();
 let statsInterval=null;
 function startPolling(){
@@ -5010,7 +4962,7 @@ async function checkPanelVersion(isPeriodic){
       loadedPanelVersion=serverVersion;
       const lastSeen=localStorage.getItem(PANEL_VERSION_KEY);
       if(lastSeen&&lastSeen!==serverVersion){
-        toast('✅ پنل با موفقیت به نسخه‌ی v'+serverVersion+' آپدیت شد');
+        toast('✅ Panel updated successfully to v'+serverVersion);
       }
       localStorage.setItem(PANEL_VERSION_KEY,serverVersion);
     }
