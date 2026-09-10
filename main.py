@@ -4885,26 +4885,35 @@ async function loadStats(){
     if(r.status===401){showLogin();return}
     if(!r.ok)throw new Error();
     sData=await r.json();
-    $m('sv-traffic').innerHTML=(sData.total_traffic_mb||0)+'<span class="stat-unit"> MB</span>';
-    $m('sv-links').textContent=sData.links_count||0;
-    $m('sv-uptime').textContent=sData.uptime||'-';
-    $m('sv-domain').textContent=sData.domain||'-';
-    $m('nb').textContent=sData.links_count||0;
-    $m('last-up').textContent='Updated '+new Date().toLocaleTimeString();
+    const svLinks=$m('sv-links');if(svLinks)svLinks.textContent=sData.links_count||0;
+    const svUp=$m('sv-uptime');if(svUp)svUp.textContent=sData.uptime||'-';
+    const svOnline=$m('sv-online');if(svOnline)svOnline.textContent=sData.active_connections||0;
+    const nb=$m('nb');if(nb)nb.textContent=sData.links_count||0;
+    const lu=$m('last-up');if(lu)lu.textContent='Updated '+new Date().toLocaleTimeString();
     if($m('t-tr'))$m('t-tr').textContent=(sData.total_traffic_mb||0)+' MB';
     if($m('t-rq'))$m('t-rq').textContent=(sData.total_requests||0).toLocaleString();
     if($m('t-up'))$m('t-up').textContent=sData.uptime||'-';
     if(sData.cpu_percent!==undefined){
       const c=sData.cpu_percent;
-      const cc=c>80?'var(--red)':c>50?'var(--yellow)':'var(--gold)';
-      $m('cpu-v').textContent=c.toFixed(1)+'%';$m('cpu-v').style.color=cc;
-      $m('cpu-b').style.width=c+'%';$m('cpu-b').style.background=cc;
+      const cc=c>80?'#f87171':c>50?'#fbbf24':'#4ade80';
+      const cpuV=$m('cpu-v');
+      if(cpuV){cpuV.textContent=c.toFixed(0)+'%';cpuV.style.color=cc}
+      const cpuCircle=$m('cpu-circle');
+      if(cpuCircle){
+        cpuCircle.style.stroke=cc;
+        cpuCircle.style.strokeDashoffset=264-(264*c/100);
+      }
     }
     if(sData.memory_percent!==undefined){
       const m=sData.memory_percent;
-      const mc=m>80?'var(--red)':m>50?'var(--yellow)':'var(--green)';
-      $m('mem-v').textContent=m.toFixed(1)+'%';$m('mem-v').style.color=mc;
-      $m('mem-b').style.width=m+'%';$m('mem-b').style.background=mc;
+      const mc=m>80?'#f87171':m>50?'#fbbf24':'#60a5fa';
+      const memV=$m('mem-v');
+      if(memV){memV.textContent=m.toFixed(0)+'%';memV.style.color=mc}
+      const memCircle=$m('mem-circle');
+      if(memCircle){
+        memCircle.style.stroke=mc;
+        memCircle.style.strokeDashoffset=264-(264*m/100);
+      }
     }
     updChart();
   }catch(e){}
