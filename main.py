@@ -3409,12 +3409,16 @@ PANEL_HTML = r"""<!DOCTYPE html>
   --nav-w:64px;
 }
 body.light-mode{
-  --black:#f0f4f8;--black2:#ffffff;--black3:#e8eef5;
-  --surface:rgba(255,255,255,0.97);--surface2:#ffffff;--surface3:#f8fafc;
-  --border:rgba(59,130,246,0.15);--border2:rgba(59,130,246,0.3);
-  --text:#0f172a;--text2:#0891b2;--text3:#64748b;
-  --gold-dim:rgba(59,130,246,0.1);--gold-dim2:rgba(59,130,246,0.06);
-  --gold-glow:0 4px 14px rgba(0,0,0,0.08);
+  --black:#F8FAFC;--black2:#FFFFFF;--black3:#F1F5F9;
+  --surface:rgba(255,255,255,0.95);--surface2:#FFFFFF;--surface3:#F1F5F9;
+  --border:rgba(15,23,42,0.08);--border2:rgba(15,23,42,0.18);
+  --text:#0F172A;--text2:#0891B2;--text3:#64748B;
+  --gold:#0891B2;--gold2:#06B6D4;--gold3:#0E7490;
+  --gold-dim:rgba(8,145,178,0.1);--gold-dim2:rgba(8,145,178,0.06);
+  --gold-glow:0 4px 14px rgba(8,145,178,0.15);
+  --green:#16A34A;--green-dim:rgba(22,163,74,0.1);
+  --red:#DC2626;--red-dim:rgba(220,38,38,0.1);
+  --yellow:#CA8A04;
 }
 html,body{height:100%;background:var(--black);transition:background .3s,color .3s}
 body{font-family:'Inter','Vazirmatn',sans-serif;color:var(--text);display:flex;min-height:100vh}
