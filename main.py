@@ -1793,7 +1793,10 @@ async def railway_create_volume(request: Request, _=Depends(require_auth)):
 async def get_stats(_=Depends(require_auth)):
     async with connections_lock:
         conn_count = len(connections)
-        unique_uids = len(set(info.get("uuid") for info in connections.values() if info.get("uuid")))
+        now = time.time()
+        idle_timeout = 60
+        active_conns = [info for info in connections.values() if (now - info.get("last_seen", now)) < idle_timeout]
+        unique_uids = len(set(info.get("uuid") for info in active_conns if info.get("uuid")))
     return {
         "active_connections": conn_count,
         "online_users": unique_uids,
@@ -3155,6 +3158,7 @@ async def ws_to_tcp(websocket, writer, conn_id, link_uid):
             stats["total_requests"] += 1
             async with connections_lock:
                 if conn_id in connections:
+                                        connections[conn_id]["last_seen"] = time.time()
                     connections[conn_id]["bytes"] += size
             now = datetime.now(timezone.utc)
             hourly_traffic[now.strftime("%Y-%m-%d %H:00")] += size
@@ -3190,6 +3194,7 @@ async def tcp_to_ws(websocket, reader, conn_id, link_uid, resp_prefix: bytes = b
             async with connections_lock:
                 if conn_id in connections:
                     connections[conn_id]["bytes"] += size
+                                        connections[conn_id]["last_seen"] = time.time()
             now = datetime.now(timezone.utc)
             hourly_traffic[now.strftime("%Y-%m-%d %H:00")] += size
             daily_traffic[now.strftime("%Y-%m-%d")] += size
@@ -3273,6 +3278,7 @@ async def websocket_tunnel(websocket: WebSocket, auth: str, uuid: str):
             connections[conn_id] = {
                 "uuid": uuid, "ip": client_ip,
                 "connected_at": datetime.now(timezone.utc).isoformat(),
+                "last_seen": time.time(),
                 "bytes": 0,
             }
             connection_sockets[conn_id] = websocket
