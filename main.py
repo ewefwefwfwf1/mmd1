@@ -3447,7 +3447,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .light-mode .grid-fixed{opacity:.25}
 
 /* Sidebar */
-.sidebar{position:fixed;left:10px;top:40px;width:var(--nav-w);height:auto;max-height:calc(100vh - 56px);background:rgba(10,18,35,0.55);
+.sidebar{position:fixed;left:10px;top:60px;width:var(--nav-w);height:auto;max-height:calc(100vh - 76px);background:rgba(10,18,35,0.55);
   border-radius:22px;border:1px solid rgba(96,165,250,0.15);display:flex;flex-direction:column;z-index:100;
   transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   box-shadow:0 8px 32px rgba(0,0,0,0.35);overflow-y:auto;overflow-x:hidden}
