@@ -1793,8 +1793,10 @@ async def railway_create_volume(request: Request, _=Depends(require_auth)):
 async def get_stats(_=Depends(require_auth)):
     async with connections_lock:
         conn_count = len(connections)
+        unique_uids = len(set(info.get("uuid") for info in connections.values() if info.get("uuid")))
     return {
         "active_connections": conn_count,
+        "online_users": unique_uids,
         "total_traffic_mb": round(stats["total_bytes"] / (1024 * 1024), 2),
         "total_requests": stats["total_requests"],
         "total_errors": stats["total_errors"],
@@ -4887,7 +4889,7 @@ async function loadStats(){
     sData=await r.json();
     const svLinks=$m('sv-links');if(svLinks)svLinks.textContent=sData.links_count||0;
     const svUp=$m('sv-uptime');if(svUp)svUp.textContent=sData.uptime||'-';
-    const svOnline=$m('sv-online');if(svOnline)svOnline.textContent=sData.active_connections||0;
+    const svOnline=$m('sv-online');if(svOnline)svOnline.textContent=sData.online_users||0;
     const nb=$m('nb');if(nb)nb.textContent=sData.links_count||0;
     const lu=$m('last-up');if(lu)lu.textContent='Updated '+new Date().toLocaleTimeString();
     if($m('t-tr'))$m('t-tr').textContent=(sData.total_traffic_mb||0)+' MB';
