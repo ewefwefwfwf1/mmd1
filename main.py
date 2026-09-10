@@ -3646,6 +3646,14 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .alert-item{font-size:12px;margin-bottom:4px;color:var(--text);display:flex;justify-content:space-between}
 .live-logs-container{background:#000;border:1px solid var(--border);border-radius:8px;padding:12px;
   font-family:monospace;font-size:11px;color:#3b82f6;height:200px;overflow-y:auto;white-space:pre-wrap}
+.login-stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.login-stars .ls{position:absolute;border-radius:50%;background:#fff;
+  box-shadow:0 0 6px rgba(147,197,253,0.9),0 0 12px rgba(59,130,246,0.6);
+  animation:starBlink 2.5s ease-in-out infinite}
+@keyframes starBlink{
+  0%,100%{opacity:0.15;transform:scale(0.85)}
+  50%{opacity:1;transform:scale(1.15)}
+}
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%;position:relative;z-index:1}
 .login-wrap::before,.login-wrap::after{content:"";position:absolute;border-radius:50%;pointer-events:none;z-index:0;
   background:radial-gradient(circle,rgba(59,130,246,0.75),rgba(37,99,235,0.4) 45%,transparent 72%);
@@ -3756,6 +3764,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 
 <!-- LOGIN PAGE -->
 <div id="login-page" style="display:none;width:100%">
+  <div class="login-stars" id="login-stars"></div>
   <div class="login-wrap">
     <div class="login-box">
       <div class="login-logo">
@@ -5013,6 +5022,26 @@ async function importAddrs(source){
   }catch(e){toast('Error importing',true)}
 }
 
+// Stars for login page
+(function generateLoginStars(){
+  const c = document.getElementById('login-stars');
+  if(!c) return;
+  const N = 40;
+  let html = '';
+  for(let i = 0; i < N; i++){
+    const size = (Math.random() * 2 + 1).toFixed(1);
+    const top = (Math.random() * 100).toFixed(2);
+    const left = (Math.random() * 100).toFixed(2);
+    const dur = (Math.random() * 3 + 2).toFixed(2);
+    const delay = (Math.random() * 4).toFixed(2);
+    html += `<span class="ls" style="width:${size}px;height:${size}px;top:${top}%;left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s"></span>`;
+  }
+  c.innerHTML = html;
+})();
+
+setTheme(theme);
+setLang(lang);
+checkAuth();
 setTheme(theme);
 setLang('fa');
 checkAuth();
