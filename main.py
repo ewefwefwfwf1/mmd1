@@ -3486,7 +3486,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   font-family:inherit;letter-spacing:.05em}
 .lang-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
 .lang-btn:hover:not(.active){border-color:rgba(59,130,246,.15);color:rgba(59,130,246,.5)}
-.logout-float{position:fixed;left:10px;top:calc(60px + 320px);width:var(--nav-w);
+.logout-float{position:fixed;left:10px;top:calc(60px + 500px);width:var(--nav-w);
   display:flex;align-items:center;justify-content:center;gap:4px;
   padding:10px 6px;border-radius:14px;
   border:1px solid rgba(248,113,113,0.25);background:rgba(248,113,113,0.08);
