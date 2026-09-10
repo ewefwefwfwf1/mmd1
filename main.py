@@ -3812,7 +3812,9 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 
 
   <!-- MAIN CONTENT -->
-  <main class="main">
+  <main class="main">    <div style="text-align:center;padding:0 0 20px 0;">
+      <img src="/client/logo.png" alt="logo" style="max-width:340px;width:100%;height:auto;filter:drop-shadow(0 0 20px rgba(59,130,246,0.5));">
+    </div>
 
     <!-- Dashboard -->
     <section class="page active" id="page-dashboard">
