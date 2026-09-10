@@ -4595,7 +4595,7 @@ function fillVariantFields(prefix,auth,variant){
 
 async function createLink(){
   const label=$m('nl').value.trim()||'New Link';
-  if(!/^[a-zA-Z0-9\-_. \u0600-\u06FF\u200c\u200d\u2600-\u27BF\uFE0F\s]+$/u.test(label)){toast('Only English letters allowed',true);return}
+  if(!/^[a-zA-Z0-9\-_. ]+$/.test(label)){toast('Only English letters allowed',true);return}
   if(!$m('n_vless_enabled').checked && !$m('n_trojan_enabled').checked){toast('Enable at least one protocol (VLESS or Trojan)',true);return}
   const v=parseFloat($m('nv').value)||0;
   const mc=parseInt($m('nc').value)||0;
