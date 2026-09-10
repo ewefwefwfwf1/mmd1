@@ -3333,341 +3333,207 @@ app.include_router(xhttp_router)
 
 # ── HTML Panel (Gold/Neon Theme) ─────────────────────────────────────────
 PANEL_HTML = r"""<!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>mmd Panel</title>
+<title>エムエムディー Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --gold:#3b82f6;--gold2:#60a5fa;--gold3:#2563eb;--gold-dim:rgba(59,130,246,0.18);
-  --black:#060b16;--black2:#0a1220;--black3:#111b2e;
-  --surface:rgba(12,22,42,0.65);--surface2:rgba(18,32,58,0.55);--surface3:rgba(28,45,75,0.5);
-  --border:rgba(96,165,250,0.18);--border2:rgba(96,165,250,0.35);
-  --text:rgba(255,255,255,0.94);--text2:rgba(147,197,253,0.85);--text3:rgba(255,255,255,0.42);
+  --gold:#3b82f6; --gold2:#60a5fa; --gold3:#2563eb; --gold-dim:rgba(59,130,246,0.18);
+  --black:#020a18; --black2:#0a1220; --black3:#0d1b30;
+  --surface:rgba(8, 20, 40, 0.85); --surface2:rgba(12, 25, 50, 0.7); --surface3:rgba(25, 45, 80, 0.7);
+  --border:rgba(59,130,246,0.2); --border2:rgba(59,130,246,0.4);
+  --text:rgba(255,255,255,0.95); --text2:rgba(147,197,253,0.85); --text3:rgba(255,255,255,0.45);
   --gold-glow:0 0 28px rgba(59,130,246,0.35);
-  --green:#4ade80;--green-dim:rgba(74,222,128,0.12);
-  --red:#f87171;--red-dim:rgba(248,113,113,0.12);
-  --yellow:#fbbf24;
-  --nav-w:64px;
+  --green:#4ade80; --red:#ef4444; --yellow:#fbbf24;
+  --nav-w:70px;
 }
 body.light-mode{
-  --black:#f0f4f8;--black2:#ffffff;--black3:#e8eef5;
-  --surface:rgba(255,255,255,0.97);--surface2:#ffffff;--surface3:#f8fafc;
-  --border:rgba(59,130,246,0.15);--border2:rgba(59,130,246,0.3);
-  --text:#0f172a;--text2:#0891b2;--text3:#64748b;
-  --gold-dim:rgba(59,130,246,0.1);--gold-dim2:rgba(59,130,246,0.06);
-  --gold-glow:0 4px 14px rgba(0,0,0,0.08);
+  --black:#f0f4f8; --black2:#ffffff; --black3:#e8eef5;
+  --surface:rgba(255,255,255,0.97); --surface2:#ffffff; --surface3:#f8fafc;
+  --border:rgba(59,130,246,0.15); --border2:rgba(59,130,246,0.3);
+  --text:#0f172a; --text2:#0891b2; --text3:#64748b;
+  --gold-dim:rgba(59,130,246,0.1); --gold-glow:0 4px 14px rgba(0,0,0,0.08);
 }
 html,body{height:100%;background:var(--black);transition:background .3s,color .3s}
-body{font-family:'Inter','Vazirmatn',sans-serif;color:var(--text);display:flex;min-height:100vh}
+body{font-family:'Vazirmatn','Inter',sans-serif;color:var(--text);display:flex;min-height:100vh;overflow-x:hidden}
 body[dir="rtl"]{direction:rtl;text-align:right}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.2);border-radius:4px}
-.bg-fixed{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-  background:
-    radial-gradient(ellipse 80% 55% at 5% 15%,rgba(37,99,235,0.4),transparent 50%),
-    radial-gradient(ellipse 55% 45% at 95% 5%,rgba(59,130,246,0.28),transparent 45%),
-    radial-gradient(ellipse 65% 50% at 75% 90%,rgba(29,78,216,0.32),transparent 50%),
-    radial-gradient(ellipse 45% 35% at 15% 85%,rgba(96,165,250,0.18),transparent 45%),
-    linear-gradient(165deg,#060b16 0%,#0a1628 45%,#0c1a30 100%)}
-.bg-fixed::before{content:"";position:absolute;width:480px;height:480px;border-radius:50%;
-  top:-100px;left:-80px;background:radial-gradient(circle,rgba(59,130,246,0.45),transparent 68%);
-  filter:blur(50px);animation:orbFloat 14s ease-in-out infinite}
-.bg-fixed::after{content:"";position:absolute;width:400px;height:400px;border-radius:50%;
-  bottom:-60px;right:-50px;background:radial-gradient(circle,rgba(37,99,235,0.38),transparent 68%);
-  filter:blur(55px);animation:orbFloat 18s ease-in-out infinite reverse}
-@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,25px) scale(1.1)}}
+
+/* حباب‌های متحرک آبی */
+@keyframes bubbleUp{
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.3); opacity: 0; }
+}
+.bubbles {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.bubble {
+  position: absolute; bottom: -50px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.4), rgba(59,130,246,0.1));
+  animation: bubbleUp 12s infinite ease-in;
+}
+.light-mode .bubble { background: rgba(59,130,246,0.2); }
+
+/* Backdrop */
+.bg-fixed{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background: radial-gradient(ellipse 80% 55% at 5% 15%,rgba(37,99,235,0.35),transparent 50%),
+              radial-gradient(ellipse 55% 45% at 95% 5%,rgba(59,130,246,0.25),transparent 45%),
+              linear-gradient(160deg,#020a18 0%,#04122b 45%,#061832 100%);}
 .light-mode .bg-fixed{background:none}
-.light-mode .bg-fixed::before,.light-mode .bg-fixed::after{display:none}
-.grid-fixed{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.35;
+.grid-fixed{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.3;
   background-image:linear-gradient(rgba(96,165,250,0.05) 1px,transparent 1px),
                    linear-gradient(90deg,rgba(96,165,250,0.05) 1px,transparent 1px);
   background-size:56px 56px}
-.light-mode .grid-fixed{opacity:.25}
 
 /* Sidebar */
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);background:rgba(10,18,35,0.55);
-  border-right:1px solid rgba(96,165,250,0.15);display:flex;flex-direction:column;z-index:100;
-  transition:all .3s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-.sidebar::after{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
-  background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
-.light-mode .sidebar::after{display:none}
-.sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
-  border-bottom:1px solid var(--border);flex-shrink:0}
-.sb-hat{filter:drop-shadow(0 0 10px rgba(59,130,246,.5));transition:filter .3s}
-.sb-hat:hover{filter:drop-shadow(0 0 18px rgba(59,130,246,.9))}
-.sb-title{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;color:rgba(59,130,246,.6);
-  text-transform:uppercase;white-space:nowrap;overflow:hidden}
-.sb-nav{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:12px;
-  gap:2px;padding-left:8px;padding-right:8px}
-.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-  padding:10px 6px;border-radius:12px;color:var(--text3);cursor:pointer;
-  transition:all .2s cubic-bezier(.4,0,.2,1);border:1px solid transparent;position:relative;
-  overflow:hidden;text-decoration:none;background:none;width:100%;font-family:inherit}
-.nav-item::before{content:'';position:absolute;inset:0;border-radius:12px;
-  background:linear-gradient(135deg,var(--gold-dim),transparent);opacity:0;transition:opacity .2s}
-.nav-item:hover{color:var(--gold);border-color:rgba(59,130,246,.12)}
-.nav-item:hover::before{opacity:1}
-.nav-item.active{color:#fff;border-color:rgba(59,130,246,.4);background:linear-gradient(135deg,rgba(59,130,246,0.45),rgba(37,99,235,0.35));
-  box-shadow:0 0 20px rgba(59,130,246,.25),inset 0 1px 0 rgba(255,255,255,.1)}
-.nav-item.active::before{opacity:1}
-.nav-icon{width:18px;height:18px;flex-shrink:0;transition:transform .2s}
-.nav-item:hover .nav-icon,.nav-item.active .nav-icon{transform:scale(1.1)}
-.nav-label{font-size:8.5px;font-weight:600;letter-spacing:.05em;white-space:nowrap;overflow:hidden}
-.nav-badge{position:absolute;top:5px;right:5px;background:var(--gold);color:#000;font-size:8px;
-  font-weight:800;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;
-  justify-content:center;padding:0 3px}
-.sb-bottom{padding:8px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0}
-.lang-row{display:flex;gap:4px}
-.lang-btn{flex:1;padding:5px 2px;border:1px solid var(--border);border-radius:7px;background:none;
-  color:var(--text3);font-size:9px;font-weight:700;cursor:pointer;transition:all .2s;
-  font-family:inherit;letter-spacing:.05em}
-.lang-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
-.lang-btn:hover:not(.active){border-color:rgba(59,130,246,.15);color:rgba(59,130,246,.5)}
-.logout-btn{display:flex;align-items:center;justify-content:center;padding:7px;
-  border:1px solid rgba(248,113,113,.15);border-radius:8px;background:rgba(248,113,113,.06);
-  color:rgba(248,113,113,.6);cursor:pointer;transition:all .2s;font-size:10px;gap:4px;
-  font-weight:600;font-family:inherit}
-.logout-btn:hover{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3);color:var(--red)}
-.theme-toggle{background:transparent;border:1px solid var(--border);color:var(--text3);
-  border-radius:7px;padding:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .2s}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);background:var(--surface);
+  border-right:1px solid rgba(59,130,246,0.3);display:flex;flex-direction:column;z-index:100;
+  border-top-right-radius:15px;border-bottom-right-radius:15px;
+  transition:transform 0.5s cubic-bezier(.4,0,.2,1), width 0.3s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow: 0 0 20px rgba(59,130,246,0.1);}
+.light-mode .sidebar{background: #ffffff; border-right:1px solid rgba(0,0,0,0.1);}
+
+/* فلش چپ و راست */
+.toggle-btn{position:absolute;top:18px;left:-14px;width:28px;height:28px;background:var(--gold);
+  border:2px solid var(--black);color:#fff;border-radius:50%;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;z-index:105;transition:all 0.3s;box-shadow:0 0 15px rgba(59,130,246,0.6);}
+.light-mode .toggle-btn{border-color:#fff}
+.toggle-btn:active{transform:scale(0.9)}
+.sidebar.collapsed { transform: translateX(calc(-100% + 15px)); }
+.sidebar.collapsed .toggle-btn { transform: rotate(180deg); left: 15px; }
+
+.sb-brand{height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-bottom:1px solid var(--border)}
+.sb-logo-small{width:35px;height:35px;object-fit:contain;margin-bottom:5px;filter:drop-shadow(0 0 5px rgba(59,130,246,0.8))}
+.sb-title{font-family:'Vazirmatn',sans-serif;font-size:8px;font-weight:900;color:var(--gold2);letter-spacing:1px}
+
+.sb-nav{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:12px;gap:4px;margin-top:20px}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  padding:10px 0;border-radius:10px;color:var(--text3);cursor:pointer;position:relative;transition:all 0.2s;border:none;background:none;width:100%}
+.nav-item:hover, .nav-item.active{background:rgba(59,130,246,0.2);color:#fff;box-shadow:0 0 10px rgba(59,130,246,0.3)}
+.nav-icon{width:18px;height:18px}
+.nav-label{font-size:8px;font-weight:600}
+.nav-badge{position:absolute;top:5px;right:5px;background:var(--gold);color:#000;font-size:8px;font-weight:800;min-width:14px;height:14px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+
+.sb-bottom{padding:15px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px}
+.theme-toggle{background:transparent;border:1px solid var(--border);color:var(--text3);border-radius:8px;padding:8px;cursor:pointer;font-size:10px;transition:all .2s}
 .theme-toggle:hover{background:var(--surface3);color:var(--gold);border-color:var(--gold)}
 
-/* Social links in sidebar */
-.sb-social{display:flex;gap:4px;margin-bottom:2px}
-.sb-social-btn{flex:1;display:flex;align-items:center;justify-content:center;padding:7px 4px;
-  border:1px solid var(--border);border-radius:8px;color:var(--text3);cursor:pointer;
-  transition:all .2s;text-decoration:none;background:none}
-.sb-social-btn:hover{border-color:var(--border2);color:var(--gold);background:var(--gold-dim);
-  box-shadow:0 0 10px rgba(59,130,246,0.1)}
-.sb-social-btn svg{width:14px;height:14px}
-.mob-social{display:none;gap:8px;align-items:center}
-.mob-social .sb-social-btn{padding:7px}
-.mob-social .sb-social-btn svg{width:16px;height:16px}
+.logout-btn{display:flex;align-items:center;justify-content:center;padding:8px;border:1px solid rgba(239,68,68,0.4);border-radius:8px;background:rgba(239,68,68,0.1);color:var(--red);cursor:pointer;transition:all .2s;font-size:11px;gap:5px;font-weight:700}
+.logout-btn:hover{background:rgba(239,68,68,0.3);border-color:var(--red);color:#fff}
 
 /* Main */
-.main{margin-left:var(--nav-w);flex:1;padding:24px 28px 48px;min-height:100vh;position:relative;z-index:1}
+.main{margin-right:var(--nav-w);flex:1;padding:24px 28px;position:relative;z-index:1;transition:margin 0.5s ease}
+.sidebar.collapsed ~ .main { margin-right: 15px; }
+
+/* لوگو و اسم بالا */
+.main-header{text-align:center;margin-bottom:25px;padding-top:10px}
+.main-logo{width:120px;max-height:80px;object-fit:contain;margin-bottom:5px;filter:drop-shadow(0 0 15px rgba(59,130,246,0.6))}
+.main-title{font-family:'Vazirmatn',sans-serif;font-size:34px;font-weight:900;color:#fff;letter-spacing:3px;text-shadow:0 0 20px rgba(59,130,246,0.8)}
+.light-mode .main-title{color:#0f172a;text-shadow:none}
+
 .page{display:none;animation:pgIn .35s ease}
 .page.active{display:block}
 @keyframes pgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.page-header{margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.page-title{font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:.04em}
-.page-sub{font-size:11px;color:var(--text3);margin-top:3px;letter-spacing:.02em}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.stat-card{background:rgba(18,32,58,0.5);border:1px solid rgba(96,165,250,0.18);border-radius:16px;
-  padding:16px;position:relative;overflow:hidden;transition:all .25s;animation:cIn .5s ease both;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 4px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.05)}
-.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(59,130,246,0.4),transparent)}
-.light-mode .stat-card::before{display:none}
-.stat-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--gold-glow)}
-@keyframes cIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.stat-label{font-size:9.5px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
-.stat-val{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-.02em}
-.stat-unit{font-size:11px;font-weight:400;color:var(--text3)}
-.card{background:rgba(18,32,58,0.5);border:1px solid rgba(96,165,250,0.18);border-radius:16px;padding:16px;
-  margin-bottom:10px;position:relative;overflow:hidden;transition:all .25s;animation:cIn .5s ease both;
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  box-shadow:0 4px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.05)}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(59,130,246,0.2),transparent)}
-.light-mode .card::before{display:none}
+.page-header{margin-bottom:20px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.page-title{font-family:'Vazirmatn',sans-serif;font-size:18px;font-weight:800;color:var(--text);letter-spacing:.04em}
+.page-sub{font-size:12px;color:var(--text3);margin-top:3px}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:15px}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05)}
+.stat-label{font-size:10px;color:var(--text3);font-weight:700;margin-bottom:8px}
+.stat-val{font-size:20px;font-weight:800;color:var(--text)}
+
+.card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.05)}
 .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.card-title{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
-.chart-container{height:170px;width:100%}
-.btn{font-family:inherit;font-size:11.5px;font-weight:700;border-radius:8px;padding:7px 14px;
-  cursor:pointer;display:inline-flex;align-items:center;gap:5px;border:none;transition:all .2s;letter-spacing:.03em}
-.btn-gold{background:linear-gradient(135deg,#3b82f6,#60a5fa);color:#fff;box-shadow:0 0 16px rgba(59,130,246,.25)}
-.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 0 24px rgba(59,130,246,.4)}
+.card-title{font-size:14px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+.chart-container{height:180px;width:100%}
+
+.sys-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:10px}
+.sys-fill{height:100%;border-radius:3px;transition:width .4s}
+
+.btn{font-family:inherit;font-size:13px;font-weight:700;border-radius:8px;padding:8px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;border:none;transition:all .2s}
+.btn-gold{background:linear-gradient(135deg,#3b82f6,#60a5fa);color:#fff;box-shadow:0 0 16px rgba(59,130,246,0.25)}
 .btn-ghost{background:var(--surface3);color:var(--text);border:1px solid var(--border)}
-.btn-danger{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,113,113,.15)}
-.btn-sm{padding:4px 9px;font-size:10.5px}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-danger{background:var(--red);color:#fff;border:1px solid rgba(239,68,68,0.5)}
+.btn-sm{padding:5px 10px;font-size:11px}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .tbl-wrap{overflow-x:auto}
 .tbl{width:100%;border-collapse:collapse}
-.tbl th{text-align:left;font-size:9.5px;font-weight:700;color:var(--text3);padding:9px 11px;
-  text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);background:var(--surface3)}
+.tbl th{text-align:right;font-size:10px;font-weight:700;color:var(--text3);padding:9px 11px;border-bottom:1px solid var(--border)}
 .tbl td{padding:9px 11px;border-bottom:1px solid var(--border);font-size:12.5px;vertical-align:middle}
-.tag{display:inline-flex;align-items:center;padding:2px 7px;border-radius:4px;font-size:9px;
-  font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.tag{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:800}
 .tag-vless{background:var(--gold-dim);color:var(--gold);border:1px solid var(--border)}
-.tag-port{background:rgba(167,139,250,.1);color:#a78bfa;border:1px solid rgba(167,139,250,.2)}
-.tag-on{background:var(--green-dim);color:var(--green);border:1px solid rgba(74,222,128,.2)}
-.tag-off{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,113,113,.2)}
+.tag-on{background:rgba(74,222,128,.12);color:var(--green);border:1px solid rgba(74,222,128,.2)}
+.tag-off{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+
 .pill{display:flex;align-items:center;gap:7px;font-size:11px}
-.pill-used{color:var(--text);font-weight:600}
 .pill-bar{flex:1;height:4px;background:var(--border);border-radius:2px;min-width:40px}
 .pill-fill{height:100%;border-radius:2px;transition:width .4s}
-.pill-lim{color:var(--text3);font-size:10px}
-.toggle{width:32px;height:17px;border-radius:9px;background:var(--surface3);position:relative;
-  cursor:pointer;transition:all .28s;border:1px solid var(--border);flex-shrink:0}
-.toggle::after{content:'';position:absolute;width:11px;height:11px;border-radius:50%;
-  background:var(--text3);top:2px;left:2px;transition:all .28s cubic-bezier(.4,0,.2,1)}
-.toggle.on{background:var(--green);border-color:var(--green);box-shadow:0 0 10px rgba(74,222,128,.3)}
-.toggle.on::after{left:17px;background:#fff}
-.sys-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.sys-fill{height:100%;border-radius:3px;transition:width .4s}
-.sl-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
-.sl-k{color:var(--text3);font-size:11.5px}
-.sl-v{color:var(--text);font-weight:600;font-size:11.5px}
+.toggle{width:32px;height:17px;border-radius:9px;background:var(--surface3);position:relative;cursor:pointer;transition:all .28s;border:1px solid var(--border);flex-shrink:0}
+.toggle::after{content:'';position:absolute;width:11px;height:11px;border-radius:50%;background:var(--text3);top:2px;right:2px;transition:all .28s}
+.toggle.on{background:var(--green);border-color:var(--green)}
+.toggle.on::after{right:17px;background:#fff}
+
+.act-btn{font-family:inherit;font-size:10px;font-weight:700;border-radius:6px;padding:5px 8px;cursor:pointer;display:inline-flex;align-items:center;gap:3px;border:1px solid var(--border);background:var(--surface3);color:var(--text2)}
+.act-copy{color:var(--gold)}
+.act-del{background:rgba(239,68,68,.1);color:var(--red);border-color:rgba(239,68,68,.2)}
+
 .fg{display:flex;flex-direction:column;gap:4px;margin-bottom:11px}
-.fl{font-size:9.5px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em}
-.fi,.fs{padding:8px 12px;border-radius:8px;border:1px solid var(--border);font-family:inherit;
-  font-size:12.5px;outline:none;color:var(--text);background:var(--surface);transition:all .2s}
-.fi:focus,.fs:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(59,130,246,.08)}
-.fr{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
-.fr .fg{margin-bottom:0;flex:1;min-width:90px}
-.act-btn{font-family:inherit;font-size:9.5px;font-weight:700;border-radius:6px;padding:4px 8px;
-  cursor:pointer;display:inline-flex;align-items:center;gap:3px;border:1px solid;transition:all .18s}
-.act-copy{background:var(--gold-dim);color:var(--gold);border-color:var(--border)}
-.act-sub{background:var(--green-dim);color:var(--green);border-color:rgba(74,222,128,.2)}
-.act-qr{background:rgba(167,139,250,.1);color:#a78bfa;border-color:rgba(167,139,250,.2)}
-.act-edit{background:rgba(251,191,36,.08);color:var(--yellow);border-color:rgba(251,191,36,.2)}
-.act-del{background:var(--red-dim);color:var(--red);border-color:rgba(248,113,113,.18)}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);
-  background:var(--surface);color:var(--gold);border:1px solid var(--border2);border-radius:10px;
-  padding:12px 20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:999;
-  backdrop-filter:blur(24px);box-shadow:var(--gold-glow)}
+.fl{font-size:10px;font-weight:700;color:var(--text2);margin-bottom:2px}
+.fi,.fs{padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-family:inherit;font-size:13px;outline:none;color:var(--text);background:var(--surface3);width:100%}
+.fi:focus,.fs:focus{border-color:var(--gold)}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--surface);color:var(--gold);border:1px solid var(--border2);border-radius:10px;padding:12px 20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;z-index:999}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.mo{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;
-  align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
 .mo.show{display:flex}
-.mo-box{background:rgba(15,28,52,0.7);border:1px solid rgba(96,165,250,0.25);border-radius:18px;padding:24px;
-  width:100%;max-width:460px;position:relative;box-shadow:var(--gold-glow);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  transform:scale(.92);opacity:0;transition:all .38s cubic-bezier(.34,1.56,.64,1)}
-.mo.show .mo-box{transform:scale(1);opacity:1}
-.mo-title{font-family:'Cinzel',serif;font-size:14px;font-weight:700;margin-bottom:16px;
-  color:var(--gold);letter-spacing:.06em}
-.mo-close{position:absolute;top:14px;right:14px;background:var(--surface3);border:1px solid var(--border);
-  color:var(--text3);width:30px;height:30px;border-radius:7px;cursor:pointer;display:flex;
-  align-items:center;justify-content:center;font-size:14px}
-.qr-box{text-align:center;padding:20px;background:var(--surface3);border-radius:12px;
-  border:1px solid var(--border);margin-top:12px}
-.qr-box img{max-width:200px;border-radius:8px;border:3px solid var(--border);box-shadow:var(--gold-glow)}
-.tb{display:flex;align-items:center;gap:7px;margin-bottom:14px;flex-wrap:wrap}
-.search-wrap{flex:1;min-width:160px;position:relative}
-.search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3)}
-.search-wrap input{width:100%;padding:9px 12px 9px 34px;background:var(--surface2);
-  border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;
-  font-family:inherit;outline:none}
-.search-wrap input:focus{border-color:var(--gold)}
-.filter-chips{display:flex;gap:3px;padding:3px;background:var(--surface2);border:1px solid var(--border);border-radius:8px}
-.chip{padding:7px 12px;border-radius:6px;font-size:11.5px;font-weight:700;color:var(--text3);
-  cursor:pointer;border:none;background:none;transition:all .18s;font-family:inherit}
-.chip.active{background:var(--gold);color:#fff}
-.m-cards{display:none;flex-direction:column;gap:12px}
-.m-card{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--surface2)}
-.m-card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.m-card-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-.empty{text-align:center;padding:36px;color:var(--text3)}
-.mob-hd{display:none;position:fixed;top:0;left:0;right:0;background:rgba(10,18,35,0.6);
-  border-bottom:1px solid rgba(96,165,250,0.15);z-index:90;align-items:center;justify-content:space-between;
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-.mob-tl-group{display:flex;gap:10px;align-items:center;flex-direction:row}
-.logout-mob{display:none;color:var(--red) !important}
-.logout-mob:hover{background:var(--red-dim) !important;border-color:rgba(248,113,113,.3) !important}
-.alerts-box{background:rgba(248,113,113,.08);border:1px dashed rgba(248,113,113,.3);
-  border-radius:12px;padding:14px;margin-bottom:14px;display:none}
-.alerts-title{color:var(--red);font-size:12.5px;font-weight:700;margin-bottom:8px;
-  display:flex;align-items:center;gap:6px}
-.alert-item{font-size:12px;margin-bottom:4px;color:var(--text);display:flex;justify-content:space-between}
-.live-logs-container{background:#000;border:1px solid var(--border);border-radius:8px;padding:12px;
-  font-family:monospace;font-size:11px;color:#3b82f6;height:200px;overflow-y:auto;white-space:pre-wrap}
-.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%}
-.login-box{background:rgba(15,28,52,0.55);border:1px solid rgba(96,165,250,0.25);border-radius:20px;
-  padding:36px 32px;width:100%;max-width:360px;box-shadow:var(--gold-glow);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-.login-logo{text-align:center;margin-bottom:28px}
-.login-title{font-family:'Cinzel',serif;font-size:22px;font-weight:900;color:var(--gold);letter-spacing:.1em}
-.login-sub{font-size:11px;color:var(--text3);margin-top:6px}
+.mo-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:24px;width:100%;max-width:460px;position:relative;box-shadow:var(--gold-glow)}
+.mo-title{font-family:'Vazirmatn',sans-serif;font-size:16px;font-weight:900;margin-bottom:16px;color:var(--gold)}
+.mo-close{position:absolute;top:14px;left:14px;background:var(--surface3);border:none;color:var(--text3);width:30px;height:30px;border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
+.qr-box{text-align:center;padding:20px;background:var(--surface3);border-radius:12px;border:1px solid var(--border);margin-top:12px}
+.qr-box img{max-width:200px;border-radius:8px}
 
-/* Notification styles */
-.notif-item{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);transition:all .2s}
-.notif-item:last-child{border-bottom:none}
-.notif-item:hover{background:var(--surface3)}
-.notif-item.unseen{background:var(--gold-dim)}
-.notif-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
-.notif-icon.update{background:rgba(56,189,248,.12);color:#38bdf8}
-.notif-icon.quota{background:var(--red-dim);color:var(--red)}
-.notif-icon.expiry{background:rgba(251,191,36,.12);color:var(--yellow)}
-.notif-icon.info{background:rgba(74,222,128,.12);color:var(--green)}
-.notif-body{flex:1;min-width:0}
-.notif-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
-.notif-msg{font-size:11px;color:var(--text3);line-height:1.4}
-.notif-time{font-size:10px;color:var(--text3);margin-top:4px}
-.notif-link{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--gold);text-decoration:none;margin-top:4px}
-.notif-link:hover{text-decoration:underline}
-.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:10px}
-
-/* Gold accent on progress fills */
-.pill-fill-gold{background:linear-gradient(90deg,var(--gold),var(--gold2))}
-
+.m-cards{display:none}
 @media(max-width:768px){
-  .mob-hd{display:flex;height:65px;padding:0 20px}
-  .mob-tl-group .lang-btn{font-size:13px;padding:7px 10px;border-radius:8px}
-  .theme-toggle{font-size:18px;padding:7px 10px;border-radius:8px}
-  .mob-hd span{font-size:22px !important}
-  .sidebar{transform:none !important;width:100% !important;height:78px;top:auto;bottom:0;
-    border-right:none;border-top:1px solid var(--border);flex-direction:row;padding:0;
-    background:var(--surface);box-shadow:0 -4px 20px rgba(0,0,0,.5)}
-  .light-mode .sidebar{box-shadow:0 -4px 20px rgba(0,0,0,.06)}
-  .sb-brand,.sb-bottom{display:none !important}
-  .sidebar .sb-social{display:none !important}
-  .mob-social{display:flex !important}
-  .sb-nav{flex-direction:row;width:100%;padding:0;align-items:center;justify-content:space-between;gap:0}
-  .nav-item{flex:1;padding:12px 0;border-radius:0}
-  .nav-icon{width:24px;height:24px;margin-bottom:5px}
-  .nav-label{font-size:10px;letter-spacing:0}
-  .nav-badge{top:6px;right:50%;transform:translateX(10px);min-width:18px;height:18px;font-size:10px}
-  .logout-mob{display:flex}
-  .main{margin-left:0;padding-top:85px;padding-left:18px;padding-right:18px;padding-bottom:100px}
-  .page-title{font-size:24px}
-  .page-sub{font-size:13px;margin-top:5px}
-  .btn{font-size:14px;padding:10px 18px}
-  .btn-sm{font-size:12px;padding:8px 14px}
-  .stats-row{grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-  .stat-card{padding:22px;border-radius:16px}
-  .stat-label{font-size:12px;margin-bottom:12px}
-  .stat-val{font-size:26px}
-  .stat-unit{font-size:14px}
-  .grid-2{grid-template-columns:1fr;gap:14px;margin-bottom:14px}
-  .card{padding:22px;border-radius:16px;margin-bottom:14px}
-  .card-title{font-size:16px;margin-bottom:16px}
-  .chart-container{height:220px;width:100%}
-  #cpu-v,#mem-v{font-size:22px !important}
-  .sl-k,.sl-v{font-size:14px;padding:14px 0}
-  .tbl-wrap{display:none}
-  .m-cards{display:flex}
-  .m-card{padding:18px;border-radius:14px}
-  .m-card-hd span{font-size:16px !important}
-  .pill-used{font-size:13px}
-  .pill-lim{font-size:12px}
-  .m-card-acts .act-btn{font-size:12px;padding:8px 14px;border-radius:8px}
-  .mo-box{padding:28px 24px;border-radius:20px}
-  .fi,.fs{font-size:16px;padding:12px 16px}
-  .fl{font-size:11px;margin-bottom:6px}
+  .mob-hd{display:flex;height:65px;padding:0 20px;position:fixed;top:0;left:0;right:0;background:var(--surface);z-index:90;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+  .toggle-btn{top:10px;left:5px}
+  .sidebar{transform:translateX(calc(-100% + 15px)); width:70px; top:0; bottom:0; position:fixed; z-index:100}
+  .sidebar.collapsed { transform: translateX(calc(-100% + 15px)); }
+  .main{margin-right:0;padding-top:85px;padding-right:15px}
+  .sidebar.collapsed ~ .main { margin-right:0; }
+  .sidebar.collapsed { transform: translateX(-100%); } /* Hide fully on mobile */
+  .sb-nav{justify-content:flex-start;margin-top:40px}
+  .sb-bottom{display:none}
+  .main-header .main-title{font-size:26px}
+  .main-header .main-logo{width:80px}
 }
-@media(max-width:460px){.stats-row{grid-template-columns:1fr;gap:14px}}
+
+@media(max-width:460px){.stats-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
+
+<!-- حباب های متحرک -->
+<div class="bubbles" id="bubbles-container"></div>
+
 <div class="bg-fixed"></div>
 <div class="grid-fixed"></div>
 <div class="toast" id="toast"></div>
 
-<!-- LOGIN PAGE -->
+<!-- LOGIN -->
 <div id="login-page" style="display:none;width:100%">
-  <div class="login-wrap">
-    <div class="login-box">
-      <div class="login-logo">
-        <div class="login-title">mmd</div>
-        <div class="login-sub">Enter your password to continue</div>
+  <div class="login-wrap" style="display:flex;align-items:center;justify-content:center;min-height:100vh">
+    <div class="login-box" style="background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:36px 32px;width:100%;max-width:360px;box-shadow:var(--gold-glow)">
+      <div class="login-logo" style="text-align:center;margin-bottom:28px">
+        <div class="login-title" style="font-family:'Vazirmatn',sans-serif;font-size:24px;font-weight:900;color:var(--gold);letter-spacing:1px">エムエムディー</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px">Enter your password to continue</div>
       </div>
       <div class="fg">
         <label class="fl">PASSWORD</label>
@@ -3682,121 +3548,92 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 <!-- DASHBOARD -->
 <div id="dashboard-page" style="display:none;width:100%">
 
-  <!-- MOBILE HEADER -->
-  <div class="mob-hd">
-    <div class="mob-tl-group">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-mob">🌙</button>
-      <div class="lang-row">
-        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
-      </div>
-      <div class="mob-social">
-        <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-        </a>
-      </div>
-    </div>
-    <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">mmd</span>
-  </div>
-
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sb">
-    <!-- Telegram & GitHub links (above the mmd logo) -->
-    <div class="sb-social" style="padding:10px 8px 0">
-      <a href="https://github.com/luffy-sh-op/mmd_PANEL/tree/main" target="_blank" class="sb-social-btn" title="GitHub">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-      </a>
-    </div>
+    <button class="toggle-btn" onclick="toggleSidebar()"><i class="fas fa-chevron-right" id="sb-icon" style="font-size:12px">‹</i></button>
+    
     <div class="sb-brand">
-      <div class="sb-title">mmd</div>
+      <!-- لوگوی کوچک بالا (جای اسم) -->
+      <img src="/client/logo.png" onerror="this.style.display='none';document.getElementById('sb-title').style.display='block'" class="sb-logo-small">
+      <div class="sb-title" id="sb-title" style="display:none">エムエムディー</div>
     </div>
+
     <nav class="sb-nav">
       <button class="nav-item active" data-page="dashboard">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        <span class="nav-label" data-en="Dashboard" data-fa="داشبورد">Dashboard</span>
+        <span class="nav-label">داشبورد</span>
       </button>
       <button class="nav-item" data-page="inbounds">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/><line x1="20" y1="8" x2="20" y2="14"/></svg>
-        <span class="nav-label" data-en="Inbounds" data-fa="اینباندها">Inbounds</span>
+        <span class="nav-label">اینباندها</span>
         <span class="nav-badge" id="nb">0</span>
       </button>
       <button class="nav-item" data-page="traffic">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        <span class="nav-label" data-en="Traffic" data-fa="ترافیک">Traffic</span>
+        <span class="nav-label">ترافیک</span>
       </button>
       <button class="nav-item" data-page="addresses">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-        <span class="nav-label" data-en="Clean IP" data-fa="آی‌پی تمیز">Clean IP</span>
+        <span class="nav-label">آی‌پی تمیز</span>
       </button>
       <button class="nav-item" data-page="notifications">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-        <span class="nav-label" data-en="Notifications" data-fa="اعلانات">Notifications</span>
+        <span class="nav-label">اعلانات</span>
         <span class="nav-badge" id="notif-badge" style="display:none">0</span>
       </button>
       <button class="nav-item" data-page="security">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-        <span class="nav-label" data-en="Security" data-fa="امنیت">Security</span>
+        <span class="nav-label">امنیت</span>
       </button>
       <button class="nav-item" data-page="settings">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        <span class="nav-label" data-en="Settings" data-fa="تنظیمات">Settings</span>
-      </button>
-      <button class="nav-item logout-mob" onclick="doLogout()">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span class="nav-label" data-en="Logout" data-fa="خروج">Logout</span>
+        <span class="nav-label">تنظیمات</span>
       </button>
     </nav>
+
     <div class="sb-bottom">
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="margin-bottom:4px;font-size:12px">🌙 Theme</button>
-      <div class="lang-row">
-        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
-      </div>
-      <button class="logout-btn" onclick="doLogout()" style="margin-top:2px">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span data-en="Logout" data-fa="خروج">Logout</span>
-      </button>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="display:flex;justify-content:center;align-items:center;gap:5px">🌙 تم</button>
+      <!-- دکمه خروج قرمز -->
+      <button class="logout-btn" onclick="doLogout()">خروج <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="main">
+
+    <!-- هدر بالا با لوگو -->
+    <div class="main-header">
+      <img src="/client/logo.png" onerror="this.style.display='none';" class="main-logo" alt="MMD">
+      <div class="main-title">エムエムディー</div>
+    </div>
 
     <!-- Dashboard -->
     <section class="page active" id="page-dashboard">
       <div class="page-header">
         <div>
-          <div class="page-title" data-en="Dashboard" data-fa="داشبورد">Dashboard</div>
+          <div class="page-title">داشبورد</div>
           <div class="page-sub" id="last-up">-</div>
         </div>
       </div>
 
-      <div class="alerts-box" id="alerts-box">
-        <div class="alerts-title">
-          <span>⚠️</span>
-          <span data-en="SYSTEM WARNINGS" data-fa="هشدارهای سیستم">SYSTEM WARNINGS</span>
-        </div>
-        <div id="alerts-list"></div>
-      </div>
-
       <div class="stats-row">
-        <div class="stat-card" style="animation-delay:.08s"><div class="stat-label" data-en="Traffic" data-fa="ترافیک">Traffic</div><div class="stat-val" id="sv-traffic">-<span class="stat-unit"> MB</span></div></div>
-        <div class="stat-card" style="animation-delay:.16s"><div class="stat-label" data-en="Inbounds" data-fa="اینباندها">Inbounds</div><div class="stat-val" id="sv-links">-</div></div>
-        <div class="stat-card" style="animation-delay:.24s"><div class="stat-label" data-en="Uptime" data-fa="آپتایم">Uptime</div><div class="stat-val" id="sv-uptime" style="font-size:15px">-</div></div>
-        <div class="stat-card" style="animation-delay:.32s"><div class="stat-label" data-en="Domain" data-fa="دامنه">Domain</div><div class="stat-val" id="sv-domain" style="font-size:10px;word-break:break-all;font-weight:500">-</div></div>
+        <div class="stat-card"><div class="stat-label">ترافیک</div><div class="stat-val" id="sv-traffic">-<span style="font-size:11px"> MB</span></div></div>
+        <div class="stat-card"><div class="stat-label">اینباندها</div><div class="stat-val" id="sv-links">-</div></div>
+        <div class="stat-card"><div class="stat-label">آپتایم</div><div class="stat-val" id="sv-uptime" style="font-size:15px">-</div></div>
+        <div class="stat-card"><div class="stat-label">دامنه</div><div class="stat-val" id="sv-domain" style="font-size:10px;word-break:break-all;font-weight:500">-</div></div>
       </div>
       <div class="grid-2">
         <div class="card">
-          <div class="card-hd"><div class="card-title" data-en="CPU" data-fa="پردازنده">CPU</div><span id="cpu-v" style="font-size:17px;font-weight:700;color:var(--gold)">-%</span></div>
+          <div class="card-hd"><div class="card-title">پردازنده</div><span id="cpu-v" style="font-size:17px;font-weight:700;color:var(--gold)">-%</span></div>
           <div class="sys-bar"><div class="sys-fill" id="cpu-b" style="background:var(--gold)"></div></div>
         </div>
         <div class="card">
-          <div class="card-hd"><div class="card-title" data-en="Memory" data-fa="حافظه">Memory</div><span id="mem-v" style="font-size:17px;font-weight:700;color:var(--green)">-%</span></div>
+          <div class="card-hd"><div class="card-title">حافظه</div><span id="mem-v" style="font-size:17px;font-weight:700;color:var(--green)">-%</span></div>
           <div class="sys-bar"><div class="sys-fill" id="mem-b" style="background:var(--green)"></div></div>
         </div>
       </div>
       <div class="card">
-        <div class="card-hd"><div class="card-title" data-en="Hourly Traffic" data-fa="ترافیک ساعتی">Hourly Traffic</div></div>
+        <div class="card-hd"><div class="card-title">ترافیک ساعتی</div></div>
         <div class="chart-container"><canvas id="tc"></canvas></div>
       </div>
     </section>
@@ -3805,54 +3642,32 @@ body[dir="rtl"]{direction:rtl;text-align:right}
     <section class="page" id="page-inbounds">
       <div class="page-header">
         <div>
-          <div class="page-title" data-en="Inbounds" data-fa="اینباندها">Inbounds</div>
-          <div class="page-sub" data-en="VLESS over WebSocket · TLS" data-fa="VLESS روی WebSocket با TLS">VLESS over WebSocket · TLS</div>
+          <div class="page-title">اینباندها</div>
+          <div class="page-sub">VLESS on WebSocket · TLS</div>
         </div>
-        <button class="btn btn-gold" onclick="showAddMo()" data-en="+ Add" data-fa="+ افزودن">+ Add</button>
-      </div>
-      <div class="tb">
-        <div class="search-wrap">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="srch" data-ph-en="Search name…" data-ph-fa="جستجوی نام…" placeholder="Search name…" oninput="filterLinks()">
-        </div>
-        <div class="filter-chips">
-          <button class="chip active" data-filter="all" onclick="setFilter('all',this)" data-en="All" data-fa="همه">All</button>
-          <button class="chip" data-filter="active" onclick="setFilter('active',this)" data-en="Active" data-fa="فعال">Active</button>
-          <button class="chip" data-filter="off" onclick="setFilter('off',this)" data-en="Off" data-fa="غیرفعال">Off</button>
-        </div>
+        <button class="btn btn-gold" onclick="showAddMo()">+ افزودن</button>
       </div>
       <div class="card" style="padding:0;overflow:hidden">
         <div class="tbl-wrap">
           <table class="tbl">
-            <thead><tr>
-              <th>#</th>
-              <th data-en="Name" data-fa="نام">Name</th>
-              <th data-en="Type" data-fa="نوع">Type</th>
-              <th data-en="Usage" data-fa="مصرف">Usage</th>
-              <th data-en="IPs" data-fa="آی‌پی">IPs</th>
-              <th data-en="Expiry" data-fa="انقضا">Expiry</th>
-              <th data-en="Status" data-fa="وضعیت">Status</th>
-              <th data-en="Actions" data-fa="عملیات">Actions</th>
-            </tr></thead>
+            <thead><tr><th>#</th><th>نام</th><th>نوع</th><th>مصرف</th><th>وضعیت</th><th>عملیات</th></tr></thead>
             <tbody id="ltb"></tbody>
           </table>
         </div>
-        <div class="m-cards" id="mcards"></div>
-        <div class="empty" id="lempty" style="display:none" data-en="No inbounds found" data-fa="هیچ اینباندی یافت نشد">No inbounds found</div>
       </div>
     </section>
 
     <!-- Traffic -->
     <section class="page" id="page-traffic">
-      <div class="page-header"><div><div class="page-title" data-en="Traffic" data-fa="ترافیک">Traffic</div><div class="page-sub" data-en="Statistics & Inbound comparison" data-fa="آمار و مقایسه مصرف کاربران">Statistics & Inbound comparison</div></div></div>
+      <div class="page-header"><div><div class="page-title">ترافیک</div><div class="page-sub">آمار و مقایسه مصرف کاربران</div></div></div>
       <div class="grid-2" style="margin-bottom:14px">
         <div class="card">
-          <div class="sl-item"><span class="sl-k" data-en="Total Traffic" data-fa="کل ترافیک">Total Traffic</span><span class="sl-v" id="t-tr">-</span></div>
-          <div class="sl-item"><span class="sl-k" data-en="Total Requests" data-fa="کل درخواست‌ها">Total Requests</span><span class="sl-v" id="t-rq">-</span></div>
-          <div class="sl-item"><span class="sl-k" data-en="Uptime" data-fa="آپتایم">Uptime</span><span class="sl-v" id="t-up">-</span></div>
+          <div class="sl-item" style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border)"><span class="sl-k" style="color:var(--text3);font-size:13px">کل ترافیک</span><span class="sl-v" id="t-tr" style="font-weight:700">-</span></div>
+          <div class="sl-item" style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border)"><span class="sl-k" style="color:var(--text3);font-size:13px">کل درخواست‌ها</span><span class="sl-v" id="t-rq" style="font-weight:700">-</span></div>
+          <div class="sl-item" style="display:flex;justify-content:space-between;padding:10px"><span class="sl-k" style="color:var(--text3);font-size:13px">آپ‌تایم</span><span class="sl-v" id="t-up" style="font-weight:700">-</span></div>
         </div>
         <div class="card">
-          <div class="card-hd"><div class="card-title" data-en="Inbound Traffic Share" data-fa="سهم ترافیک کاربران">Inbound Traffic Share</div></div>
+          <div class="card-hd"><div class="card-title">سهم ترافیک کاربران</div></div>
           <div class="chart-container"><canvas id="inbound-chart"></canvas></div>
         </div>
       </div>
@@ -3861,78 +3676,53 @@ body[dir="rtl"]{direction:rtl;text-align:right}
     <!-- Notifications -->
     <section class="page" id="page-notifications">
       <div class="page-header">
-        <div><div class="page-title" data-en="Notifications" data-fa="اعلانات">Notifications</div><div class="page-sub" data-en="Updates, alerts & system messages" data-fa="بروزرسانی‌ها، هشدارها و پیام‌های سیستم">Updates, alerts & system messages</div></div>
+        <div><div class="page-title">اعلانات</div><div class="page-sub">بروزرسانی‌ها و هشدارها</div></div>
         <div style="display:flex;gap:6px">
-          <button class="btn btn-ghost btn-sm" onclick="markAllSeen()" data-en="Mark all read" data-fa="خوانده شدن همه">Mark all read</button>
-          <button class="btn btn-danger btn-sm" onclick="clearNotifs()" data-en="Clear all" data-fa="حذف همه">Clear all</button>
+          <button class="btn btn-ghost btn-sm" onclick="markAllSeen()">خوانده شدن همه</button>
+          <button class="btn btn-danger btn-sm" onclick="clearNotifs()">حذف همه</button>
         </div>
       </div>
       <div class="card" style="padding:0;overflow:hidden">
-        <div id="notif-list" style="padding:4px 0">
-          <div class="empty" data-en="No notifications" data-fa="هیچ اعلانی وجود ندارد">No notifications</div>
-        </div>
+        <div id="notif-list" style="padding:4px 0"></div>
       </div>
     </section>
 
     <!-- Clean IP -->
     <section class="page" id="page-addresses">
       <div class="page-header">
-        <div><div class="page-title" data-en="Clean IP" data-fa="آی‌پی تمیز">Clean IP</div><div class="page-sub" data-en="Subscription alternative addresses" data-fa="آدرس‌های جایگزین اشتراک">Subscription alternative addresses</div></div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn btn-ghost" onclick="importAddrs('railway')" data-en="🚄 Railway IP" data-fa="🚄 آی‌پی ریلوی">🚄 Railway IP</button>
-          <button class="btn btn-danger" onclick="delAllAddrs()" data-en="Delete All" data-fa="پاک کردن همه">Delete All</button>
-          <button class="btn btn-gold" onclick="showAddAddrMo()" data-en="+ Add" data-fa="+ افزودن">+ Add</button>
-        </div>
+        <div><div class="page-title">آی‌پی تمیز</div><div class="page-sub">آدرس‌های جایگزین اشتراک</div></div>
+        <button class="btn btn-gold" onclick="showAddAddrMo()">+ افزودن</button>
       </div>
-      <div class="card">
-        <div style="font-size:12px;color:var(--text3);margin-bottom:12px" data-en="Add your own clean IPs or import from Railway/Cloudflare" data-fa="آی‌پی‌های تمیز خودت رو اضافه کن یا از Railway/Cloudflare ایمپورت کن">Add your own clean IPs or import from Railway/Cloudflare</div>
-        <div id="addr-list"></div>
-      </div>
+      <div class="card"><div id="addr-list"></div></div>
     </section>
 
     <!-- Security & Settings -->
     <section class="page" id="page-security">
-      <div class="page-header"><div><div class="page-title" data-en="Security & Settings" data-fa="امنیت و تنظیمات">Security & Settings</div><div class="page-sub" data-en="Settings, Password & Live logs" data-fa="تنظیمات، تغییر رمز پنل و لاگ‌های زنده">Settings, Password & Live logs</div></div></div>
-      <div class="grid-2">
-        
-        <div class="card">
-          <div class="card-hd"><div class="card-title" data-en="Change Password" data-fa="تغییر رمز عبور">Change Password</div></div>
-          <div class="fg"><label class="fl" data-en="Current Password" data-fa="رمز فعلی">Current Password</label><input class="fi" type="password" id="cpw" placeholder="Current password"></div>
-          <div class="fg"><label class="fl" data-en="New Password" data-fa="رمز جدید">New Password</label><input class="fi" type="password" id="npw" placeholder="Min 4 chars"></div>
-          <button class="btn btn-gold" onclick="chgPw()" style="margin-top:10px;width:100%;justify-content:center" data-en="Update Password" data-fa="بروزرسانی رمز">Update Password</button>
-        </div>
-      </div>
-      <div class="card" style="margin-top:14px">
-        <div class="card-hd"><div class="card-title" data-en="Live Logs" data-fa="لاگ‌های زنده">Live Logs</div></div>
-        <div class="live-logs-container" id="log-container">Connecting to live logs...</div>
+      <div class="page-header"><div><div class="page-title">امنیت و تنظیمات</div><div class="page-sub">تغییر رمز پنل</div></div></div>
+      <div class="card">
+        <div class="card-hd"><div class="card-title">تغییر رمز عبور</div></div>
+        <div class="fg"><label class="fl">رمز فعلی</label><input class="fi" type="password" id="cpw" placeholder="Current password"></div>
+        <div class="fg"><label class="fl">رمز جدید</label><input class="fi" type="password" id="npw" placeholder="Min 4 chars"></div>
+        <button class="btn btn-gold" onclick="chgPw()" style="margin-top:10px;width:100%;justify-content:center">بروزرسانی رمز</button>
       </div>
     </section>
 
     <!-- Settings -->
     <section class="page" id="page-settings">
-      <div class="page-header"><div><div class="page-title" data-en="Settings" data-fa="تنظیمات">Settings</div><div class="page-sub" data-en="Railway Permanent Database & Preferences" data-fa="دیتابیس دائمی Railway و تنظیمات">Railway Permanent Database & Preferences</div></div></div>
-
-      <!-- Permanent Database -->
+      <div class="page-header"><div><div class="page-title">تنظیمات</div><div class="page-sub">دیتابیس دائمی Railway</div></div></div>
       <div class="card" style="border:1px solid rgba(129,140,248,0.25)">
         <div class="card-hd">
-          <div class="card-title" style="color:#818cf8">💾 <span data-en="Permanent Database" data-fa="دیتابیس دائمی">Permanent Database</span></div>
+          <div class="card-title" style="color:#818cf8">💾 دیتابیس دائمی</div>
           <span id="rdb-status" style="font-size:11px;color:var(--text3)">-</span>
         </div>
-        <div style="font-size:11px;color:var(--text3);margin-bottom:12px;line-height:1.5" data-en="Connect to Railway, select a project and ensure a persistent volume at /data exists for permanent storage." data-fa="به Railway متصل شوید، یک پروژه انتخاب کنید و مطمئن شوید یک volume پایدار در مسیر /data وجود دارد.">
-          Connect to Railway, select a project and ensure a persistent volume at /data exists for permanent storage.
+        <div class="fg">
+          <label class="fl">Railway Token</label>
+          <input class="fi" type="password" id="rw-token" placeholder="rly_..." style="flex:1">
+          <button class="btn btn-ghost btn-sm" onclick="fetchRailwayProjects()" id="rw-fetch-btn">دریافت</button>
         </div>
         <div class="fg">
-          <label class="fl" data-en="Railway Token" data-fa="توکن Railway">Railway Token</label>
-          <div style="display:flex;gap:8px">
-            <input class="fi" type="password" id="rw-token" placeholder="rly_..." style="flex:1">
-            <button class="btn btn-ghost btn-sm" onclick="fetchRailwayProjects()" id="rw-fetch-btn" data-en="Fetch" data-fa="دریافت">Fetch</button>
-          </div>
-        </div>
-        <div class="fg">
-          <label class="fl" data-en="Project" data-fa="پروژه">Project</label>
-          <select class="fs" id="rw-project" disabled>
-            <option value="" data-en="-- Select a project --" data-fa="-- پروژه را انتخاب کنید --">-- Select a project --</option>
-          </select>
+          <label class="fl">پروژه</label>
+          <select class="fs" id="rw-project" disabled><option value="">-- پروژه را انتخاب کنید --</option></select>
         </div>
         <div class="fg" id="rw-volume-info" style="display:none">
           <div style="display:flex;align-items:center;gap:10px;padding:12px;border-radius:8px;border:1px solid var(--border)" id="rw-volume-box">
@@ -3941,12 +3731,10 @@ body[dir="rtl"]{direction:rtl;text-align:right}
               <div id="rw-volume-title" style="font-weight:600;font-size:13px">-</div>
               <div id="rw-volume-desc" style="font-size:11px;color:var(--text3);margin-top:2px">-</div>
             </div>
-            <button class="btn btn-gold btn-sm" id="rw-create-btn" style="margin-left:auto;display:none" onclick="createRailwayVolume()" data-en="Create Volume" data-fa="ایجاد Volume">Create Volume</button>
+            <button class="btn btn-gold btn-sm" id="rw-create-btn" style="margin-right:auto;display:none" onclick="createRailwayVolume()">ایجاد Volume</button>
           </div>
         </div>
       </div>
-
-      
     </section>
 
   </main>
@@ -3956,173 +3744,46 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 <div class="mo" id="mo-add" onclick="if(event.target===this)this.classList.remove('show')">
   <div class="mo-box">
     <button class="mo-close" onclick="document.getElementById('mo-add').classList.remove('show')">✕</button>
-    <div class="mo-title" data-en="ADD INBOUND" data-fa="افزودن اینباند">ADD INBOUND</div>
-    <div class="fg"><label class="fl" data-en="Remark" data-fa="توضیح">Remark</label><input class="fi" id="nl" data-ph-en="e.g. User 1" data-ph-fa="مثلاً کاربر ۱" placeholder="e.g. User 1"></div>
-    <div class="fr">
-      <div class="fg"><label class="fl" data-en="Traffic Limit" data-fa="محدودیت ترافیک">Traffic Limit</label><input class="fi" id="nv" type="number" min="0" step=".1" placeholder="0 = ∞"></div>
-      <div class="fg" style="max-width:100px"><label class="fl" data-en="Unit" data-fa="واحد">Unit</label><select class="fs" id="nu"><option>GB</option></select></div>
-    </div>
-    <div class="fg"><label class="fl" data-en="Max IPs" data-fa="حداکثر آی‌پی">Max IPs</label><input class="fi" id="nc" type="number" min="0" placeholder="0 = ∞"></div>
-    <div class="fg"><label class="fl" data-en="Days Valid" data-fa="روزهای اعتبار">Days Valid</label><input class="fi" id="nd" type="number" min="0" placeholder="0 = No expiry"></div>
-    <div class="fg" style="border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:4px">
+    <div class="mo-title">افزودن اینباند</div>
+    <div class="fg"><label class="fl">توضیح</label><input class="fi" id="nl" placeholder="مثلاً کاربر ۱"></div>
+    <div class="fg"><label class="fl">محدودیت ترافیک (GB)</label><input class="fi" id="nv" type="number" min="0" placeholder="0 = ∞"></div>
+    <div class="fg"><label class="fl">روزهای اعتبار</label><input class="fi" id="nd" type="number" min="0" placeholder="0 = بدون انقضا"></div>
+    <div class="fg" style="border:1px solid var(--border);border-radius:10px;padding:10px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <input type="checkbox" id="n_vless_enabled" checked style="width:16px;height:16px;accent-color:var(--gold)" onchange="toggleVariantBox('n','vless')">
-        <label for="n_vless_enabled" style="font-weight:700;cursor:pointer">VLESS</label>
+        <input type="checkbox" id="n_vless_enabled" checked style="width:16px;height:16px;accent-color:var(--gold)">
+        <label for="n_vless_enabled" style="font-weight:700;cursor:pointer">VLESS فعال</label>
       </div>
-      <div id="n_vless_box">
-        <div class="fr">
-          <div class="fg">
-            <label class="fl" data-en="Transport" data-fa="ترابرد">Transport</label>
-            <select class="fs" id="n_vless_transport" onchange="syncAlpnDefault('vless','n_vless_transport','n_vless_alpn')">
-              <option value="ws">WebSocket</option>
-              <option value="xhttp-packet-up">XHTTP (packet-up)</option>
-              <option value="xhttp-stream-up">XHTTP (stream-up)</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label class="fl" data-en="Fingerprint" data-fa="فینگرپرینت">Fingerprint</label>
-            <select class="fs" id="n_vless_fp">
-              <option value="chrome">chrome</option><option value="firefox">firefox</option><option value="safari">safari</option>
-              <option value="ios">ios</option><option value="android">android</option><option value="edge">edge</option>
-              <option value="360">360</option><option value="qq">qq</option><option value="random">random</option><option value="randomized">randomized</option>
-            </select>
-          </div>
-        </div>
-        <div class="fg">
-          <label class="fl" data-en="ALPN" data-fa="ALPN">ALPN</label>
-          <select class="fs" id="n_vless_alpn">
-            <option value="h3">h3</option><option value="h2">h2</option><option value="http/1.1">http/1.1</option>
-            <option value="h3,h2,http/1.1">h3,h2,http/1.1</option><option value="h3,h2">h3,h2</option><option value="h2,http/1.1">h2,http/1.1</option>
-          </select>
-        </div>
+      <div class="fg">
+        <label class="fl">ترابرد</label>
+        <select class="fs" id="n_vless_transport"><option value="ws">WebSocket</option><option value="xhttp-packet-up">XHTTP (packet-up)</option><option value="xhttp-stream-up">XHTTP (stream-up)</option></select>
       </div>
+      <div class="fg"><label class="fl">Fingerprint</label><select class="fs" id="n_vless_fp"><option value="chrome">chrome</option><option value="firefox">firefox</option></select></div>
     </div>
-    <div class="fg" style="border:1px solid var(--border);border-radius:10px;padding:10px 12px">
+    <div class="fg" style="border:1px solid var(--border);border-radius:10px;padding:10px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <input type="checkbox" id="n_trojan_enabled" style="width:16px;height:16px;accent-color:var(--gold)" onchange="toggleVariantBox('n','trojan')">
-        <label for="n_trojan_enabled" style="font-weight:700;cursor:pointer">Trojan</label>
+        <input type="checkbox" id="n_trojan_enabled" style="width:16px;height:16px;accent-color:var(--gold)">
+        <label for="n_trojan_enabled" style="font-weight:700;cursor:pointer">Trojan فعال</label>
       </div>
-      <div id="n_trojan_box" style="display:none">
-        <div class="fr">
-          <div class="fg">
-            <label class="fl" data-en="Transport" data-fa="ترابرد">Transport</label>
-            <select class="fs" id="n_trojan_transport" onchange="syncAlpnDefault('trojan','n_trojan_transport','n_trojan_alpn')">
-              <option value="ws">WebSocket</option>
-              <option value="xhttp-packet-up">XHTTP (packet-up)</option>
-              <option value="xhttp-stream-up">XHTTP (stream-up)</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label class="fl" data-en="Fingerprint" data-fa="فینگرپرینت">Fingerprint</label>
-            <select class="fs" id="n_trojan_fp">
-              <option value="chrome">chrome</option><option value="firefox">firefox</option><option value="safari">safari</option>
-              <option value="ios">ios</option><option value="android">android</option><option value="edge">edge</option>
-              <option value="360">360</option><option value="qq">qq</option><option value="random">random</option><option value="randomized">randomized</option>
-            </select>
-          </div>
-        </div>
-        <div class="fg">
-          <label class="fl" data-en="ALPN" data-fa="ALPN">ALPN</label>
-          <select class="fs" id="n_trojan_alpn">
-            <option value="h3">h3</option><option value="h2">h2</option><option value="http/1.1">http/1.1</option>
-            <option value="h3,h2,http/1.1">h3,h2,http/1.1</option><option value="h3,h2">h3,h2</option><option value="h2,http/1.1">h2,http/1.1</option>
-          </select>
-        </div>
+      <div class="fg" id="n_trojan_box" style="display:none">
+        <label class="fl">ترابرد</label>
+        <select class="fs" id="n_trojan_transport"><option value="ws">WebSocket</option><option value="xhttp-packet-up">XHTTP (packet-up)</option></select>
       </div>
     </div>
-    <div class="fg" style="opacity:.6">
-      <label class="fl" data-en="Port" data-fa="پورت">Port</label>
-      <input class="fi" value="443" readonly style="cursor:not-allowed">
-    </div>
-    <button class="btn btn-gold" onclick="createLink()" style="width:100%;justify-content:center;margin-top:12px;padding:12px" data-en="CREATE" data-fa="ایجاد">CREATE</button>
+    <button class="btn btn-gold" onclick="createLink()" style="width:100%;justify-content:center;margin-top:12px;padding:12px">ایجاد</button>
   </div>
 </div>
 
 <div class="mo" id="mo-edit" onclick="if(event.target===this)this.classList.remove('show')">
   <div class="mo-box">
     <button class="mo-close" onclick="document.getElementById('mo-edit').classList.remove('show')">✕</button>
-    <div class="mo-title" id="et">EDIT INBOUND</div>
+    <div class="mo-title">ویرایش اینباند</div>
     <input type="hidden" id="eu">
-    <div class="fg"><label class="fl" data-en="Name" data-fa="نام">Name</label><input class="fi" id="en2" readonly style="opacity:.5;cursor:not-allowed"></div>
-    <div class="fr">
-      <div class="fg"><label class="fl" data-en="Traffic Limit" data-fa="محدودیت ترافیک">Traffic Limit</label><input class="fi" id="el" type="number" min="0" step=".1" placeholder="0 = ∞"></div>
-      <div class="fg" style="max-width:100px"><label class="fl" data-en="Unit" data-fa="واحد">Unit</label><select class="fs" id="eu2"><option>GB</option></select></div>
-    </div>
-    <div class="fg"><label class="fl" data-en="Max IPs" data-fa="حداکثر آی‌پی">Max IPs</label><input class="fi" id="ec" type="number" min="0" placeholder="0 = ∞"></div>
-    <div class="fg"><label class="fl" data-en="Extend Days" data-fa="افزایش روزها">Extend Days</label><input class="fi" id="ed" type="number" min="0" placeholder="0 = no change"></div>
-    <div class="fg" style="border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:4px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <input type="checkbox" id="e_vless_enabled" style="width:16px;height:16px;accent-color:var(--gold)" onchange="toggleVariantBox('e','vless')">
-        <label for="e_vless_enabled" style="font-weight:700;cursor:pointer">VLESS</label>
-      </div>
-      <div id="e_vless_box">
-        <div class="fr">
-          <div class="fg">
-            <label class="fl" data-en="Transport" data-fa="ترابرد">Transport</label>
-            <select class="fs" id="e_vless_transport" onchange="syncAlpnDefault('vless','e_vless_transport','e_vless_alpn')">
-              <option value="ws">WebSocket</option>
-              <option value="xhttp-packet-up">XHTTP (packet-up)</option>
-              <option value="xhttp-stream-up">XHTTP (stream-up)</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label class="fl" data-en="Fingerprint" data-fa="فینگرپرینت">Fingerprint</label>
-            <select class="fs" id="e_vless_fp">
-              <option value="chrome">chrome</option><option value="firefox">firefox</option><option value="safari">safari</option>
-              <option value="ios">ios</option><option value="android">android</option><option value="edge">edge</option>
-              <option value="360">360</option><option value="qq">qq</option><option value="random">random</option><option value="randomized">randomized</option>
-            </select>
-          </div>
-        </div>
-        <div class="fg">
-          <label class="fl" data-en="ALPN" data-fa="ALPN">ALPN</label>
-          <select class="fs" id="e_vless_alpn">
-            <option value="h3">h3</option><option value="h2">h2</option><option value="http/1.1">http/1.1</option>
-            <option value="h3,h2,http/1.1">h3,h2,http/1.1</option><option value="h3,h2">h3,h2</option><option value="h2,http/1.1">h2,http/1.1</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="fg" style="border:1px solid var(--border);border-radius:10px;padding:10px 12px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <input type="checkbox" id="e_trojan_enabled" style="width:16px;height:16px;accent-color:var(--gold)" onchange="toggleVariantBox('e','trojan')">
-        <label for="e_trojan_enabled" style="font-weight:700;cursor:pointer">Trojan</label>
-      </div>
-      <div id="e_trojan_box" style="display:none">
-        <div class="fr">
-          <div class="fg">
-            <label class="fl" data-en="Transport" data-fa="ترابرد">Transport</label>
-            <select class="fs" id="e_trojan_transport" onchange="syncAlpnDefault('trojan','e_trojan_transport','e_trojan_alpn')">
-              <option value="ws">WebSocket</option>
-              <option value="xhttp-packet-up">XHTTP (packet-up)</option>
-              <option value="xhttp-stream-up">XHTTP (stream-up)</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label class="fl" data-en="Fingerprint" data-fa="فینگرپرینت">Fingerprint</label>
-            <select class="fs" id="e_trojan_fp">
-              <option value="chrome">chrome</option><option value="firefox">firefox</option><option value="safari">safari</option>
-              <option value="ios">ios</option><option value="android">android</option><option value="edge">edge</option>
-              <option value="360">360</option><option value="qq">qq</option><option value="random">random</option><option value="randomized">randomized</option>
-            </select>
-          </div>
-        </div>
-        <div class="fg">
-          <label class="fl" data-en="ALPN" data-fa="ALPN">ALPN</label>
-          <select class="fs" id="e_trojan_alpn">
-            <option value="h3">h3</option><option value="h2">h2</option><option value="http/1.1">http/1.1</option>
-            <option value="h3,h2,http/1.1">h3,h2,http/1.1</option><option value="h3,h2">h3,h2</option><option value="h2,http/1.1">h2,http/1.1</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="fg" style="opacity:.6">
-      <label class="fl" data-en="Port" data-fa="پورت">Port</label>
-      <input class="fi" value="443" readonly style="cursor:not-allowed">
-    </div>
+    <div class="fg"><label class="fl">نام</label><input class="fi" id="en2" readonly style="opacity:.5"></div>
+    <div class="fg"><label class="fl">محدودیت ترافیک (GB)</label><input class="fi" id="el" type="number" min="0" placeholder="0 = ∞"></div>
+    <div class="fg"><label class="fl">افزایش روزها</label><input class="fi" id="ed" type="number" min="0" placeholder="0 = بدون تغییر"></div>
     <div style="display:flex;gap:10px;margin-top:16px">
-      <button class="btn btn-gold" onclick="saveEdit()" style="flex:1;justify-content:center;padding:12px" data-en="SAVE" data-fa="ذخیره">SAVE</button>
-      <button class="btn btn-danger" onclick="resetTraf()" style="padding:12px" data-en="Reset" data-fa="بازنشانی">Reset</button>
+      <button class="btn btn-gold" onclick="saveEdit()" style="flex:1;justify-content:center;padding:12px">ذخیره</button>
+      <button class="btn btn-danger" onclick="resetTraf()" style="padding:12px">بازنشانی مصرف</button>
     </div>
   </div>
 </div>
@@ -4130,21 +3791,18 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 <div class="mo" id="mo-qr" onclick="if(event.target===this)this.classList.remove('show')">
   <div class="mo-box" style="max-width:340px">
     <button class="mo-close" onclick="document.getElementById('mo-qr').classList.remove('show')">✕</button>
-    <div class="mo-title" data-en="QR CODE" data-fa="کد QR">QR CODE</div>
+    <div class="mo-title">کد QR</div>
     <div class="qr-box"><img id="qr-img" src="" alt="QR"></div>
-    <div style="display:flex;gap:10px;margin-top:16px;justify-content:center">
-      <button class="btn btn-gold btn-sm" onclick="dlQR()" style="padding:10px 16px" data-en="Download" data-fa="دانلود">Download</button>
-      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('mo-qr').classList.remove('show')" style="padding:10px 16px" data-en="Close" data-fa="بستن">Close</button>
-    </div>
+    <button class="btn btn-gold btn-sm" onclick="dlQR()" style="width:100%;margin-top:10px">دانلود</button>
   </div>
 </div>
 
 <div class="mo" id="mo-addr" onclick="if(event.target===this)this.classList.remove('show')">
   <div class="mo-box">
     <button class="mo-close" onclick="document.getElementById('mo-addr').classList.remove('show')">✕</button>
-    <div class="mo-title" data-en="ADD CLEAN IP" data-fa="افزودن آی‌پی تمیز">ADD CLEAN IP</div>
-    <div class="fg"><label class="fl" data-en="IPs / Domains (one per line)" data-fa="آی‌پی‌ها (هر خط یک)">IPs / Domains</label><textarea class="fi" id="na" rows="5" placeholder="8.8.8.8&#10;example.com" style="resize:vertical;font-family:monospace"></textarea></div>
-    <button class="btn btn-gold" onclick="addAddrs()" style="width:100%;justify-content:center;margin-top:12px;padding:12px" data-en="ADD ALL" data-fa="افزودن همه">ADD ALL</button>
+    <div class="mo-title">افزودن آی‌پی تمیز</div>
+    <div class="fg"><label class="fl">آی‌پی‌ها (هر خط یک)</label><textarea class="fi" id="na" rows="5" style="resize:vertical"></textarea></div>
+    <button class="btn btn-gold" onclick="addAddrs()" style="width:100%;justify-content:center;margin-top:12px">افزودن</button>
   </div>
 </div>
 
@@ -4152,90 +3810,45 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 function $(s){return document.querySelector(s)}
 function $m(id){return document.getElementById(id)}
 function esc(s){return String(s).replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function protoBadge(variants){
-  if(!variants)return 'VLESS';
-  const on=[];
-  if(variants.vless&&variants.vless.enabled)on.push('VLESS');
-  if(variants.trojan&&variants.trojan.enabled)on.push('TROJAN');
-  return on.length?on.join('+'):'VLESS';
-}
 
-const langMap={
-  en:{edit:'Edit',copy:'Copy',sub:'Sub',qr:'QR',del:'Del',gh:'View on GitHub'},
-  fa:{edit:'ویرایش',copy:'کپی',sub:'اشتراک',qr:'QR',del:'حذف',gh:'مشاهده در گیت‌هاب'}
-};
-function tr(key){return(langMap[lang]&&langMap[lang][key])||langMap['en'][key]||key}
-
-let lang=localStorage.getItem('ll')||'en';
-let theme=localStorage.getItem('theme')||'dark';
+let lang='fa';
 let allLinks=[];
-let cf='all';
-let sData={};
-let tChart=null;
-let iChart=null;
-
-// Generates visually distinct colors using the golden-angle rotation so that
-// adjacent chart segments never look alike, regardless of how many users exist.
-function genDistinctColors(n){
-  const colors=[];
-  const GOLDEN_ANGLE=137.508;
-  const startHue=45; // start near gold to match theme, then spread out
-  for(let i=0;i<n;i++){
-    const hue=(startHue+i*GOLDEN_ANGLE)%360;
-    const sat=70+((i*17)%20);   // 70-90%
-    const light=48+((i*11)%16); // 48-64%
-    colors.push(`hsl(${hue.toFixed(1)},${sat}%,${light}%)`);
-  }
-  return colors;
-}
 let allAddrs=[];
 let isAuthenticated=false;
 let logsWS=null;
+let tChart=null, iChart=null;
+let sData={};
 
+// حباب های متحرک
+function makeBubbles() {
+  const container = document.getElementById('bubbles-container');
+  const count = window.innerWidth < 600 ? 20 : 50;
+  for(let i=0; i<count; i++) {
+    const b = document.createElement('div');
+    b.classList.add('bubble');
+    b.style.left = Math.random() * 100 + 'vw';
+    b.style.width = (Math.random() * 20 + 10) + 'px';
+    b.style.height = b.style.width;
+    b.style.animationDuration = (Math.random() * 10 + 8) + 's';
+    b.style.animationDelay = (Math.random() * 5) + 's';
+    container.appendChild(b);
+  }
+}
+makeBubbles();
+
+function toggleSidebar() {
+  const sb = document.getElementById('sb');
+  sb.classList.toggle('collapsed');
+}
 function setTheme(t){
-  theme=t;
   if(t==='light')document.body.classList.add('light-mode');
   else document.body.classList.remove('light-mode');
-  localStorage.setItem('theme',t);
-  const icon=t==='light'?'☀️':'🌙';
-  const mb=$m('theme-btn-mob');
+  const icon=t==='light'?'☀️ تم':'🌙 تم';
   const db=$m('theme-btn-desk');
-  if(mb)mb.innerHTML=icon;
-  if(db)db.innerHTML=icon+' Theme';
+  if(db)db.innerHTML=icon;
   updChartColors();
 }
-function toggleTheme(){setTheme(theme==='dark'?'light':'dark')}
-
-function setLang(l){
-  lang=l;
-  document.querySelectorAll('.lang-en').forEach(e=>e.classList.toggle('active',l==='en'));
-  document.querySelectorAll('.lang-fa').forEach(e=>e.classList.toggle('active',l==='fa'));
-  document.body.dir=l==='fa'?'rtl':'ltr';
-  document.querySelectorAll('[data-en]').forEach(el=>{
-    const v=el.getAttribute('data-'+l);
-    if(v)el.textContent=v;
-  });
-  document.querySelectorAll('[data-ph-en]').forEach(el=>{
-    const v=el.getAttribute('data-ph-'+l);
-    if(v)el.placeholder=v;
-  });
-  localStorage.setItem('ll',l);
-  filterLinks();
-}
-
-function connectLogsWS(){
-  if(logsWS){try{logsWS.close()}catch(e){}}
-  const protocol=location.protocol==='https:'?'wss:':'ws:';
-  const token=document.cookie.split('; ').find(r=>r.startsWith('ren_session='))?.split('=')[1];
-  if(!token)return;
-  logsWS=new WebSocket(`${protocol}//${location.host}/ws/live-logs?token=${token}`);
-  logsWS.onmessage=function(e){
-    const c=$m('log-container');
-    if(c){c.textContent+=e.data+'\n';c.scrollTop=c.scrollHeight}
-  };
-  logsWS.onerror=function(){$m('log-container').textContent='Connection error. Reconnecting...'};
-  logsWS.onclose=function(){setTimeout(connectLogsWS,5000)};
-}
+function toggleTheme(){setTheme(document.body.classList.contains('light-mode')?'dark':'light')}
 
 async function checkAuth(){
   try{
@@ -4245,459 +3858,66 @@ async function checkAuth(){
     else showLogin();
   }catch(e){showLogin()}
 }
-
 function showLogin(){
   isAuthenticated=false;
   $m('login-page').style.display='';
   $m('dashboard-page').style.display='none';
 }
-
 function showDashboard(){
   isAuthenticated=true;
   $m('login-page').style.display='none';
   $m('dashboard-page').style.display='';
   initChart();
-  loadStats();
-  loadLinks();
-  loadAddrs();
-  loadSettings();
-  loadNotifs();
-  updateNotifBadge();
-  connectLogsWS();
+  loadStats(); loadLinks(); loadAddrs(); updateNotifBadge();
 }
-
 async function doLogin(){
   const pw=$m('login-pw').value;
-  $m('login-err').style.display='none';
   try{
     const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
     if(r.ok){$m('login-pw').value='';showDashboard()}
     else $m('login-err').style.display='block';
   }catch(e){$m('login-err').style.display='block'}
 }
-
 async function doLogout(){
   await fetch('/api/logout',{method:'POST'});
   showLogin();
 }
-
 document.querySelectorAll('.nav-item[data-page]').forEach(el=>{
   el.addEventListener('click',()=>switchPage(el.dataset.page));
 });
-
 function switchPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const target=$m('page-'+id);
   if(target)target.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===id));
 }
-
 function toast(msg,err=false){
   const t=$m('toast');
   t.textContent=msg;
-  t.className='toast'+(err?' err':'')+' show';
+  t.className='toast show';
   clearTimeout(t._hide);
   t._hide=setTimeout(()=>t.classList.remove('show'),3000);
 }
-
 function fmtB(b){
   if(!b||b===0)return'0 B';
-  return b>=1073741824?(b/1073741824).toFixed(2)+' GB':
-         b>=1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB';
+  return b>=1073741824?(b/1073741824).toFixed(2)+' GB': b>=1048576?(b/1048576).toFixed(2)+' MB':(b/1024).toFixed(1)+' KB';
 }
-function fmtLim(b){
-  if(!b||b===0)return'∞';
-  const g=b/1073741824;
-  return(g%1===0?g.toFixed(0):g.toFixed(1))+' GB';
-}
+function fmtLim(b){ return(!b||b===0)?'∞': (b/1073741824).toFixed(1)+' GB'; }
 function fmtExp(ea){
   if(!ea||ea===0)return'∞';
   const d=new Date(ea)-new Date();
   if(d<=0)return'Expired';
   const days=Math.floor(d/86400000);
   if(days>0)return days+'d';
-  const hours=Math.floor(d/3600000);
-  if(hours>0)return hours+'h';
-  return Math.floor(d/60000)+'m';
+  return Math.floor(d/3600000)+'h';
 }
-
-function setFilter(filter,el){
-  cf=filter;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  if(el)el.classList.add('active');
-  filterLinks();
+function protoBadge(variants){
+  if(!variants)return'VLESS';
+  const on=[];
+  if(variants.vless&&variants.vless.enabled)on.push('VLESS');
+  if(variants.trojan&&variants.trojan.enabled)on.push('TROJAN');
+  return on.length?on.join('+'):'VLESS';
 }
-
-function filterLinks(){
-  const q=($m('srch')?.value||'').toLowerCase();
-  let r=allLinks;
-  if(cf==='active')r=r.filter(l=>l.active);
-  else if(cf==='off')r=r.filter(l=>!l.active);
-  if(q)r=r.filter(l=>l.label.toLowerCase().includes(q)||l.uuid.toLowerCase().includes(q));
-  renderLinks(r);
-}
-
-function processAlertsAndCharts(){
-  const alertsList=$m('alerts-list');
-  const alertsBox=$m('alerts-box');
-  alertsList.innerHTML='';
-  let alertCount=0;
-
-  allLinks.forEach(l=>{
-    const u=l.used_bytes||0;
-    const lim=l.limit_bytes||0;
-    const pct=lim>0?(u/lim)*100:0;
-    if(lim>0&&pct>=90){
-      alertCount++;
-      alertsList.innerHTML+=`<div class="alert-item"><span style="font-weight:600">🔴 '${esc(l.label)}' near limit:</span><span>${pct.toFixed(1)}% Used</span></div>`;
-    }
-    if(l.expires_at){
-      const diff=new Date(l.expires_at)-new Date();
-      const days=diff/86400000;
-      if(days>0&&days<=3){
-        alertCount++;
-        alertsList.innerHTML+=`<div class="alert-item"><span style="font-weight:600">🟡 '${esc(l.label)}' expiring soon:</span><span>${days.toFixed(1)} Days</span></div>`;
-      }
-    }
-  });
-  alertsBox.style.display=alertCount>0?'block':'none';
-
-  if(iChart){
-    const sorted=[...allLinks].sort((a,b)=>(b.used_bytes||0)-(a.used_bytes||0)).slice(0,8);
-    iChart.data.labels=sorted.map(x=>x.label);
-    iChart.data.datasets[0].data=sorted.map(x=>Math.round((x.used_bytes||0)/(1024*1024)));
-    iChart.data.datasets[0].backgroundColor=genDistinctColors(sorted.length);
-    iChart.update();
-  }
-}
-
-function renderLinks(links){
-  const tb=$m('ltb');
-  const em=$m('lempty');
-  const mc=$m('mcards');
-  if(!links||!links.length){
-    tb.innerHTML='';mc.innerHTML='';em.style.display='block';
-    em.textContent=em.getAttribute('data-'+lang)||'No inbounds found';
-    return;
-  }
-  em.style.display='none';
-  let idx=links.length;
-  const rows=links.map(l=>{
-    const u=l.used_bytes||0;
-    const lim=l.limit_bytes||0;
-    const pct=lim>0?Math.min(100,(u/lim)*100):0;
-    const col=pct>90?'var(--red)':pct>70?'var(--yellow)':'var(--gold)';
-    const ex=fmtExp(l.expires_at);
-    const ec=ex==='Expired'?'var(--red)':ex==='∞'?'var(--text3)':'var(--text2)';
-    const i=idx--;
-    const cc=l.current_connections||0;
-    const mc2=l.max_connections||0;
-    return{l,pct,col,ex,ec,i,cc,mc2,u,lim};
-  });
-
-  const editText=tr('edit');
-  const copyText=tr('copy');
-  const subText=tr('sub');
-  const qrText=tr('qr');
-  const delText=tr('del');
-
-  tb.innerHTML=rows.map(r=>`<tr>
-    <td style="color:var(--text3);font-size:10.5px">${r.i}</td>
-    <td style="font-weight:600">${esc(r.l.label)}</td>
-    <td><span class="tag tag-vless">${protoBadge(r.l.variants)}</span></td>
-    <td><div class="pill"><span class="pill-used">${fmtB(r.u)}</span><div class="pill-bar"><div class="pill-fill" style="width:${r.pct}%;background:${r.col}"></div></div><span class="pill-lim">${fmtLim(r.lim)}</span></div></td>
-    <td style="font-size:11px;font-weight:600;color:${r.mc2>0&&r.cc>=r.mc2?'var(--red)':'var(--text2)'}">${r.cc}/${r.mc2||'∞'}</td>
-    <td style="font-size:10.5px;font-weight:700;color:${r.ec}">${r.ex}</td>
-    <td><span class="tag ${r.l.active?'tag-on':'tag-off'}">${r.l.active?'On':'Off'}</span></td>
-    <td><div style="display:flex;gap:3px;align-items:center;flex-wrap:wrap">
-      <button class="toggle ${r.l.active?'on':''}" data-uid="${r.l.uuid}" onclick="togLink(this)"></button>
-      <button class="act-btn act-edit" onclick="showEditMo('${r.l.uuid}')">${editText}</button>
-      <button class="act-btn act-copy" onclick="cpLink('${esc((r.l.vless_links||[]).join(String.fromCharCode(10)))}')">${copyText}</button>
-      <button class="act-btn act-sub" onclick="cpSub('${r.l.uuid}')">${subText}</button>
-      <button class="act-btn act-qr" onclick="showQR('${esc((r.l.vless_links||[])[0]||'')}')">${qrText}</button>
-      <button class="act-btn act-del" onclick="delLink('${r.l.uuid}')">${delText}</button>
-    </div></td>
-  </tr>`).join('');
-
-  mc.innerHTML=rows.map(r=>`<div class="m-card">
-    <div class="m-card-hd">
-      <div style="display:flex;align-items:center;gap:7px">
-        <span style="font-size:11px;color:var(--text3)">#${r.i}</span>
-        <span style="font-weight:600;font-size:14px">${esc(r.l.label)}</span>
-        <span class="tag tag-vless">${protoBadge(r.l.variants)}</span>
-      </div>
-      <button class="toggle ${r.l.active?'on':''}" data-uid="${r.l.uuid}" onclick="togLink(this)"></button>
-    </div>
-    <div class="pill"><span class="pill-used">${fmtB(r.u)}</span><div class="pill-bar"><div class="pill-fill" style="width:${r.pct}%;background:${r.col}"></div></div><span class="pill-lim">${fmtLim(r.lim)}</span></div>
-    <div style="font-size:11.5px;color:${r.ec};margin-top:6px;font-weight:600">⏳ ${r.ex} · ${r.cc}/${r.mc2||'∞'} IPs</div>
-    <div class="m-card-acts">
-      <button class="act-btn act-edit" onclick="showEditMo('${r.l.uuid}')">${editText}</button>
-      <button class="act-btn act-copy" onclick="cpLink('${esc((r.l.vless_links||[]).join(String.fromCharCode(10)))}')">${copyText}</button>
-      <button class="act-btn act-sub" onclick="cpSub('${r.l.uuid}')">${subText}</button>
-      <button class="act-btn act-qr" onclick="showQR('${esc((r.l.vless_links||[])[0]||'')}')">${qrText}</button>
-      <button class="act-btn act-del" onclick="delLink('${r.l.uuid}')">${delText}</button>
-    </div>
-  </div>`).join('');
-  
-  processAlertsAndCharts();
-}
-
-async function togLink(el){
-  const uid=el.dataset.uid;
-  const l=allLinks.find(x=>x.uuid===uid);
-  if(!l)return;
-  const na=!l.active;
-  try{
-    const r=await fetch('/api/links/'+uid,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({active:na})});
-    if(!r.ok)throw new Error();
-    l.active=na;filterLinks();loadStats();
-  }catch(e){toast('Failed to toggle',true)}
-}
-
-function showAddMo(){$m('mo-add').classList.add('show')}
-
-// وقتی transport یک بلاک (vless یا trojan) عوض شد، ALPN همون بلاک رو به پیش‌فرضش ببر
-const ALPN_DEFAULTS={
-  'vless-ws':'http/1.1','vless-xhttp-packet-up':'h2,http/1.1','vless-xhttp-stream-up':'h2,http/1.1',
-  'trojan-ws':'http/1.1','trojan-xhttp-packet-up':'h2,http/1.1','trojan-xhttp-stream-up':'h2,http/1.1',
-};
-function syncAlpnDefault(auth,transportId,alpnId){
-  const key=auth+'-'+$m(transportId).value;
-  $m(alpnId).value=ALPN_DEFAULTS[key]||'http/1.1';
-}
-function toggleVariantBox(prefix,auth){
-  $m(prefix+'_'+auth+'_box').style.display=$m(prefix+'_'+auth+'_enabled').checked?'':'none';
-}
-function readVariantFields(prefix,auth){
-  return {
-    [auth+'_enabled']: $m(prefix+'_'+auth+'_enabled').checked,
-    [auth+'_transport']: $m(prefix+'_'+auth+'_transport').value,
-    [auth+'_fingerprint']: $m(prefix+'_'+auth+'_fp').value,
-    [auth+'_alpn']: $m(prefix+'_'+auth+'_alpn').value,
-  };
-}
-function fillVariantFields(prefix,auth,variant){
-  $m(prefix+'_'+auth+'_enabled').checked=!!(variant&&variant.enabled);
-  $m(prefix+'_'+auth+'_transport').value=(variant&&variant.transport)||'ws';
-  $m(prefix+'_'+auth+'_fp').value=(variant&&variant.fingerprint)||'chrome';
-  $m(prefix+'_'+auth+'_alpn').value=(variant&&variant.alpn)||ALPN_DEFAULTS[auth+'-ws'];
-  toggleVariantBox(prefix,auth);
-}
-
-async function createLink(){
-  const label=$m('nl').value.trim()||'New Link';
-  if(!/^[a-zA-Z0-9\-_. ]+$/.test(label)){toast('Only English letters allowed',true);return}
-  if(!$m('n_vless_enabled').checked && !$m('n_trojan_enabled').checked){toast('Enable at least one protocol (VLESS or Trojan)',true);return}
-  const v=parseFloat($m('nv').value)||0;
-  const mc=parseInt($m('nc').value)||0;
-  const days=parseInt($m('nd').value)||0;
-  const body=Object.assign({label,limit_value:v,limit_unit:'GB',max_connections:mc,days_valid:days},readVariantFields('n','vless'),readVariantFields('n','trojan'));
-  try{
-    const r=await fetch('/api/links',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(!r.ok)throw new Error();
-    toast('Created');
-    $m('nl').value='';$m('nv').value='';$m('nc').value='';$m('nd').value='';
-    $m('mo-add').classList.remove('show');
-    await loadLinks();await loadStats();
-  }catch(e){toast('Error creating link',true)}
-}
-
-function showEditMo(uid){
-  const l=allLinks.find(x=>x.uuid===uid);
-  if(!l)return;
-  $m('eu').value=uid;
-  $m('en2').value=l.label;
-  $m('el').value=l.limit_bytes>0?(l.limit_bytes/1073741824):'';
-  $m('ec').value=l.max_connections>0?l.max_connections:'';
-  $m('ed').value='';
-  const variants=l.variants||{};
-  fillVariantFields('e','vless',variants.vless);
-  fillVariantFields('e','trojan',variants.trojan);
-  $m('et').textContent=(lang==='fa'?'ویرایش: ':'EDIT: ')+l.label;
-  $m('mo-edit').classList.add('show');
-}
-
-async function saveEdit(){
-  const uid=$m('eu').value;
-  if(!$m('e_vless_enabled').checked && !$m('e_trojan_enabled').checked){toast('Enable at least one protocol (VLESS or Trojan)',true);return}
-  const v=parseFloat($m('el').value)||0;
-  const mc=parseInt($m('ec').value)||0;
-  const days=parseInt($m('ed').value)||0;
-  const body=Object.assign({limit_value:v,limit_unit:'GB',max_connections:mc},readVariantFields('e','vless'),readVariantFields('e','trojan'));
-  if(days>0)body.days_valid=days;
-  try{
-    const r=await fetch('/api/links/'+uid,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(!r.ok)throw new Error();
-    toast('Updated');$m('mo-edit').classList.remove('show');await loadLinks();
-  }catch(e){toast('Error updating',true)}
-}
-
-async function resetTraf(){
-  const uid=$m('eu').value;
-  if(!confirm('Reset traffic for this inbound?'))return;
-  try{
-    const r=await fetch('/api/links/'+uid,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({reset_usage:true})});
-    if(!r.ok)throw new Error();
-    toast('Traffic reset');await loadLinks();
-  }catch(e){toast('Error resetting',true)}
-}
-
-async function delLink(uid){
-  if(!confirm('Delete this inbound?'))return;
-  try{
-    const r=await fetch('/api/links/'+uid,{method:'DELETE'});
-    if(!r.ok)throw new Error();
-    toast('Deleted');await loadLinks();await loadStats();
-  }catch(e){toast('Error deleting',true)}
-}
-
-function cpLink(txt){
-  if(!txt){toast('No link to copy',true);return}
-  navigator.clipboard.writeText(txt).then(()=>toast('Copied!')).catch(()=>toast('Failed to copy',true));
-}
-
-async function cpSub(uid){
-  try{
-    await navigator.clipboard.writeText('https://'+location.host+'/sub/'+uid);
-    toast('Sub URL copied!');
-  }catch(e){toast('Failed to copy',true)}
-}
-
-function showQR(txt){
-  if(!txt){toast('No QR data',true);return}
-  $m('qr-img').src='https://api.qrserver.com/v1/create-qr-code/?size=280x280&data='+encodeURIComponent(txt);
-  $m('mo-qr').classList.add('show');
-}
-
-function dlQR(){
-  const a=document.createElement('a');
-  a.href=$m('qr-img').src;a.download='mmd-qr.png';a.click();
-}
-
-async function loadSettings(){
-  try{
-    const r=await fetch('/api/settings');
-    if(r.ok){const d=await r.json();
-      $m('tg-token').value=d.telegram_token||'';
-      $m('tg-admin-id').value=d.telegram_admin_id||'';
-      if($m('rw-tg-token'))$m('rw-tg-token').value=d.telegram_token||'';
-      if($m('rw-tg-admin'))$m('rw-tg-admin').value=d.telegram_admin_id||'';
-      if($m('rw-token'))$m('rw-token').value=d.railway_token||'';
-      if($m('rw-tg-notify-conn'))$m('rw-tg-notify-conn').checked=!!d.notify_connections;
-    }
-  }catch(e){}
-}
-
-async function saveSettings(){
-  const tok=$m('tg-token').value.trim();
-  const adm=$m('tg-admin-id').value.trim();
-  try{
-    const r=await fetch('/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({telegram_token:tok,telegram_admin_id:adm})});
-    if(r.ok)toast('Bot settings saved & restarted');
-    else toast('Failed to save settings',true);
-  }catch(e){toast('Error saving settings',true)}
-}
-
-async function saveAllSettings(){
-  const tok=($m('rw-tg-token')?.value||'').trim();
-  const adm=($m('rw-tg-admin')?.value||'').trim();
-  const rwt=($m('rw-token')?.value||'').trim();
-  const notifyConn=!!($m('rw-tg-notify-conn')?.checked);
-  try{
-    const r=await fetch('/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({telegram_token:tok,telegram_admin_id:adm,railway_token:rwt,notify_connections:notifyConn})});
-    if(r.ok)toast('All settings saved');
-    else toast('Failed to save settings',true);
-  }catch(e){toast('Error saving settings',true)}
-}
-
-// ── Railway / Permanent Database ──────────────────────────────────────────
-
-async function fetchRailwayProjects(){
-  const token=$m('rw-token').value.trim();
-  if(!token){toast('Enter your Railway token first',true);return}
-  const btn=$m('rw-fetch-btn');
-  const sel=$m('rw-project');
-  btn.disabled=true;btn.textContent='Loading...';
-  sel.disabled=true;sel.innerHTML='<option>Loading...</option>';
-  $m('rw-volume-info').style.display='none';
-  try{
-    const r=await fetch('/api/railway/projects',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});
-    if(!r.ok)throw new Error((await r.json()).detail||'Error');
-    const d=await r.json();
-    sel.innerHTML='<option value="">-- Select a project --</option>'+d.projects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');
-    sel.disabled=false;
-    toast('Found '+d.projects.length+' project(s)');
-  }catch(e){toast(e.message||'Failed to fetch projects',true);sel.innerHTML='<option value="">Error loading</option>'}
-  finally{btn.disabled=false;btn.textContent=btn.getAttribute('data-'+lang)||'Fetch'}
-}
-
-async function checkRailwayVolume(){
-  const token=$m('rw-token').value.trim();
-  const pid=$m('rw-project').value;
-  if(!token||!pid){toast('Select a project first',true);return}
-  const info=$m('rw-volume-info');
-  const icon=$m('rw-volume-icon');
-  const title=$m('rw-volume-title');
-  const desc=$m('rw-volume-desc');
-  const cbtn=$m('rw-create-btn');
-  info.style.display='';icon.textContent='⏳';title.textContent='Checking...';desc.textContent='';cbtn.style.display='none';
-  try{
-    const r=await fetch('/api/railway/volume-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,project_id:pid})});
-    if(!r.ok)throw new Error((await r.json()).detail||'Error');
-    const d=await r.json();
-    const hasData=d.has_data_volume;
-    if(hasData){
-      icon.textContent='✅';icon.style.color='var(--green)';
-      title.textContent='Volume at /data exists!';
-      const v=d.volumes.find(x=>x.path==='data'||x.path==='/data')||d.volumes[0];
-      desc.textContent=(v?'ID: '+v.id+' | Name: '+v.name+' | State: '+v.state:'');
-      cbtn.style.display='none';
-      $m('rdb-status').textContent='✅ Active';$m('rdb-status').style.color='var(--green)';
-    }else{
-      // No volume found - create it automatically, no manual click needed.
-      icon.textContent='⏳';title.textContent='No volume found, creating one automatically...';desc.textContent='';
-      $m('rdb-status').textContent='⏳ Creating...';$m('rdb-status').style.color='var(--gold)';
-      await createRailwayVolume(true);
-    }
-  }catch(e){toast(e.message||'Failed to check',true);info.style.display='none'}
-}
-
-async function createRailwayVolume(silent){
-  const token=$m('rw-token').value.trim();
-  const pid=$m('rw-project').value;
-  if(!token||!pid){toast('Select a project first',true);return}
-  const icon=$m('rw-volume-icon');
-  const title=$m('rw-volume-title');
-  const desc=$m('rw-volume-desc');
-  const cbtn=$m('rw-create-btn');
-  cbtn.disabled=true;cbtn.textContent='Creating...';
-  try{
-    const r=await fetch('/api/railway/create-volume',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,project_id:pid})});
-    if(!r.ok)throw new Error((await r.json()).detail||'Error');
-    if(!silent)toast('Volume created successfully!');
-    else toast('/data volume created automatically');
-    icon.textContent='✅';icon.style.color='var(--green)';
-    title.textContent='Volume at /data created!';
-    desc.textContent='It may take a few seconds to finish provisioning.';
-    cbtn.style.display='none';
-    $m('rdb-status').textContent='✅ Active';$m('rdb-status').style.color='var(--green)';
-  }catch(e){
-    icon.textContent='❌';icon.style.color='var(--red)';
-    title.textContent='No volume at /data found';
-    desc.textContent=e.message||'Failed to auto-create volume. Click below to retry.';
-    cbtn.style.display='';
-    $m('rdb-status').textContent='❌ Missing';$m('rdb-status').style.color='var(--red)';
-    toast(e.message||'Failed to create volume',true);
-  }
-  finally{cbtn.disabled=false;cbtn.textContent=cbtn.getAttribute('data-'+lang)||'Create Volume'}
-}
-
-// Auto-check volume when project selection changes
-document.addEventListener('change',function(e){
-  if(e.target.id==='rw-project'&&e.target.value){
-    checkRailwayVolume();
-  }
-});
 
 async function loadStats(){
   try{
@@ -4705,26 +3925,24 @@ async function loadStats(){
     if(r.status===401){showLogin();return}
     if(!r.ok)throw new Error();
     sData=await r.json();
-    $m('sv-traffic').innerHTML=(sData.total_traffic_mb||0)+'<span class="stat-unit"> MB</span>';
+    $m('sv-traffic').innerHTML=(sData.total_traffic_mb||0)+'<span style="font-size:11px"> MB</span>';
     $m('sv-links').textContent=sData.links_count||0;
     $m('sv-uptime').textContent=sData.uptime||'-';
     $m('sv-domain').textContent=sData.domain||'-';
     $m('nb').textContent=sData.links_count||0;
-    $m('last-up').textContent='Updated '+new Date().toLocaleTimeString();
+    $m('last-up').textContent='بروزرسانی: '+new Date().toLocaleTimeString();
     if($m('t-tr'))$m('t-tr').textContent=(sData.total_traffic_mb||0)+' MB';
     if($m('t-rq'))$m('t-rq').textContent=(sData.total_requests||0).toLocaleString();
     if($m('t-up'))$m('t-up').textContent=sData.uptime||'-';
     if(sData.cpu_percent!==undefined){
       const c=sData.cpu_percent;
-      const cc=c>80?'var(--red)':c>50?'var(--yellow)':'var(--gold)';
-      $m('cpu-v').textContent=c.toFixed(1)+'%';$m('cpu-v').style.color=cc;
-      $m('cpu-b').style.width=c+'%';$m('cpu-b').style.background=cc;
+      $m('cpu-v').textContent=c.toFixed(1)+'%';
+      $m('cpu-b').style.width=c+'%';
     }
     if(sData.memory_percent!==undefined){
       const m=sData.memory_percent;
-      const mc=m>80?'var(--red)':m>50?'var(--yellow)':'var(--green)';
-      $m('mem-v').textContent=m.toFixed(1)+'%';$m('mem-v').style.color=mc;
-      $m('mem-b').style.width=m+'%';$m('mem-b').style.background=mc;
+      $m('mem-v').textContent=m.toFixed(1)+'%';
+      $m('mem-b').style.width=m+'%';
     }
     updChart();
   }catch(e){}
@@ -4736,251 +3954,168 @@ async function loadLinks(){
     if(r.status===401){showLogin();return}
     if(!r.ok)throw new Error();
     const d=await r.json();
-    allLinks=d.links||[];filterLinks();
+    allLinks=d.links||[]; renderLinks();
   }catch(e){}
 }
 
-async function chgPw(){
-  const cur=$m('cpw').value;const nw=$m('npw').value;
-  if(!cur||!nw){toast('Fill all fields',true);return}
-  if(nw.length<4){toast('Password must be at least 4 characters',true);return}
-  try{
-    const r=await fetch('/api/change-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({current_password:cur,new_password:nw})});
-    if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.detail||'Error')}
-    toast('Password updated');$m('cpw').value='';$m('npw').value='';
-  }catch(e){toast(e.message,true)}
+function renderLinks(){
+  const tb=$m('ltb');
+  if(!allLinks.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text3)">هیچ اینباندی یافت نشد</td></tr>';return}
+  tb.innerHTML=allLinks.map((l,i)=>{
+    const u=l.used_bytes||0;
+    const lim=l.limit_bytes||0;
+    const pct=lim>0?Math.min(100,(u/lim)*100):0;
+    const col=pct>90?'var(--red)':pct>70?'var(--yellow)':'var(--gold)';
+    return`<tr>
+      <td style="color:var(--text3)">${allLinks.length-i}</td>
+      <td style="font-weight:600">${esc(l.label)}</td>
+      <td><span class="tag tag-vless">${protoBadge(l.variants)}</span></td>
+      <td><div class="pill"><span style="font-weight:700">${fmtB(u)}</span><div class="pill-bar"><div class="pill-fill" style="width:${pct}%;background:${col}"></div></div><span style="color:var(--text3)">${fmtLim(lim)}</span></div></td>
+      <td><span class="tag ${l.active?'tag-on':'tag-off'}">${l.active?'فعال':'غیرفعال'}</span></td>
+      <td><div style="display:flex;gap:5px">
+        <button class="act-btn act-copy" onclick="cpLink('${esc((l.vless_links||[]).join(String.fromCharCode(10)))}')">کپی</button>
+        <button class="act-btn" onclick="showEditMo('${l.uuid}')">ویرایش</button>
+        <button class="act-btn act-del" onclick="delLink('${l.uuid}')">حذف</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  processCharts();
+}
+function processCharts(){
+  if(iChart){
+    const sorted=[...allLinks].sort((a,b)=>(b.used_bytes||0)-(a.used_bytes||0)).slice(0,8);
+    iChart.data.labels=sorted.map(x=>x.label);
+    iChart.data.datasets[0].data=sorted.map(x=>Math.round((x.used_bytes||0)/(1024*1024)));
+    iChart.data.datasets[0].backgroundColor=genDistinctColors(sorted.length);
+    iChart.update();
+  }
+}
+function genDistinctColors(n){
+  const colors=[]; const GOLDEN_ANGLE=137.508; const startHue=45;
+  for(let i=0;i<n;i++){const hue=(startHue+i*GOLDEN_ANGLE)%360; const sat=70+((i*17)%20); const light=48+((i*11)%16); colors.push(`hsl(${hue.toFixed(1)},${sat}%,${light}%)`);}
+  return colors;
+}
+async function cpLink(txt){ await navigator.clipboard.writeText(txt); toast('کپی شد'); }
+async function delLink(uid){
+  if(!confirm('حذف این اینباند؟'))return;
+  await fetch('/api/links/'+uid,{method:'DELETE'});
+  toast('حذف شد'); loadLinks(); loadStats();
 }
 
 function initChart(){
+  if(tChart)return;
   const ctx=$m('tc');
-  if(!ctx||tChart)return;
-  tChart=new Chart(ctx,{
-    type:'bar',
-    data:{labels:[],datasets:[{label:'MB',data:[],backgroundColor:'rgba(59,130,246,0.45)',borderColor:'#3b82f6',borderWidth:1,borderRadius:4}]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{
-        x:{grid:{display:false},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10}}},
-        y:{grid:{color:'rgba(59,130,246,0.06)'},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10},callback:v=>v+' MB'},beginAtZero:true}
-      }
-    }
-  });
-
-  const ctx2=$m('inbound-chart');
-  if(ctx2&&!iChart){
-    iChart=new Chart(ctx2,{
-      type:'doughnut',
-      data:{labels:[],datasets:[{data:[],
-        backgroundColor:[],
-        borderWidth:0}]},
-      options:{responsive:true,maintainAspectRatio:false,
-        plugins:{legend:{display:true,position:'right',labels:{color:'rgba(255,255,255,0.6)',font:{size:10}}}}}
-    });
+  if(ctx){
+    tChart=new Chart(ctx,{type:'bar',data:{labels:[],datasets:[{label:'MB',data:[],backgroundColor:'rgba(59,130,246,0.45)',borderColor:'#3b82f6',borderWidth:1,borderRadius:4}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10}}},y:{grid:{color:'rgba(59,130,246,0.06)'},ticks:{color:'rgba(59,130,246,0.35)',font:{size:10}}}}}});
   }
-  updChartColors();
+  const ctx2=$m('inbound-chart');
+  if(ctx2 && !iChart){
+    iChart=new Chart(ctx2,{type:'doughnut',data:{labels:[],datasets:[{data:[],backgroundColor:[]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'right',labels:{color:'rgba(255,255,255,0.6)',font:{size:10}}}}}});
+  }
 }
-
-function updChartColors(){
-  if(!tChart)return;
-  const col=theme==='light'?'rgba(0,0,0,0.4)':'rgba(59,130,246,0.35)';
-  const gridCol=theme==='light'?'rgba(0,0,0,0.06)':'rgba(59,130,246,0.06)';
-  tChart.options.scales.x.ticks.color=col;
-  tChart.options.scales.y.ticks.color=col;
-  tChart.options.scales.y.grid.color=gridCol;
-  tChart.update();
-}
-
-function updChart(){
-  if(!tChart||!sData.hourly_traffic)return;
+function updChart(){ if(!tChart||!sData.hourly_traffic)return;
   const entries=Object.entries(sData.hourly_traffic).sort((a,b)=>a[0].localeCompare(b[0])).slice(-12);
   tChart.data.labels=entries.map(x=>{const p=x[0].split(' ');return p.length>1?p[1]:p[0]});
   tChart.data.datasets[0].data=entries.map(x=>Math.round(x[1]/1048576));
   tChart.update();
 }
 
+async function chgPw(){
+  const cur=$m('cpw').value; const nw=$m('npw').value;
+  if(!cur||!nw){toast('همه فیلدها را پر کنید',true);return}
+  if(nw.length<4){toast('رمز حداقل ۴ کاراکتر',true);return}
+  const r=await fetch('/api/change-password',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({current_password:cur,new_password:nw})});
+  if(r.ok){toast('رمز تغییر کرد'); $m('cpw').value=''; $m('npw').value='';}else toast('خطا در تغییر رمز',true);
+}
+
 async function loadAddrs(){
-  try{
-    const r=await fetch('/api/addresses');
-    if(!r.ok)throw new Error();
-    const d=await r.json();allAddrs=d.addresses||[];renderAddrs();
-  }catch(e){}
-}
-
-function renderAddrs(){
+  const r=await fetch('/api/addresses');
+  if(!r.ok)return;
+  const d=await r.json();
+  allAddrs=d.addresses||[];
   const el=$m('addr-list');
-  if(!el)return;
-  if(!allAddrs||!allAddrs.length){el.innerHTML='<div style="color:var(--text3);font-size:12px">No addresses added</div>';return}
-  el.innerHTML=allAddrs.map((a,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--surface3);border:1px solid var(--border);border-radius:10px;margin-bottom:8px">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span style="color:var(--gold);font-size:16px">🌐</span>
-      <div><div style="font-size:14px;font-weight:600">${esc(a)}</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Address #${i+1}</div></div>
-    </div>
-    <button class="act-btn act-del" onclick="delAddr(${i})">${tr('del')}</button>
-  </div>`).join('');
+  el.innerHTML = allAddrs.length ? allAddrs.map((a,i)=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--border)"><span>${esc(a)}</span><button class="act-btn act-del" onclick="delAddr(${i})">حذف</button></div>`).join('') : '<div style="padding:20px;text-align:center;color:var(--text3)">آدرسی اضافه نشده</div>';
 }
-
-function showAddAddrMo(){$m('na').value='';$m('mo-addr').classList.add('show')}
-
-// ── Notifications ────────────────────────────────────────────────────────
-const NOTIF_ICONS = {update:'🔔',quota:'⚠️',expiry:'⏰',info:'ℹ️'};
-
-async function loadNotifs(){
-  try{
-    const r=await fetch('/api/notifications');
-    if(r.status===401)return;
-    if(!r.ok)return;
-    const d=await r.json();
-    renderNotifs(d.notifications||[]);
-  }catch(e){}
-}
-
-function renderNotifs(notifs){
-  const el=$m('notif-list');
-  if(!el)return;
-  if(!notifs||!notifs.length){
-    el.innerHTML='<div class="empty" style="padding:32px">'+(lang==='fa'?'هیچ اعلانی وجود ندارد':'No notifications')+'</div>';
-    return;
-  }
-  el.innerHTML=notifs.map(n=>{
-    const icon=NOTIF_ICONS[n.type]||'ℹ️';
-    const cls=n.seen?'':'unseen';
-    const time=new Date(n.created_at).toLocaleString();
-    const linkHtml=n.link?`<a href="${esc(n.link)}" target="_blank" class="notif-link">${tr('gh')} ↗</a>`:'';
-    return `<div class="notif-item ${cls}" onclick="markSeen(${n.id})">
-      <div class="notif-icon ${n.type}">${icon}</div>
-      <div class="notif-body">
-        <div class="notif-title">${esc(n.title)}</div>
-        <div class="notif-msg">${esc(n.message)}</div>
-        <div class="notif-time">${time}</div>
-        ${linkHtml}
-      </div>
-      ${n.seen?'':'<div class="notif-dot"></div>'}
-    </div>`;
-  }).join('');
-}
-
-async function markSeen(id){
-  await fetch('/api/notifications/'+id+'/seen',{method:'POST'});
-  await loadNotifs();
-  await updateNotifBadge();
-}
-
-async function markAllSeen(){
-  await fetch('/api/notifications/seen-all',{method:'POST'});
-  await loadNotifs();
-  await updateNotifBadge();
-}
-
-async function clearNotifs(){
-  if(!confirm(lang==='fa'?'حذف همه اعلانات؟':'Clear all notifications?'))return;
-  await fetch('/api/notifications',{method:'DELETE'});
-  await loadNotifs();
-  await updateNotifBadge();
-}
-
-async function updateNotifBadge(){
-  try{
-    const r=await fetch('/api/notifications/count');
-    if(!r.ok)return;
-    const d=await r.json();
-    const badge=$m('notif-badge');
-    if(badge){
-      if(d.count>0){badge.style.display='';badge.textContent=d.count}
-      else{badge.style.display='none'}
-    }
-  }catch(e){}
-}
-
-async function addAddrs(){
-  const lines=($m('na').value||'').trim().split('\n').map(l=>l.trim()).filter(l=>l);
-  let ok=0,fail=0;
-  for(const a of lines){
-    if(!/^[a-zA-Z0-9\-_. ]+$/.test(a)){fail++;continue}
-    try{
-      const r=await fetch('/api/addresses',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:a})});
-      if(r.ok)ok++;else fail++;
-    }catch(e){fail++}
-  }
-  if(ok)toast('Added '+ok);
-  if(fail)toast(fail+' failed',true);
-  if(ok){$m('mo-addr').classList.remove('show');await loadAddrs()}
-}
-
 async function delAddr(i){
-  if(!confirm('Delete this address?'))return;
-  try{
-    const r=await fetch('/api/addresses/'+i,{method:'DELETE'});
-    if(!r.ok)throw new Error();
-    toast('Deleted');await loadAddrs();
-  }catch(e){toast('Error deleting',true)}
+  await fetch('/api/addresses/'+i,{method:'DELETE'}); loadAddrs();
+}
+function showAddAddrMo(){$m('na').value=''; $m('mo-addr').classList.add('show');}
+async function addAddrs(){
+  const lines=($m('na').value||'').trim().split('\n').filter(l=>l.trim());
+  for(const a of lines){ await fetch('/api/addresses',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:a.trim()})}); }
+  $m('mo-addr').classList.remove('show'); loadAddrs(); toast('آدرس‌ها اضافه شدند');
 }
 
-async function delAllAddrs(){
-  if(!allAddrs||!allAddrs.length){toast('No addresses to delete',true);return}
-  if(!confirm('Delete ALL clean IP addresses?'))return;
-  try{
-    const r=await fetch('/api/addresses',{method:'DELETE'});
-    if(!r.ok)throw new Error();
-    toast('All addresses deleted');await loadAddrs();
-  }catch(e){toast('Error deleting',true)}
+function showAddMo(){$m('mo-add').classList.add('show');}
+async function createLink(){
+  const label=$m('nl').value.trim()||'New Link';
+  if(!/^[a-zA-Z0-9\-_. ]+$/.test(label)){toast('نام فقط انگلیسی',true);return}
+  const v=parseFloat($m('nv').value)||0;
+  const days=parseInt($m('nd').value)||0;
+  const body={label,limit_value:v,limit_unit:'GB',days_valid:days};
+  body.vless_enabled=$m('n_vless_enabled').checked;
+  body.vless_transport=$m('n_vless_transport').value;
+  body.vless_fingerprint=$m('n_vless_fp').value;
+  body.trojan_enabled=$m('n_trojan_enabled').checked;
+  body.trojan_transport=$m('n_trojan_transport').value;
+  const r=await fetch('/api/links',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(r.ok){toast('ساخته شد'); $m('mo-add').classList.remove('show'); loadLinks(); loadStats();}else toast('خطا',true);
+}
+function showEditMo(uid){
+  const l=allLinks.find(x=>x.uuid===uid);
+  if(!l)return;
+  $m('eu').value=uid;
+  $m('en2').value=l.label;
+  $m('el').value=l.limit_bytes>0?(l.limit_bytes/1073741824):'';
+  $m('ed').value='';
+  $m('mo-edit').classList.add('show');
+}
+async function saveEdit(){
+  const uid=$m('eu').value;
+  const v=parseFloat($m('el').value)||0;
+  const days=parseInt($m('ed').value)||0;
+  const body={limit_value:v,limit_unit:'GB'};
+  if(days>0)body.days_valid=days;
+  const r=await fetch('/api/links/'+uid,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(r.ok){toast('ذخیره شد'); $m('mo-edit').classList.remove('show'); loadLinks();}else toast('خطا',true);
+}
+async function resetTraf(){
+  const uid=$m('eu').value;
+  const r=await fetch('/api/links/'+uid,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({reset_usage:true})});
+  if(r.ok){toast('مصرف ریست شد'); loadLinks();}
 }
 
-// همه‌ی آی‌پی‌های railway_ips.txt رو یکجا (یک درخواست، بدون تاخیر
-// به‌ازای هر آی‌پی) به لیست Clean IP اضافه می‌کنه.
-async function importAddrs(source){
-  try{
-    const r=await fetch('/api/addresses/import/'+source,{method:'POST'});
-    const d=await r.json().catch(()=>null);
-    if(!r.ok){toast((d&&d.detail)||'Error importing',true);return}
-    toast((d.added||0)+' address(es) added, '+((d.total_in_file||0)-(d.added||0))+' already existed');
-    await loadAddrs();
-  }catch(e){toast('Error importing',true)}
+// Notifications
+async function updateNotifBadge(){
+  const r=await fetch('/api/notifications/count');
+  const d=await r.json();
+  const badge=$m('notif-badge');
+  if(badge && d.count>0){badge.style.display=''; badge.textContent=d.count;}else if(badge){badge.style.display='none';}
 }
+async function markAllSeen(){await fetch('/api/notifications/seen-all',{method:'POST'});}
+async function clearNotifs(){await fetch('/api/notifications',{method:'DELETE'});}
 
-setTheme(theme);
-setLang(lang);
+// Railway
+async function fetchRailwayProjects(){
+  const token=$m('rw-token').value.trim();
+  if(!token)return toast('توکن را وارد کنید',true);
+  const btn=$m('rw-fetch-btn'); btn.disabled=true; btn.textContent='...';
+  const r=await fetch('/api/railway/projects',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});
+  if(r.ok){const d=await r.json(); $m('rw-project').innerHTML='<option value="">-- Select --</option>'+d.projects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join(''); $m('rw-project').disabled=false; $m('rw-volume-info').style.display='';}
+  else toast('خطا در دریافت پروژه',true);
+  btn.disabled=false; btn.textContent='دریافت';
+}
+async function createRailwayVolume(){
+  const token=$m('rw-token').value.trim(); const pid=$m('rw-project').value;
+  const r=await fetch('/api/railway/create-volume',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,project_id:pid})});
+  if(r.ok){toast('Volume ساخته شد'); $m('rw-create-btn').style.display='none'; $m('rw-volume-title').textContent='Volume فعال است';}
+}
+document.addEventListener('change',function(e){ if(e.target.id==='rw-project'&&e.target.value){ $m('rw-create-btn').style.display=''; }});
+
+setTheme('dark');
 checkAuth();
-let statsInterval=null;
-function startPolling(){
-  if(statsInterval)clearInterval(statsInterval);
-  statsInterval=setInterval(()=>{if(isAuthenticated){loadStats();loadLinks();updateNotifBadge()}},12000);
-}
-startPolling();
-
-// ── Panel update notifications (checks GitHub for new releases) ────────
-const PANEL_VERSION_KEY='mmd_panel_last_version';
-const PANEL_GH_NOTIFIED_KEY='mmd_panel_last_notified_gh';
-let loadedPanelVersion=null;
-
-async function checkPanelVersion(isPeriodic){
-  try{
-    const r=await fetch('/api/version');
-    if(!r.ok)return;
-    const d=await r.json();
-    const serverVersion=d.version;
-
-    // Detect that this panel instance was updated since the last time we visited
-    if(!loadedPanelVersion){
-      loadedPanelVersion=serverVersion;
-      const lastSeen=localStorage.getItem(PANEL_VERSION_KEY);
-      if(lastSeen&&lastSeen!==serverVersion){
-        toast('✅ Panel updated successfully to v'+serverVersion);
-      }
-      localStorage.setItem(PANEL_VERSION_KEY,serverVersion);
-    }
-
-    // Detect that GitHub has a newer release than what's currently running
-    if(d.update_available&&d.latest_github_version){
-      const alreadyNotified=localStorage.getItem(PANEL_GH_NOTIFIED_KEY);
-      if(alreadyNotified!==d.latest_github_version){
-        toast('🚀 New version available on GitHub: '+d.latest_github_version+' - pull the latest update');
-        localStorage.setItem(PANEL_GH_NOTIFIED_KEY,d.latest_github_version);
-      }
-    }
-  }catch(e){}
-}
-checkPanelVersion(false);
-setInterval(()=>checkPanelVersion(true),5*60*1000);
+setInterval(()=>{ if(isAuthenticated){loadStats(); loadLinks();} }, 12000);
 </script>
 </body>
 </html>"""
