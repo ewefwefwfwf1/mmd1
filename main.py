@@ -3647,7 +3647,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .live-logs-container{background:#000;border:1px solid var(--border);border-radius:8px;padding:12px;
   font-family:monospace;font-size:11px;color:#3b82f6;height:200px;overflow-y:auto;white-space:pre-wrap}
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;width:100%}
-.login-box{background:linear-gradient(90deg,rgba(8,32,62,0.75),rgba(85,124,147,0.75));border:1px solid rgba(255,255,255,0.15);border-radius:20px;
+.login-box{background:linear-gradient(90deg,rgba(8,32,62,0.85),rgba(14,28,38,0.85));border:1px solid rgba(255,255,255,0.15);border-radius:20px;
   padding:36px 32px;width:100%;max-width:360px;
   box-shadow:0 20px 60px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.12);
   backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}
