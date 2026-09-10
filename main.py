@@ -3744,10 +3744,6 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   <div class="mob-hd">
     <div class="mob-tl-group">
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-mob">🌙</button>
-      <div class="lang-row">
-        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
-      </div>
 
     </div>
     <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--gold);letter-spacing:2px">エムエムディー</span>
@@ -3797,13 +3793,9 @@ body[dir="rtl"]{direction:rtl;text-align:right}
     </nav>
     <div class="sb-bottom">
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn-desk" style="margin-bottom:4px;font-size:12px">🌙 Theme</button>
-      <div class="lang-row">
-        <button class="lang-btn lang-en active" onclick="setLang('en')">EN</button>
-        <button class="lang-btn lang-fa" onclick="setLang('fa')">FA</button>
-      </div>
-      <button class="logout-btn" onclick="doLogout()" style="margin-top:2px">
+      <button class="logout-btn" onclick="doLogout()" style="margin-top:2px;margin-left:auto;width:auto;padding:7px 14px;align-self:flex-end">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        <span data-en="Logout" data-fa="خروج">Logout</span>
+        <span data-en="Logout" data-fa="خروج">خروج</span>
       </button>
     </div>
   </aside>
@@ -4215,7 +4207,7 @@ const langMap={
 };
 function tr(key){return(langMap[lang]&&langMap[lang][key])||langMap['en'][key]||key}
 
-let lang=localStorage.getItem('ll')||'en';
+let lang='fa';
 let theme=localStorage.getItem('theme')||'dark';
 let allLinks=[];
 let cf='all';
@@ -4268,7 +4260,6 @@ function setLang(l){
     const v=el.getAttribute('data-ph-'+l);
     if(v)el.placeholder=v;
   });
-  localStorage.setItem('ll',l);
   filterLinks();
 }
 
@@ -4987,7 +4978,7 @@ async function importAddrs(source){
 }
 
 setTheme(theme);
-setLang(lang);
+setLang('fa');
 checkAuth();
 let statsInterval=null;
 function startPolling(){
