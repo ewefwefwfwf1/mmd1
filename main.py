@@ -3454,7 +3454,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
   background:linear-gradient(180deg,transparent,rgba(59,130,246,0.4) 30%,rgba(59,130,246,0.4) 70%,transparent)}
 .light-mode .sidebar::after{display:none}
 .sb-theme-top{display:flex;justify-content:center;padding:14px 0;flex-shrink:0}
-.sb-theme-top .theme-toggle{font-size:24px;padding:0;margin:0;border-radius:0;background:transparent;border:none;color:var(--text);cursor:pointer;transition:transform .2s;box-shadow:none}
+.sb-theme-top .theme-toggle{font-size:14px;padding:0;margin:0;border-radius:0;background:transparent;border:none;color:var(--text);cursor:pointer;transition:transform .2s;box-shadow:none}
 .sb-theme-top .theme-toggle:hover{background:transparent;border:none;box-shadow:none;transform:scale(1.15)}
 .sb-brand{padding:16px 0;display:flex;flex-direction:column;align-items:center;gap:2px;
   border-bottom:1px solid var(--border);flex-shrink:0}
