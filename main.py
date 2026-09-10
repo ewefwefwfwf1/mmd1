@@ -3949,7 +3949,7 @@ body[dir="rtl"]{direction:rtl;text-align:right}
           <div class="circle-stat">
             <svg viewBox="0 0 100 100">
               <circle class="cs-bg" cx="50" cy="50" r="42"/>
-              <circle class="cs-fill" cx="50" cy="50" r="42" id="mem-circle" stroke="#60a5fa"/>
+              <circle class="cs-fill" cx="50" cy="50" r="42" id="mem-circle" stroke="#fbbf24"/>
             </svg>
             <div class="circle-center">
               <div class="circle-val" id="mem-v">-%</div>
@@ -4914,7 +4914,7 @@ async function loadStats(){
     }
     if(sData.memory_percent!==undefined){
       const m=sData.memory_percent;
-      const mc=m>80?'#f87171':m>50?'#fbbf24':'#60a5fa';
+      const mc=m>80?'#f87171':m>50?'#f59e0b':'#fbbf24';
       const memV=$m('mem-v');
       if(memV){memV.textContent=m.toFixed(0)+'%';memV.style.color=mc}
       const memCircle=$m('mem-circle');
