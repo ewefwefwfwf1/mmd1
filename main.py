@@ -3628,6 +3628,29 @@ body[dir="rtl"]{direction:rtl;text-align:right}
 .chip{padding:7px 12px;border-radius:6px;font-size:11.5px;font-weight:700;color:var(--text3);
   cursor:pointer;border:none;background:none;transition:all .18s;font-family:inherit}
 .chip.active{background:var(--gold);color:#fff}
+/* Desktop cards - shown on wide screens */
+.d-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;padding:14px}
+.d-card{background:rgba(18,32,58,0.55);border:1px solid rgba(96,165,250,0.18);border-radius:18px;
+  padding:18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;
+  transition:all .25s;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:0 4px 24px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.05)}
+.d-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(59,130,246,0.35),transparent)}
+.d-card:hover{border-color:rgba(96,165,250,0.4);transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(59,130,246,0.15),inset 0 1px 0 rgba(255,255,255,0.08)}
+.d-card-hd{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.d-card-idx{color:var(--text3);font-size:11px;font-weight:700}
+.d-card-name{font-size:14px;font-weight:700;color:var(--text);flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.d-card-usage{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2)}
+.d-card-usage .val{font-weight:700;color:var(--text)}
+.d-card-usage .bar{flex:1;height:5px;background:rgba(96,165,250,0.12);border-radius:3px;overflow:hidden}
+.d-card-usage .fill{height:100%;border-radius:3px;transition:width .4s}
+.d-card-usage .lim{color:var(--text3);font-size:11px;font-weight:600}
+.d-card-info{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11.5px;color:var(--text3)}
+.d-card-info .item{display:flex;align-items:center;gap:5px}
+.d-card-actions{display:flex;gap:6px;flex-wrap:wrap;padding-top:6px;border-top:1px solid rgba(96,165,250,0.1)}
+@media(max-width:768px){.d-cards{display:none !important}}
 .m-cards{display:none;flex-direction:column;gap:12px}
 .m-card{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--surface2)}
 .m-card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -3907,22 +3930,8 @@ body[dir="rtl"]{direction:rtl;text-align:right}
           <button class="chip" data-filter="off" onclick="setFilter('off',this)" data-en="Off" data-fa="غیرفعال">Off</button>
         </div>
       </div>
-      <div class="card" style="padding:0;overflow:hidden">
-        <div class="tbl-wrap">
-          <table class="tbl">
-            <thead><tr>
-              <th>#</th>
-              <th data-en="Name" data-fa="نام">Name</th>
-              <th data-en="Type" data-fa="نوع">Type</th>
-              <th data-en="Usage" data-fa="مصرف">Usage</th>
-              <th data-en="IPs" data-fa="آی‌پی">IPs</th>
-              <th data-en="Expiry" data-fa="انقضا">Expiry</th>
-              <th data-en="Status" data-fa="وضعیت">Status</th>
-              <th data-en="Actions" data-fa="عملیات">Actions</th>
-            </tr></thead>
-            <tbody id="ltb"></tbody>
-          </table>
-        </div>
+            <div class="card" style="padding:0;overflow:hidden;background:transparent;border:none;box-shadow:none">
+        <div class="d-cards" id="dcards"></div>
         <div class="m-cards" id="mcards"></div>
         <div class="empty" id="lempty" style="display:none" data-en="No inbounds found" data-fa="هیچ اینباندی یافت نشد">No inbounds found</div>
       </div>
@@ -4457,11 +4466,11 @@ function processAlertsAndCharts(){
 }
 
 function renderLinks(links){
-  const tb=$m('ltb');
-  const em=$m('lempty');
+  const dc=$m('dcards');
   const mc=$m('mcards');
+  const em=$m('lempty');
   if(!links||!links.length){
-    tb.innerHTML='';mc.innerHTML='';em.style.display='block';
+    if(dc)dc.innerHTML='';mc.innerHTML='';em.style.display='block';
     em.textContent=em.getAttribute('data-'+lang)||'No inbounds found';
     return;
   }
@@ -4486,24 +4495,39 @@ function renderLinks(links){
   const qrText=tr('qr');
   const delText=tr('del');
 
-  tb.innerHTML=rows.map(r=>`<tr>
-    <td style="color:var(--text3);font-size:10.5px">${r.i}</td>
-    <td style="font-weight:600">${esc(r.l.label)}</td>
-    <td><span class="tag tag-vless">${protoBadge(r.l.variants)}</span></td>
-    <td><div class="pill"><span class="pill-used">${fmtB(r.u)}</span><div class="pill-bar"><div class="pill-fill" style="width:${r.pct}%;background:${r.col}"></div></div><span class="pill-lim">${fmtLim(r.lim)}</span></div></td>
-    <td style="font-size:11px;font-weight:600;color:${r.mc2>0&&r.cc>=r.mc2?'var(--red)':'var(--text2)'}">${r.cc}/${r.mc2||'∞'}</td>
-    <td style="font-size:10.5px;font-weight:700;color:${r.ec}">${r.ex}</td>
-    <td><span class="tag ${r.l.active?'tag-on':'tag-off'}">${r.l.active?'On':'Off'}</span></td>
-    <td><div style="display:flex;gap:3px;align-items:center;flex-wrap:wrap">
-      <button class="toggle ${r.l.active?'on':''}" data-uid="${r.l.uuid}" onclick="togLink(this)"></button>
-      <button class="act-btn act-edit" onclick="showEditMo('${r.l.uuid}')">${editText}</button>
-      <button class="act-btn act-copy" onclick="cpLink('${esc((r.l.vless_links||[]).join(String.fromCharCode(10)))}')">${copyText}</button>
-      <button class="act-btn act-sub" onclick="cpSub('${r.l.uuid}')">${subText}</button>
-      <button class="act-btn act-qr" onclick="showQR('${esc((r.l.vless_links||[])[0]||'')}')">${qrText}</button>
-      <button class="act-btn act-del" onclick="delLink('${r.l.uuid}')">${delText}</button>
-    </div></td>
-  </tr>`).join('');
+  // ── Desktop cards ──
+  if(dc){
+    dc.innerHTML=rows.map(r=>`<div class="d-card">
+      <div class="d-card-hd">
+        <span class="d-card-idx">#${r.i}</span>
+        <span class="d-card-name">${esc(r.l.label)}</span>
+        <span class="tag tag-vless">${protoBadge(r.l.variants)}</span>
+        <button class="toggle ${r.l.active?'on':''}" data-uid="${r.l.uuid}" onclick="togLink(this)" style="margin-left:auto"></button>
+      </div>
 
+      <div class="d-card-usage">
+        <span class="val">${fmtB(r.u)} / ${fmtLim(r.lim)}</span>
+        <div class="bar"><div class="fill" style="width:${r.pct}%;background:${r.col}"></div></div>
+        <span class="lim">${fmtLim(r.lim)}</span>
+      </div>
+
+      <div class="d-card-info">
+        <span class="item">⏳ <span style="color:${r.ec};font-weight:700">${r.ex}</span></span>
+        <span class="item">👥 <span style="font-weight:700;color:${r.mc2>0&&r.cc>=r.mc2?'var(--red)':'var(--text2)'}">${r.cc}/${r.mc2||'∞'}</span> IPs</span>
+        <span class="tag ${r.l.active?'tag-on':'tag-off'}">${r.l.active?'ON':'OFF'}</span>
+      </div>
+
+      <div class="d-card-actions">
+        <button class="act-btn act-edit" onclick="showEditMo('${r.l.uuid}')">✏️ ${editText}</button>
+        <button class="act-btn act-copy" onclick="cpLink('${esc((r.l.vless_links||[]).join(String.fromCharCode(10)))}')">📋 ${copyText}</button>
+        <button class="act-btn act-sub" onclick="cpSub('${r.l.uuid}')">🌐 ${subText}</button>
+        <button class="act-btn act-qr" onclick="showQR('${esc((r.l.vless_links||[])[0]||'')}')">📱 ${qrText}</button>
+        <button class="act-btn act-del" onclick="delLink('${r.l.uuid}')">🗑️ ${delText}</button>
+      </div>
+    </div>`).join('');
+  }
+
+  // ── Mobile cards (unchanged) ──
   mc.innerHTML=rows.map(r=>`<div class="m-card">
     <div class="m-card-hd">
       <div style="display:flex;align-items:center;gap:7px">
