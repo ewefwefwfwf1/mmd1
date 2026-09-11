@@ -2409,7 +2409,7 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
         <div class="header-logo">
             <span class="header-title">エムエムディー</span>
         </div>
-        <div class="header-sub">{link['label']} · Connection Status</div>
+        <div class="header-sub">{link['label']} · وضعیت اتصال</div>
     </div>
 
     <!-- Usage Ring Card -->
@@ -2427,14 +2427,14 @@ def generate_landing_page(link: dict, uid: str, addresses: list[str]) -> str:
             </svg>
             <div class="ring-center">
                 <div class="ring-pct">{pct:.0f}%</div>
-                <div class="ring-label">USED</div>
+                <div class="ring-label">مصرف‌شده</div>
             </div>
         </div>
 
         <div class="usage-nums">
             {_fmt_bytes(used)} <span>/ {_fmt_bytes(limit) if limit > 0 else '∞'}</span>
         </div>
-        <div class="usage-sub">{rem_str} remaining</div>
+        <div class="usage-sub">{rem_str} باقی‌مانده</div>
 
         <div class="info-row">
             <div class="info-box">
